@@ -24,13 +24,13 @@ const ChatInput = ({ onSendMessage, isLoading }: ChatInputProps) => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Escribe un mensaje..."
-        className="flex-1 rounded-full border border-[#E5DEFF] px-4 py-2.5 focus:outline-none focus:border-[#9b87f5] focus:ring-1 focus:ring-[#9b87f5] transition-colors"
+        className="flex-1 rounded-full bg-secondary/50 border border-secondary/20 backdrop-blur-sm px-4 py-2.5 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
         disabled={isLoading}
       />
       <button
         type="submit"
         disabled={isLoading || !message.trim()}
-        className="rounded-full p-2.5 bg-[#9b87f5] text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#7E69AB] transition-colors"
+        className="rounded-full p-2.5 bg-gradient-to-r from-purple-600 to-purple-800 text-white disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-all shadow-lg"
       >
         <Send size={20} />
       </button>

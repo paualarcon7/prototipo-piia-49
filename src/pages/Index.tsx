@@ -46,11 +46,11 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#F1F0FB]">
+    <div className="flex flex-col h-screen bg-transparent">
       {/* Chat header */}
-      <div className="bg-[#9b87f5] shadow-lg p-4 flex items-center gap-3">
-        <div className="bg-white p-2 rounded-full">
-          <Bot className="w-6 h-6 text-[#9b87f5]" />
+      <div className="bg-secondary/50 backdrop-blur-sm border-b border-secondary/20 p-4 flex items-center gap-3">
+        <div className="bg-gradient-to-r from-purple-600 to-purple-800 p-2 rounded-full shadow-lg">
+          <Bot className="w-6 h-6 text-white" />
         </div>
         <h1 className="text-xl font-bold text-white">PIIA</h1>
       </div>
@@ -69,7 +69,7 @@ const Index = () => {
       </div>
 
       {/* Input area */}
-      <div className="border-t border-[#E5DEFF] bg-white p-4">
+      <div className="border-t border-secondary/20 bg-secondary/50 backdrop-blur-sm p-4">
         <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
       </div>
     </div>
