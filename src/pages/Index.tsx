@@ -2,11 +2,12 @@ import { useState } from "react";
 import ChatMessage from "@/components/ChatMessage";
 import ChatInput from "@/components/ChatInput";
 import { useEffect, useRef } from "react";
+import { Bot } from "lucide-react";
 
 const Index = () => {
   const [messages, setMessages] = useState<Array<{text: string; isBot: boolean}>>([
     {
-      text: "¡Hola! Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?",
+      text: "¡Hola! Soy PIIA, tu asistente virtual. ¿En qué puedo ayudarte hoy?",
       isBot: true
     }
   ]);
@@ -24,11 +25,9 @@ const Index = () => {
   const handleSendMessage = async (text: string) => {
     if (!text.trim()) return;
     
-    // Add user message
     setMessages(prev => [...prev, { text, isBot: false }]);
     setIsLoading(true);
 
-    // Simulate bot response
     setTimeout(() => {
       setMessages(prev => [...prev, {
         text: "Gracias por tu mensaje. Por ahora soy un bot simple, ¡pero pronto seré más inteligente!",
@@ -39,10 +38,13 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="flex flex-col h-screen bg-[#F1F0FB]">
       {/* Chat header */}
-      <div className="bg-white shadow-sm p-4 flex items-center">
-        <h1 className="text-lg font-semibold text-gray-800">Chat Asistente</h1>
+      <div className="bg-[#9b87f5] shadow-lg p-4 flex items-center gap-3">
+        <div className="bg-white p-2 rounded-full">
+          <Bot className="w-6 h-6 text-[#9b87f5]" />
+        </div>
+        <h1 className="text-xl font-bold text-white">PIIA</h1>
       </div>
 
       {/* Messages container */}
@@ -59,7 +61,7 @@ const Index = () => {
       </div>
 
       {/* Input area */}
-      <div className="border-t bg-white p-4">
+      <div className="border-t border-[#E5DEFF] bg-white p-4">
         <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
       </div>
     </div>
