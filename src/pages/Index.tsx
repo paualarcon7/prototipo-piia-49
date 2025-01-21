@@ -7,7 +7,15 @@ import { Bot } from "lucide-react";
 const Index = () => {
   const [messages, setMessages] = useState<Array<{text: string; isBot: boolean}>>([
     {
-      text: "¡Hola! Soy PIIA, tu asistente virtual. ¿En qué puedo ayudarte hoy?",
+      text: "¡Hola Diego! En que te puedo ayudar hoy?",
+      isBot: true
+    },
+    {
+      text: "Me siento estresado, que me recomiendas?",
+      isBot: false
+    },
+    {
+      text: "Sal a caminar.",
       isBot: true
     }
   ]);
