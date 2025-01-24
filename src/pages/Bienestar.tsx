@@ -2,7 +2,7 @@ import ExerciseSection from "@/components/ExerciseSection";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Play, Lotus, Wind } from "lucide-react";
+import { Play, Flower2, Wind } from "lucide-react";
 
 const Bienestar = () => {
   return (
@@ -11,7 +11,7 @@ const Bienestar = () => {
         <div className="space-y-4">
           <Card className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4 space-y-4">
             <div className="flex items-center gap-2">
-              <Lotus className="w-6 h-6 text-white" />
+              <Flower2 className="w-6 h-6 text-white" />
               <h2 className="text-xl font-semibold text-white">Armonía Interior</h2>
             </div>
             <p className="text-gray-300">Serenidad, enfoque y poder personal.</p>
@@ -51,7 +51,7 @@ const Bienestar = () => {
 
           <Card className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4 space-y-4">
             <div className="flex items-center gap-2">
-              <Lotus className="w-6 h-6 text-white" />
+              <Flower2 className="w-6 h-6 text-white" />
               <h2 className="text-xl font-semibold text-white">Agradecimiento profundo</h2>
             </div>
             <p className="text-gray-300">Agradece y abre tu corazón</p>
