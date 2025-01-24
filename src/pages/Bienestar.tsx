@@ -7,20 +7,6 @@ import { Play } from "lucide-react";
 const Bienestar = () => {
   return (
     <div className="flex flex-col h-screen bg-transparent">
-      <div className="bg-secondary/50 backdrop-blur-sm border-b border-secondary/20 p-4">
-        <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
-          <Button variant="secondary" className="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full">
-            Mindfulness
-          </Button>
-          <Button variant="secondary" className="bg-secondary/50 text-white rounded-full">
-            Diario
-          </Button>
-          <Button variant="secondary" className="bg-secondary/50 text-white rounded-full">
-            Actividad
-          </Button>
-        </div>
-      </div>
-      
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         <div className="space-y-4">
           <Card className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4 space-y-4">
