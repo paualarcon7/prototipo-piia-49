@@ -1,4 +1,4 @@
-import { MessageSquare, Bot, BookOpen, TestTube } from "lucide-react";
+import { MessageSquare, Flower2, BookOpen, TestTube } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const BottomNav = () => {
@@ -13,7 +13,7 @@ const BottomNav = () => {
             location.pathname === "/bienestar" ? "text-purple-500" : "text-gray-400"
           } transition-colors`}
         >
-          <Bot className="w-6 h-6" />
+          <Flower2 className="w-6 h-6" />
           <span className="text-xs mt-1">Bienestar</span>
         </Link>
         <Link
