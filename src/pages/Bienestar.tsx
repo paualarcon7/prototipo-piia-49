@@ -2,7 +2,7 @@ import ExerciseSection from "@/components/ExerciseSection";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Play } from "lucide-react";
+import { Play, Lotus, Wind } from "lucide-react";
 
 const Bienestar = () => {
   return (
@@ -10,7 +10,10 @@ const Bienestar = () => {
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         <div className="space-y-4">
           <Card className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4 space-y-4">
-            <h2 className="text-xl font-semibold text-white">Armonía Interior</h2>
+            <div className="flex items-center gap-2">
+              <Lotus className="w-6 h-6 text-white" />
+              <h2 className="text-xl font-semibold text-white">Armonía Interior</h2>
+            </div>
             <p className="text-gray-300">Serenidad, enfoque y poder personal.</p>
             <div className="flex items-center justify-between">
               <div className="flex gap-2">
@@ -27,7 +30,10 @@ const Bienestar = () => {
           </Card>
 
           <Card className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4 space-y-4">
-            <h2 className="text-xl font-semibold text-white">Tummo</h2>
+            <div className="flex items-center gap-2">
+              <Wind className="w-6 h-6 text-white" />
+              <h2 className="text-xl font-semibold text-white">Tummo</h2>
+            </div>
             <p className="text-gray-300">Reconecta con la fuente de poder dentro de ti</p>
             <div className="flex items-center justify-between">
               <div className="flex gap-2">
@@ -44,7 +50,10 @@ const Bienestar = () => {
           </Card>
 
           <Card className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4 space-y-4">
-            <h2 className="text-xl font-semibold text-white">Agradecimiento profundo</h2>
+            <div className="flex items-center gap-2">
+              <Lotus className="w-6 h-6 text-white" />
+              <h2 className="text-xl font-semibold text-white">Agradecimiento profundo</h2>
+            </div>
             <p className="text-gray-300">Agradece y abre tu corazón</p>
             <div className="flex items-center justify-between">
               <div className="flex gap-2">
