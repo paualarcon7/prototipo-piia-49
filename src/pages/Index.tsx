@@ -1,7 +1,6 @@
 import { useState } from "react";
 import ChatMessage from "@/components/ChatMessage";
 import ChatInput from "@/components/ChatInput";
-import ExerciseSection from "@/components/ExerciseSection";
 import { useEffect, useRef } from "react";
 import { Bot } from "lucide-react";
 
@@ -47,7 +46,7 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-transparent">
+    <div className="flex flex-col h-screen bg-transparent pb-16">
       {/* Chat header */}
       <div className="bg-secondary/50 backdrop-blur-sm border-b border-secondary/20 p-4 flex items-center gap-3">
         <div className="bg-gradient-to-r from-purple-600 to-purple-800 p-2 rounded-full shadow-lg">
@@ -58,7 +57,6 @@ const Index = () => {
 
       {/* Messages container */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        <ExerciseSection />
         {messages.map((message, index) => (
           <ChatMessage
             key={index}
