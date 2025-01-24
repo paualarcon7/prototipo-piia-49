@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ChatMessage from "@/components/ChatMessage";
 import ChatInput from "@/components/ChatInput";
+import ExerciseSection from "@/components/ExerciseSection";
 import { useEffect, useRef } from "react";
 import { Bot } from "lucide-react";
 
@@ -57,6 +58,7 @@ const Index = () => {
 
       {/* Messages container */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <ExerciseSection />
         {messages.map((message, index) => (
           <ChatMessage
             key={index}
