@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Bienestar from "./pages/Bienestar";
 import Diario from "./pages/Diario";
+import Tests from "./pages/Tests";
 import BottomNav from "./components/BottomNav";
 
 const queryClient = new QueryClient();
@@ -20,6 +21,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/bienestar" element={<Bienestar />} />
           <Route path="/diario" element={<Diario />} />
+          <Route path="/tests" element={<Tests />} />
         </Routes>
         <BottomNav />
       </TooltipProvider>

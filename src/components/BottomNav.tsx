@@ -1,4 +1,4 @@
-import { MessageSquare, Bot, BookOpen } from "lucide-react";
+import { MessageSquare, Bot, BookOpen, TestTube } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const BottomNav = () => {
@@ -33,6 +33,15 @@ const BottomNav = () => {
         >
           <BookOpen className="w-6 h-6" />
           <span className="text-xs mt-1">Diario</span>
+        </Link>
+        <Link
+          to="/tests"
+          className={`flex flex-col items-center py-3 px-5 ${
+            location.pathname === "/tests" ? "text-purple-500" : "text-gray-400"
+          } transition-colors`}
+        >
+          <TestTube className="w-6 h-6" />
+          <span className="text-xs mt-1">Tests</span>
         </Link>
       </div>
     </div>
