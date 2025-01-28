@@ -33,14 +33,14 @@ const Diario = () => {
   const { toast } = useToast();
 
   const handleSaveEntry = () => {
-    if (!date) return;
+    if (!date || !selectedEmotion) return;
     
     const dateKey = date.toISOString().split('T')[0];
     setEntries(prev => ({
       ...prev,
       [dateKey]: {
         text: currentEntry,
-        emotion: selectedEmotion || undefined,
+        emotion: selectedEmotion,
         words: selectedWords,
         date: dateKey
       }
@@ -135,21 +135,25 @@ const Diario = () => {
         selectedEmotion={selectedEmotion}
       />
 
-      <EmotionWords
-        emotionName={selectedEmotion?.name || null}
-        onSelectWord={handleWordSelect}
-        selectedWords={selectedWords}
-      />
+      {selectedEmotion && (
+        <>
+          <EmotionWords
+            emotionName={selectedEmotion?.name || null}
+            onSelectWord={handleWordSelect}
+            selectedWords={selectedWords}
+          />
 
-      <DiaryInput
-        currentEntry={currentEntry}
-        onEntryChange={setCurrentEntry}
-        onSave={handleSaveEntry}
-        isRecording={isRecording}
-        onStartRecording={startRecording}
-        onStopRecording={stopRecording}
-        date={date}
-      />
+          <DiaryInput
+            currentEntry={currentEntry}
+            onEntryChange={setCurrentEntry}
+            onSave={handleSaveEntry}
+            isRecording={isRecording}
+            onStartRecording={startRecording}
+            onStopRecording={stopRecording}
+            date={date}
+          />
+        </>
+      )}
 
       {currentDateEntry && <DiaryEntry entry={currentDateEntry} />}
     </div>
