@@ -114,9 +114,14 @@ const Diario = () => {
     }
   };
 
-  const hasEntryForDate = (date: Date) => {
-    const dateKey = date.toISOString().split('T')[0];
-    return !!entries[dateKey];
+  const isCurrentDate = (dateToCheck: Date | undefined) => {
+    if (!dateToCheck) return false;
+    const today = new Date();
+    return (
+      dateToCheck.getDate() === today.getDate() &&
+      dateToCheck.getMonth() === today.getMonth() &&
+      dateToCheck.getFullYear() === today.getFullYear()
+    );
   };
 
   const currentDateKey = date?.toISOString().split('T')[0];
@@ -127,15 +132,17 @@ const Diario = () => {
       <DiaryCalendar
         date={date}
         onSelectDate={setDate}
-        hasEntryForDate={hasEntryForDate}
+        entries={entries}
       />
 
-      <EmotionSelector 
-        onSelect={setSelectedEmotion}
-        selectedEmotion={selectedEmotion}
-      />
+      {isCurrentDate(date) && (
+        <EmotionSelector 
+          onSelect={setSelectedEmotion}
+          selectedEmotion={selectedEmotion}
+        />
+      )}
 
-      {selectedEmotion && (
+      {selectedEmotion && isCurrentDate(date) && (
         <>
           <EmotionWords
             emotionName={selectedEmotion?.name || null}
@@ -155,7 +162,12 @@ const Diario = () => {
         </>
       )}
 
-      {currentDateEntry && <DiaryEntry entry={currentDateEntry} />}
+      {currentDateEntry && (
+        <DiaryEntry 
+          entry={currentDateEntry}
+          isEditable={isCurrentDate(date)}
+        />
+      )}
     </div>
   );
 };

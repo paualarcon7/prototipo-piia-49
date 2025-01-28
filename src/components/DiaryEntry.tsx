@@ -14,15 +14,19 @@ interface DiaryEntryProps {
     words: string[];
     audioUrl?: string;
   };
+  isEditable?: boolean;
 }
 
-const DiaryEntry = ({ entry }: DiaryEntryProps) => {
+const DiaryEntry = ({ entry, isEditable = true }: DiaryEntryProps) => {
   return (
     <Card className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4">
-      <h3 className="text-white font-semibold mb-2">Entrada del día</h3>
+      <h3 className="text-white font-semibold mb-2">
+        {isEditable ? "Entrada del día" : "Registro guardado"}
+      </h3>
       {entry.emotion && (
-        <p className="text-gray-300 mb-2">
-          Emoción: {entry.emotion.name}
+        <p className="text-gray-300 mb-2 flex items-center gap-2">
+          <span>{entry.emotion.icon}</span>
+          <span>{entry.emotion.name}</span>
         </p>
       )}
       {entry.words && entry.words.length > 0 && (
