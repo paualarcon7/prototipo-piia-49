@@ -127,6 +127,9 @@ const Diario = () => {
     return !!entries[dateKey];
   };
 
+  const currentDateKey = date?.toISOString().split('T')[0];
+  const currentDateEntry = currentDateKey ? entries[currentDateKey] : undefined;
+
   return (
     <div className="flex flex-col min-h-screen pb-20 p-4 space-y-4">
       <Accordion type="single" collapsible className="w-full">
@@ -208,19 +211,19 @@ const Diario = () => {
         </div>
       </Card>
 
-      {date && entries[date.toISOString().split('T')[0]] && (
+      {currentDateEntry && (
         <Card className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4">
           <h3 className="text-white font-semibold mb-2">Entrada del día</h3>
-          {entries[date.toISOString().split('T')[0]].emotion && (
+          {currentDateEntry.emotion && (
             <p className="text-gray-300 mb-2">
-              Emoción: {entries[date.toISOString().split('T')[0]].emotion?.name}
+              Emoción: {currentDateEntry.emotion.name}
             </p>
           )}
-          {entries[date.toISOString().split('T')[0]].words.length > 0 && (
+          {currentDateEntry.words && currentDateEntry.words.length > 0 && (
             <div className="mb-2">
               <p className="text-gray-300">Palabras:</p>
               <div className="flex flex-wrap gap-1 mt-1">
-                {entries[date.toISOString().split('T')[0]].words.map((word) => (
+                {currentDateEntry.words.map((word) => (
                   <span key={word} className="bg-purple-500/20 text-purple-200 px-2 py-1 rounded-full text-sm">
                     {word}
                   </span>
@@ -229,13 +232,13 @@ const Diario = () => {
             </div>
           )}
           <p className="text-gray-300 whitespace-pre-wrap">
-            {entries[date.toISOString().split('T')[0]].text}
+            {currentDateEntry.text}
           </p>
-          {entries[date.toISOString().split('T')[0]].audioUrl && (
+          {currentDateEntry.audioUrl && (
             <div className="mt-4">
               <audio
                 controls
-                src={entries[date.toISOString().split('T')[0]].audioUrl}
+                src={currentDateEntry.audioUrl}
                 className="w-full"
               />
             </div>
