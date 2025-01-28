@@ -35,20 +35,22 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
       <TooltipProvider>
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button 
-              variant="ghost" 
-              size="icon"
-              className="fixed top-4 right-4 z-50"
-            >
-              <Menu className="h-6 w-6" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="right" className="w-[300px]">
-            <MenuContent />
-          </SheetContent>
-        </Sheet>
+        <div className="relative">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button 
+                variant="ghost" 
+                size="icon"
+                className="fixed top-4 right-4 z-50 bg-secondary/50 backdrop-blur-sm hover:bg-secondary/60"
+              >
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px]">
+              <MenuContent />
+            </SheetContent>
+          </Sheet>
+        </div>
         <Toaster />
         <Sonner />
         <Routes>
