@@ -7,8 +7,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Calendar as CalendarIcon, ArrowLeft, ArrowRight } from "lucide-react";
 import DiaryEntry from "./DiaryEntry";
+import { es } from 'date-fns/locale';
 
 type Emotion = {
   id: number;
@@ -34,7 +34,6 @@ interface DiaryCalendarProps {
 const DiaryCalendar = ({ date, onSelectDate, entries }: DiaryCalendarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedEntry, setSelectedEntry] = useState<DiaryEntry | null>(null);
-  const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
 
   const handleDayClick = (date: Date | undefined) => {
     if (!date) return;
@@ -73,32 +72,11 @@ const DiaryCalendar = ({ date, onSelectDate, entries }: DiaryCalendarProps) => {
             <DialogTitle className="text-2xl font-semibold text-center">Mi bitácora</DialogTitle>
           </DialogHeader>
 
-          <div className="flex justify-between items-center mb-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))}
-            >
-              <ArrowLeft className="h-4 w-4" />
-            </Button>
-            <h2 className="text-xl">
-              {currentMonth.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })}
-            </h2>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}
-            >
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </div>
-
           <Calendar
             mode="single"
             selected={date}
             onSelect={handleDayClick}
-            month={currentMonth}
-            onMonthChange={setCurrentMonth}
+            locale={es}
             className="rounded-lg border bg-secondary/50 backdrop-blur-sm border-secondary/20"
             modifiers={{
               booked: (date) => {
@@ -111,6 +89,22 @@ const DiaryCalendar = ({ date, onSelectDate, entries }: DiaryCalendarProps) => {
                 color: "white",
                 backgroundColor: "rgba(168, 85, 247, 0.4)",
               }
+            }}
+            components={{
+              DayContent: ({ date }) => {
+                const dateKey = date.toISOString().split('T')[0];
+                const entry = entries[dateKey];
+                return (
+                  <div className="relative w-full h-full flex items-center justify-center">
+                    <span>{date.getDate()}</span>
+                    {entry?.emotion && (
+                      <span className="absolute -bottom-1 text-xs">
+                        {entry.emotion.icon}
+                      </span>
+                    )}
+                  </div>
+                );
+              },
             }}
           />
 
