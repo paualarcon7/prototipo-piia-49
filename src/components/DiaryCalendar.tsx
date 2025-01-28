@@ -96,11 +96,12 @@ const DiaryCalendar = ({ date, onSelectDate, entries }: DiaryCalendarProps) => {
                 const entry = entries[dateKey];
                 return (
                   <div className="relative w-full h-full flex items-center justify-center">
-                    <span>{date.getDate()}</span>
-                    {entry?.emotion && (
-                      <span className="absolute -bottom-1 text-xs">
-                        {entry.emotion.icon}
-                      </span>
+                    {entry?.emotion ? (
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center relative" style={{ backgroundColor: entry.emotion.color || 'rgba(168, 85, 247, 0.4)' }}>
+                        <span className="absolute text-white text-sm">{date.getDate()}</span>
+                      </div>
+                    ) : (
+                      <span>{date.getDate()}</span>
                     )}
                   </div>
                 );
