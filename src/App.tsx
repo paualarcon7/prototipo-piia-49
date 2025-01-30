@@ -7,9 +7,9 @@ import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Index from "./pages/Index";
+import Home from "./pages/Home";
 import Bienestar from "./pages/Bienestar";
 import Diario from "./pages/Diario";
-import Tests from "./pages/Tests";
 import BottomNav from "./components/BottomNav";
 
 const queryClient = new QueryClient();
@@ -23,9 +23,9 @@ const MenuContent = () => {
       <Button 
         variant="ghost" 
         className="justify-start"
-        onClick={() => navigate('/tests')}
+        onClick={() => navigate('/home')}
       >
-        Tests
+        Home
       </Button>
     </div>
   );
@@ -55,9 +55,9 @@ const App = () => (
         <Sonner />
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/bienestar" element={<Bienestar />} />
           <Route path="/diario" element={<Diario />} />
-          <Route path="/tests" element={<Tests />} />
         </Routes>
         <BottomNav />
       </TooltipProvider>
