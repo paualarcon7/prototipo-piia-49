@@ -57,17 +57,16 @@ const Bienestar = () => {
   return (
     <div className="flex flex-col h-screen bg-transparent">
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
-        {/* Filters Section */}
-        <div className="space-y-4 bg-secondary/30 backdrop-blur-sm rounded-lg p-4">
-          {/* Exercise Type Filter */}
-          <div className="space-y-2">
-            <h3 className="text-sm font-medium text-white/90">Tipo de ejercicio</h3>
-            <div className="flex gap-2 flex-wrap">
+        {/* Filters Section - Now more compact */}
+        <div className="bg-secondary/30 backdrop-blur-sm rounded-lg p-3">
+          <div className="flex flex-col gap-3">
+            {/* Exercise Type Filter - Horizontal layout */}
+            <div className="flex items-center gap-2">
               <Button
                 size="sm"
                 variant={selectedType === "all" ? "secondary" : "outline"}
                 onClick={() => setSelectedType("all")}
-                className={`flex-1 min-w-[100px] ${
+                className={`h-8 px-3 ${
                   selectedType === "all" ? "bg-white/20" : "bg-white/5"
                 }`}
               >
@@ -77,36 +76,31 @@ const Bienestar = () => {
                 size="sm"
                 variant={selectedType === "meditation" ? "secondary" : "outline"}
                 onClick={() => setSelectedType("meditation")}
-                className={`flex-1 min-w-[100px] ${
+                className={`h-8 px-3 ${
                   selectedType === "meditation" ? "bg-white/20" : "bg-white/5"
                 }`}
               >
-                <Flower2 className="w-4 h-4 mr-2" />
-                Meditación
+                <Flower2 className="w-4 h-4" />
               </Button>
               <Button
                 size="sm"
                 variant={selectedType === "breathing" ? "secondary" : "outline"}
                 onClick={() => setSelectedType("breathing")}
-                className={`flex-1 min-w-[100px] ${
+                className={`h-8 px-3 ${
                   selectedType === "breathing" ? "bg-white/20" : "bg-white/5"
                 }`}
               >
-                <Wind className="w-4 h-4 mr-2" />
-                Respiración
+                <Wind className="w-4 h-4" />
               </Button>
             </div>
-          </div>
 
-          {/* Tags Filter */}
-          <div className="space-y-2">
-            <h3 className="text-sm font-medium text-white/90">Etiquetas</h3>
-            <div className="flex flex-wrap gap-2">
+            {/* Tags Filter - Horizontal scrollable */}
+            <div className="overflow-x-auto flex gap-2 pb-1">
               {["all", "estrés", "ansiedad", "relajación", "gratitud"].map((tag) => (
                 <Badge
                   key={tag}
                   variant="secondary"
-                  className={`cursor-pointer px-3 py-1 ${
+                  className={`cursor-pointer whitespace-nowrap px-2 py-1 text-xs ${
                     selectedTag === tag 
                       ? "bg-white/30 hover:bg-white/40" 
                       : "bg-white/10 hover:bg-white/20"
