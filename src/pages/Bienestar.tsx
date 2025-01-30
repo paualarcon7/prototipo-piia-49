@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Flower2, Wind } from "lucide-react";
+import { Flower2, Wind, Play } from "lucide-react";
 import { useState } from "react";
 
 type ExerciseType = "meditation" | "breathing" | "all";
@@ -158,7 +158,7 @@ const Bienestar = () => {
           {filteredExercises.map((exercise) => (
             <Card 
               key={exercise.id} 
-              className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4 space-y-4 hover:bg-secondary/60 transition-colors cursor-pointer"
+              className="group bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4 space-y-4 hover:bg-secondary/60 transition-colors cursor-pointer relative"
             >
               <div className="flex items-center gap-2">
                 <exercise.icon className="w-6 h-6 text-white" />
@@ -173,6 +173,9 @@ const Bienestar = () => {
                   ))}
                 </div>
                 <span className="text-sm text-gray-300">{exercise.duration} min</span>
+              </div>
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <Play className="w-8 h-8 text-white fill-white" />
               </div>
             </Card>
           ))}
