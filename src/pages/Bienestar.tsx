@@ -59,97 +59,80 @@ const Bienestar = () => {
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
         {/* Filters Section */}
         <div className="space-y-4 bg-secondary/30 backdrop-blur-sm rounded-lg p-4">
+          {/* Exercise Type Filter */}
           <div className="space-y-2">
             <h3 className="text-sm font-medium text-white/90">Tipo de ejercicio</h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex gap-2 flex-wrap">
               <Button
-                variant={selectedType === "all" ? "secondary" : "ghost"}
                 size="sm"
+                variant={selectedType === "all" ? "secondary" : "outline"}
                 onClick={() => setSelectedType("all")}
-                className="bg-white/10 hover:bg-white/20 text-white"
+                className={`flex-1 min-w-[100px] ${
+                  selectedType === "all" ? "bg-white/20" : "bg-white/5"
+                }`}
               >
                 Todos
               </Button>
               <Button
-                variant={selectedType === "meditation" ? "secondary" : "ghost"}
                 size="sm"
+                variant={selectedType === "meditation" ? "secondary" : "outline"}
                 onClick={() => setSelectedType("meditation")}
-                className="bg-white/10 hover:bg-white/20 text-white"
+                className={`flex-1 min-w-[100px] ${
+                  selectedType === "meditation" ? "bg-white/20" : "bg-white/5"
+                }`}
               >
+                <Flower2 className="w-4 h-4 mr-2" />
                 Meditación
               </Button>
               <Button
-                variant={selectedType === "breathing" ? "secondary" : "ghost"}
                 size="sm"
+                variant={selectedType === "breathing" ? "secondary" : "outline"}
                 onClick={() => setSelectedType("breathing")}
-                className="bg-white/10 hover:bg-white/20 text-white"
+                className={`flex-1 min-w-[100px] ${
+                  selectedType === "breathing" ? "bg-white/20" : "bg-white/5"
+                }`}
               >
+                <Wind className="w-4 h-4 mr-2" />
                 Respiración
               </Button>
             </div>
           </div>
 
+          {/* Tags Filter */}
           <div className="space-y-2">
             <h3 className="text-sm font-medium text-white/90">Etiquetas</h3>
             <div className="flex flex-wrap gap-2">
-              <Badge
-                variant="secondary"
-                className={`cursor-pointer hover:bg-white/20 ${
-                  selectedTag === "all" ? "bg-white/30" : "bg-white/10"
-                }`}
-                onClick={() => setSelectedTag("all")}
-              >
-                Todas
-              </Badge>
-              <Badge
-                variant="secondary"
-                className={`cursor-pointer hover:bg-white/20 ${
-                  selectedTag === "estrés" ? "bg-white/30" : "bg-white/10"
-                }`}
-                onClick={() => setSelectedTag("estrés")}
-              >
-                Estrés
-              </Badge>
-              <Badge
-                variant="secondary"
-                className={`cursor-pointer hover:bg-white/20 ${
-                  selectedTag === "ansiedad" ? "bg-white/30" : "bg-white/10"
-                }`}
-                onClick={() => setSelectedTag("ansiedad")}
-              >
-                Ansiedad
-              </Badge>
-              <Badge
-                variant="secondary"
-                className={`cursor-pointer hover:bg-white/20 ${
-                  selectedTag === "relajación" ? "bg-white/30" : "bg-white/10"
-                }`}
-                onClick={() => setSelectedTag("relajación")}
-              >
-                Relajación
-              </Badge>
-              <Badge
-                variant="secondary"
-                className={`cursor-pointer hover:bg-white/20 ${
-                  selectedTag === "gratitud" ? "bg-white/30" : "bg-white/10"
-                }`}
-                onClick={() => setSelectedTag("gratitud")}
-              >
-                Gratitud
-              </Badge>
+              {["all", "estrés", "ansiedad", "relajación", "gratitud"].map((tag) => (
+                <Badge
+                  key={tag}
+                  variant="secondary"
+                  className={`cursor-pointer px-3 py-1 ${
+                    selectedTag === tag 
+                      ? "bg-white/30 hover:bg-white/40" 
+                      : "bg-white/10 hover:bg-white/20"
+                  }`}
+                  onClick={() => setSelectedTag(tag as Tag)}
+                >
+                  {tag === "all" ? "Todas" : tag}
+                </Badge>
+              ))}
             </div>
           </div>
         </div>
 
-        <div className="space-y-4">
+        {/* Exercise Cards */}
+        <div className="grid gap-4 sm:grid-cols-2">
           {filteredExercises.map((exercise) => (
-            <Card key={exercise.id} className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4 space-y-4">
+            <Card 
+              key={exercise.id} 
+              className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4 space-y-4 hover:bg-secondary/60 transition-colors cursor-pointer"
+            >
               <div className="flex items-center gap-2">
                 <exercise.icon className="w-6 h-6 text-white" />
                 <h2 className="text-xl font-semibold text-white">{exercise.title}</h2>
               </div>
               <div className="flex items-center justify-between">
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   {exercise.tags.map((tag) => (
                     <Badge key={tag} variant="secondary" className="bg-secondary/30">
                       {tag}
