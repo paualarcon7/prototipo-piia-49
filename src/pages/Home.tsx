@@ -24,39 +24,39 @@ const Home = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-6 pb-20">
-      <h1 className="text-2xl font-bold mb-6">Bienvenido de vuelta</h1>
+    <div className="container mx-auto px-4 py-4 space-y-4 pb-20">
+      <h1 className="text-xl font-bold mb-4">Bienvenido de vuelta</h1>
       
       {/* Streak Card */}
       <Card className="bg-[#221F26] border-none text-white">
-        <CardContent className="pt-6">
+        <CardContent className="pt-4">
           {/* Days of the week */}
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex justify-between items-center mb-6 px-2">
             {days.map((day, index) => (
-              <div key={index} className="flex flex-col items-center gap-2">
-                <div className={`w-8 h-8 rounded-full border-2 ${
+              <div key={index} className="flex flex-col items-center gap-1.5">
+                <div className={`w-6 h-6 md:w-8 md:h-8 rounded-full border-2 ${
                   day.completed 
                     ? 'bg-[#0EA5E9] border-[#0EA5E9]' 
                     : 'border-gray-600 border-dashed'
                 } flex items-center justify-center`}>
-                  {day.completed && <CheckCircle2 className="h-5 w-5 text-white" />}
+                  {day.completed && <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-white" />}
                 </div>
-                <span className="text-sm">{day.name}</span>
+                <span className="text-xs md:text-sm">{day.name}</span>
               </div>
             ))}
           </div>
 
           {/* Streak Stats */}
-          <div className="flex justify-between items-center border-t border-gray-700 pt-6">
+          <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center border-t border-gray-700 pt-4 space-y-2 md:space-y-0">
             <div className="flex items-center gap-2">
-              <span className="text-xl">Mi racha actual</span>
-              <Flame className="h-6 w-6 text-orange-500" />
-              <span className="text-xl">x{streak.current}</span>
+              <span className="text-sm md:text-xl">Mi racha actual</span>
+              <Flame className="h-5 w-5 md:h-6 md:w-6 text-orange-500" />
+              <span className="text-sm md:text-xl">x{streak.current}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xl">Mi mejor racha</span>
-              <Flame className="h-6 w-6 text-yellow-500" />
-              <span className="text-xl">x{streak.best}</span>
+              <span className="text-sm md:text-xl">Mi mejor racha</span>
+              <Flame className="h-5 w-5 md:h-6 md:w-6 text-yellow-500" />
+              <span className="text-sm md:text-xl">x{streak.best}</span>
             </div>
           </div>
         </CardContent>
