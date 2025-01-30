@@ -1,4 +1,3 @@
-import ExerciseSection from "@/components/ExerciseSection";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -41,6 +40,46 @@ const exercises: Exercise[] = [
     tags: ["gratitud"],
     duration: "05:30",
     icon: Flower2
+  },
+  {
+    id: 4,
+    title: "Respiración 4-7-8",
+    type: "breathing",
+    tags: ["ansiedad", "relajación"],
+    duration: "03:45",
+    icon: Wind
+  },
+  {
+    id: 5,
+    title: "Meditación del Amanecer",
+    type: "meditation",
+    tags: ["gratitud", "relajación"],
+    duration: "08:00",
+    icon: Flower2
+  },
+  {
+    id: 6,
+    title: "Respiración Cuadrada",
+    type: "breathing",
+    tags: ["estrés", "ansiedad"],
+    duration: "04:20",
+    icon: Wind
+  },
+  {
+    id: 7,
+    title: "Mindfulness Guiado",
+    type: "meditation",
+    tags: ["estrés", "relajación"],
+    duration: "10:00",
+    icon: Flower2
+  },
+  {
+    id: 8,
+    title: "Respiración Oceánica",
+    type: "breathing",
+    tags: ["relajación"],
+    duration: "05:15",
+    icon: Wind
   }
 ];
 
@@ -138,8 +177,6 @@ const Bienestar = () => {
             </Card>
           ))}
         </div>
-
-        <ExerciseSection />
       </div>
     </div>
   );
