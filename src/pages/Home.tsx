@@ -1,5 +1,5 @@
 import { Trophy, Flame, CheckCircle2 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 const Home = () => {
   // This is mock data - you should replace it with real data from your backend
@@ -8,10 +8,15 @@ const Home = () => {
     best: 1
   };
 
-  const activeProgram = {
-    name: "Programa de Meditación",
-    progress: 60
-  };
+  const activePrograms = [
+    {
+      id: 1,
+      name: "Elementia",
+      description: "Programa para que alcances tu máximo potencial a través de las metodologías del alto rendimiento",
+      progress: 60,
+      color: "from-[#9b87f5] to-[#6E59A5]"
+    }
+  ];
 
   const days = [
     { name: "Vie", completed: false },
@@ -62,22 +67,36 @@ const Home = () => {
         </CardContent>
       </Card>
 
-      {/* Active Program Card */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Programa Activo</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <h3 className="font-semibold mb-2">{activeProgram.name}</h3>
-          <div className="w-full bg-secondary rounded-full h-2.5">
-            <div 
-              className="bg-[#0EA5E9] h-2.5 rounded-full" 
-              style={{ width: `${activeProgram.progress}%` }}
-            ></div>
-          </div>
-          <p className="text-sm text-gray-500 mt-2">{activeProgram.progress}% completado</p>
-        </CardContent>
-      </Card>
+      {/* Active Programs Section */}
+      <div className="space-y-4">
+        <h2 className="text-lg font-semibold">Programas Activos</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {activePrograms.map((program) => (
+            <Card key={program.id} className="overflow-hidden border-none">
+              <div className={`bg-gradient-to-r ${program.color} p-6 text-white`}>
+                <CardTitle className="text-xl mb-2">{program.name}</CardTitle>
+                <CardDescription className="text-white/90 text-sm">
+                  {program.description}
+                </CardDescription>
+              </div>
+              <CardContent className="pt-4">
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Progreso</span>
+                    <span>{program.progress}%</span>
+                  </div>
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div 
+                      className="bg-[#9b87f5] h-2 rounded-full transition-all duration-300" 
+                      style={{ width: `${program.progress}%` }}
+                    ></div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
