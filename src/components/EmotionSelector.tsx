@@ -51,7 +51,7 @@ const EmotionSelector = ({ onSelect, selectedEmotion }: EmotionSelectorProps) =>
   return (
     <Card className="p-6 bg-white/10 backdrop-blur-lg border-0 shadow-xl">
       <h3 className="text-xl font-semibold mb-6 text-white text-center">¿Cómo te sientes en este momento?</h3>
-      <div className="flex justify-between items-center gap-2 mb-4">
+      <div className="flex justify-between items-center gap-2">
         {emotions.map((emotion) => (
           <button
             key={emotion.id}
@@ -66,20 +66,6 @@ const EmotionSelector = ({ onSelect, selectedEmotion }: EmotionSelectorProps) =>
           >
             {emotion.icon}
           </button>
-        ))}
-      </div>
-      <div className="flex justify-between items-center px-1">
-        {emotions.map((emotion) => (
-          <span 
-            key={emotion.id} 
-            className={`text-sm w-16 text-center ${
-              selectedEmotion?.id === emotion.id 
-                ? "text-white font-medium" 
-                : "text-gray-300"
-            }`}
-          >
-            {emotion.name}
-          </span>
         ))}
       </div>
     </Card>
