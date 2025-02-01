@@ -28,6 +28,7 @@ const Diario = () => {
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const [isRecording, setIsRecording] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const { toast } = useToast();
@@ -49,11 +50,24 @@ const Diario = () => {
     setCurrentEntry("");
     setSelectedEmotion(null);
     setSelectedWords([]);
+    setIsEditing(false);
     
     toast({
       title: "Entrada guardada",
       description: "Tu registro del día ha sido guardado exitosamente.",
     });
+  };
+
+  const handleEditEntry = () => {
+    if (!date) return;
+    const dateKey = date.toISOString().split('T')[0];
+    const entry = entries[dateKey];
+    if (entry) {
+      setCurrentEntry(entry.text);
+      setSelectedEmotion(entry.emotion || null);
+      setSelectedWords(entry.words);
+      setIsEditing(true);
+    }
   };
 
   const handleWordSelect = (word: string) => {
@@ -126,6 +140,7 @@ const Diario = () => {
 
   const currentDateKey = date?.toISOString().split('T')[0];
   const currentDateEntry = currentDateKey ? entries[currentDateKey] : undefined;
+  const showCalendar = !selectedEmotion || (currentDateEntry && !isEditing);
 
   return (
     <div className="flex flex-col min-h-screen pb-20 p-4 space-y-4">
@@ -135,12 +150,6 @@ const Diario = () => {
           selectedEmotion={selectedEmotion}
         />
       )}
-
-      <DiaryCalendar
-        date={date}
-        onSelectDate={setDate}
-        entries={entries}
-      />
 
       {selectedEmotion && isCurrentDate(date) && (
         <>
@@ -162,10 +171,19 @@ const Diario = () => {
         </>
       )}
 
-      {currentDateEntry && (
+      {currentDateEntry && !isEditing && (
         <DiaryEntry 
           entry={currentDateEntry}
           isEditable={isCurrentDate(date)}
+          onEdit={handleEditEntry}
+        />
+      )}
+
+      {showCalendar && (
+        <DiaryCalendar
+          date={date}
+          onSelectDate={setDate}
+          entries={entries}
         />
       )}
     </div>

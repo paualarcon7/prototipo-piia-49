@@ -1,4 +1,6 @@
 import { Card } from "./ui/card";
+import { Button } from "./ui/button";
+import { Pencil } from "lucide-react";
 
 type Emotion = {
   id: number;
@@ -15,14 +17,27 @@ interface DiaryEntryProps {
     audioUrl?: string;
   };
   isEditable?: boolean;
+  onEdit?: () => void;
 }
 
-const DiaryEntry = ({ entry, isEditable = true }: DiaryEntryProps) => {
+const DiaryEntry = ({ entry, isEditable = true, onEdit }: DiaryEntryProps) => {
   return (
     <Card className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4">
-      <h3 className="text-white font-semibold mb-2">
-        {isEditable ? "Entrada del día" : "Registro guardado"}
-      </h3>
+      <div className="flex justify-between items-center mb-2">
+        <h3 className="text-white font-semibold">
+          {isEditable ? "Entrada del día" : "Registro guardado"}
+        </h3>
+        {isEditable && onEdit && (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onEdit}
+            className="text-purple-500 hover:text-purple-400"
+          >
+            <Pencil className="h-4 w-4" />
+          </Button>
+        )}
+      </div>
       {entry.emotion && (
         <p className="text-gray-300 mb-2 flex items-center gap-2">
           <span>{entry.emotion.icon}</span>
