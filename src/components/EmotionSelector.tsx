@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
-import { Angry, Frown, Meh, Smile, SmilePlus } from "lucide-react";
 
 type Emotion = {
   id: number;
@@ -59,7 +58,7 @@ const EmotionSelector = ({ onSelect, selectedEmotion }: EmotionSelectorProps) =>
             onClick={() => onSelect(emotion)}
             className={`${
               emotion.color
-            } w-14 h-14 rounded-2xl flex items-center justify-center text-2xl transition-all duration-200 ${
+            } w-16 h-16 rounded-2xl flex items-center justify-center text-3xl transition-all duration-200 ${
               selectedEmotion?.id === emotion.id 
                 ? "scale-110 ring-4 ring-white/30 shadow-lg" 
                 : "hover:scale-105 shadow-md hover:shadow-lg"
@@ -73,7 +72,7 @@ const EmotionSelector = ({ onSelect, selectedEmotion }: EmotionSelectorProps) =>
         {emotions.map((emotion) => (
           <span 
             key={emotion.id} 
-            className={`text-sm w-14 text-center ${
+            className={`text-sm w-16 text-center ${
               selectedEmotion?.id === emotion.id 
                 ? "text-white font-medium" 
                 : "text-gray-300"
