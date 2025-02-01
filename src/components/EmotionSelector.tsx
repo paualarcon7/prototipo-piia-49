@@ -7,39 +7,39 @@ type Emotion = {
   id: number;
   name: string;
   color: string;
-  icon: React.ReactNode;
+  icon: string;
 };
 
 const emotions: Emotion[] = [
   { 
     id: 1, 
     name: "Muy mal", 
-    color: "bg-red-400/90 hover:bg-red-400", 
-    icon: <Angry className="w-6 h-6 text-red-950" /> 
+    color: "bg-gradient-to-br from-red-400 to-red-500", 
+    icon: "😫" 
   },
   { 
     id: 2, 
     name: "Mal", 
-    color: "bg-blue-400/90 hover:bg-blue-400", 
-    icon: <Frown className="w-6 h-6 text-blue-950" /> 
+    color: "bg-gradient-to-br from-orange-400 to-orange-500", 
+    icon: "😕" 
   },
   { 
     id: 3, 
     name: "Normal", 
-    color: "bg-purple-400/90 hover:bg-purple-400", 
-    icon: <Meh className="w-6 h-6 text-purple-950" /> 
+    color: "bg-gradient-to-br from-yellow-400 to-yellow-500", 
+    icon: "😐" 
   },
   { 
     id: 4, 
     name: "Bien", 
-    color: "bg-green-400/90 hover:bg-green-400", 
-    icon: <Smile className="w-6 h-6 text-green-950" /> 
+    color: "bg-gradient-to-br from-green-400 to-green-500", 
+    icon: "😊" 
   },
   { 
     id: 5, 
     name: "Muy bien", 
-    color: "bg-yellow-400/90 hover:bg-yellow-400", 
-    icon: <SmilePlus className="w-6 h-6 text-yellow-950" /> 
+    color: "bg-gradient-to-br from-purple-400 to-purple-500", 
+    icon: "😄" 
   },
 ];
 
@@ -50,28 +50,35 @@ interface EmotionSelectorProps {
 
 const EmotionSelector = ({ onSelect, selectedEmotion }: EmotionSelectorProps) => {
   return (
-    <Card className="p-4 bg-secondary/50 backdrop-blur-sm border-secondary/20">
-      <h3 className="text-lg font-semibold mb-4 text-white">¿Cómo te sientes en este momento?</h3>
-      <div className="flex justify-between items-center gap-2">
+    <Card className="p-6 bg-white/10 backdrop-blur-lg border-0 shadow-xl">
+      <h3 className="text-xl font-semibold mb-6 text-white text-center">¿Cómo te sientes en este momento?</h3>
+      <div className="flex justify-between items-center gap-2 mb-4">
         {emotions.map((emotion) => (
           <button
             key={emotion.id}
             onClick={() => onSelect(emotion)}
             className={`${
               emotion.color
-            } w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200 ${
+            } w-14 h-14 rounded-2xl flex items-center justify-center text-2xl transition-all duration-200 ${
               selectedEmotion?.id === emotion.id 
-                ? "scale-110 ring-2 ring-purple-500 shadow-lg" 
-                : "hover:scale-105 shadow-md"
+                ? "scale-110 ring-4 ring-white/30 shadow-lg" 
+                : "hover:scale-105 shadow-md hover:shadow-lg"
             }`}
           >
             {emotion.icon}
           </button>
         ))}
       </div>
-      <div className="flex justify-between items-center mt-2 px-1">
+      <div className="flex justify-between items-center px-1">
         {emotions.map((emotion) => (
-          <span key={emotion.id} className="text-sm text-gray-300 w-12 text-center">
+          <span 
+            key={emotion.id} 
+            className={`text-sm w-14 text-center ${
+              selectedEmotion?.id === emotion.id 
+                ? "text-white font-medium" 
+                : "text-gray-300"
+            }`}
+          >
             {emotion.name}
           </span>
         ))}
