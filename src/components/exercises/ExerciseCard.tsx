@@ -12,7 +12,7 @@ const ExerciseCard = ({ exercise, onClick }: ExerciseCardProps) => {
   return (
     <Card 
       key={exercise.id} 
-      className="card-gradient p-4 space-y-2 cursor-pointer relative overflow-hidden border-none shadow-lg"
+      className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4 space-y-2 hover:bg-secondary/60 transition-colors cursor-pointer relative"
       onClick={() => onClick(exercise.id)}
     >
       <div className="flex items-center justify-between">
@@ -21,7 +21,7 @@ const ExerciseCard = ({ exercise, onClick }: ExerciseCardProps) => {
           <div>
             <h2 className="text-lg font-semibold text-white">{exercise.title}</h2>
             {exercise.description && (
-              <p className="text-sm text-gray-200">{exercise.description}</p>
+              <p className="text-sm text-gray-300">{exercise.description}</p>
             )}
           </div>
         </div>
@@ -30,16 +30,12 @@ const ExerciseCard = ({ exercise, onClick }: ExerciseCardProps) => {
       <div className="flex items-center justify-between mt-2">
         <div className="flex flex-wrap gap-2">
           {exercise.tags.map((tag) => (
-            <Badge 
-              key={tag} 
-              variant="secondary" 
-              className="bg-white/20 hover:bg-white/30 text-white border-none"
-            >
+            <Badge key={tag} variant="secondary" className="bg-secondary/30">
               {tag}
             </Badge>
           ))}
         </div>
-        <span className="text-sm text-gray-200">{exercise.duration} min</span>
+        <span className="text-sm text-gray-300">{exercise.duration} min</span>
       </div>
     </Card>
   );
