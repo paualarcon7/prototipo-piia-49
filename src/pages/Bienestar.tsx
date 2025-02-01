@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Flower2, Wind, Play } from "lucide-react";
+import { Flower2, Wind, PlayCircle } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type ExerciseType = "meditation" | "breathing" | "all";
 type Tag = "estrés" | "ansiedad" | "relajación" | "gratitud" | "all";
@@ -13,6 +14,7 @@ interface Exercise {
   type: Exclude<ExerciseType, "all">;
   tags: Exclude<Tag, "all">[];
   duration: string;
+  description?: string;
   icon: typeof Flower2 | typeof Wind;
 }
 
@@ -23,6 +25,7 @@ const exercises: Exercise[] = [
     type: "meditation",
     tags: ["estrés", "ansiedad"],
     duration: "06:17",
+    description: "Serenidad, enfoque y poder personal",
     icon: Flower2
   },
   {
@@ -31,6 +34,7 @@ const exercises: Exercise[] = [
     type: "breathing",
     tags: ["estrés", "relajación"],
     duration: "02:50",
+    description: "Reconecta con la fuente de poder dentro de ti",
     icon: Wind
   },
   {
@@ -86,6 +90,7 @@ const exercises: Exercise[] = [
 const Bienestar = () => {
   const [selectedType, setSelectedType] = useState<ExerciseType>("all");
   const [selectedTag, setSelectedTag] = useState<Tag>("all");
+  const navigate = useNavigate();
 
   const filteredExercises = exercises.filter((exercise) => {
     const typeMatch = selectedType === "all" || exercise.type === selectedType;
@@ -93,13 +98,17 @@ const Bienestar = () => {
     return typeMatch && tagMatch;
   });
 
+  const handleExerciseClick = (exerciseId: number) => {
+    navigate(`/ejercicio/${exerciseId}`);
+  };
+
   return (
     <div className="flex flex-col h-screen bg-transparent">
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
-        {/* Filters Section - Now more compact */}
+        {/* Filters Section */}
         <div className="bg-secondary/30 backdrop-blur-sm rounded-lg p-3">
           <div className="flex flex-col gap-3">
-            {/* Exercise Type Filter - Horizontal layout */}
+            {/* Exercise Type Filter */}
             <div className="flex items-center gap-2">
               <Button
                 size="sm"
@@ -133,7 +142,7 @@ const Bienestar = () => {
               </Button>
             </div>
 
-            {/* Tags Filter - Horizontal scrollable */}
+            {/* Tags Filter */}
             <div className="overflow-x-auto flex gap-2 pb-1">
               {["all", "estrés", "ansiedad", "relajación", "gratitud"].map((tag) => (
                 <Badge
@@ -158,13 +167,22 @@ const Bienestar = () => {
           {filteredExercises.map((exercise) => (
             <Card 
               key={exercise.id} 
-              className="group bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4 space-y-4 hover:bg-secondary/60 transition-colors cursor-pointer relative"
+              className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4 space-y-2 hover:bg-secondary/60 transition-colors cursor-pointer relative"
+              onClick={() => handleExerciseClick(exercise.id)}
             >
-              <div className="flex items-center gap-2">
-                <exercise.icon className="w-6 h-6 text-white" />
-                <h2 className="text-xl font-semibold text-white">{exercise.title}</h2>
-              </div>
               <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <exercise.icon className="w-6 h-6 text-white" />
+                  <div>
+                    <h2 className="text-lg font-semibold text-white">{exercise.title}</h2>
+                    {exercise.description && (
+                      <p className="text-sm text-gray-300">{exercise.description}</p>
+                    )}
+                  </div>
+                </div>
+                <PlayCircle className="w-10 h-10 text-white fill-white/10" />
+              </div>
+              <div className="flex items-center justify-between mt-2">
                 <div className="flex flex-wrap gap-2">
                   {exercise.tags.map((tag) => (
                     <Badge key={tag} variant="secondary" className="bg-secondary/30">
@@ -173,9 +191,6 @@ const Bienestar = () => {
                   ))}
                 </div>
                 <span className="text-sm text-gray-300">{exercise.duration} min</span>
-              </div>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <Play className="w-8 h-8 text-white fill-white" />
               </div>
             </Card>
           ))}
