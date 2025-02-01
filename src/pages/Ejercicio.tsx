@@ -1,24 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Flower2, Wind, Play, Pause, RotateCcw } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
-// Reutilizamos los tipos del componente Bienestar
-type ExerciseType = "meditation" | "breathing";
-type Tag = "estrés" | "ansiedad" | "relajación" | "gratitud";
-
-interface Exercise {
-  id: number;
-  title: string;
-  type: ExerciseType;
-  tags: Tag[];
-  duration: string;
-  description?: string;
-  icon: typeof Flower2 | typeof Wind;
-  instructions?: string;
-}
+import { Exercise } from "@/types/exercises";
 
 const exercises: Exercise[] = [
   {
@@ -39,7 +24,8 @@ const exercises: Exercise[] = [
     duration: "02:50",
     description: "Reconecta con la fuente de poder dentro de ti",
     icon: Wind,
-    instructions: "Inhala profundamente por la nariz, expandiendo el abdomen. Mantén la respiración por 4 segundos. Exhala lentamente por la boca, contrayendo el abdomen."
+    instructions: "Inhala profundamente por la nariz, expandiendo el abdomen. Mantén la respiración por 4 segundos. Exhala lentamente por la boca, contrayendo el abdomen.",
+    videoUrl: "https://www.youtube.com/watch?v=0BNejY1e9ik"
   },
   {
     id: 3,
@@ -57,7 +43,8 @@ const exercises: Exercise[] = [
     tags: ["ansiedad", "relajación"],
     duration: "03:45",
     icon: Wind,
-    instructions: "Inhala por la nariz durante 4 segundos, mantén la respiración durante 7 segundos y exhala por la boca durante 8 segundos."
+    instructions: "Inhala por la nariz durante 4 segundos, mantén la respiración durante 7 segundos y exhala por la boca durante 8 segundos.",
+    videoUrl: "https://www.youtube.com/watch?v=0BNejY1e9ik"
   },
   {
     id: 5,
@@ -75,7 +62,8 @@ const exercises: Exercise[] = [
     tags: ["estrés", "ansiedad"],
     duration: "04:20",
     icon: Wind,
-    instructions: "Inhala durante 4 segundos, mantén la respiración durante 4 segundos, exhala durante 4 segundos y mantén la respiración durante 4 segundos."
+    instructions: "Inhala durante 4 segundos, mantén la respiración durante 4 segundos, exhala durante 4 segundos y mantén la respiración durante 4 segundos.",
+    videoUrl: "https://www.youtube.com/watch?v=0BNejY1e9ik"
   },
   {
     id: 7,
@@ -93,7 +81,8 @@ const exercises: Exercise[] = [
     tags: ["relajación"],
     duration: "05:15",
     icon: Wind,
-    instructions: "Imagina que estás en la playa y sincroniza tu respiración con las olas del mar."
+    instructions: "Imagina que estás en la playa y sincroniza tu respiración con las olas del mar.",
+    videoUrl: "https://www.youtube.com/watch?v=0BNejY1e9ik"
   }
 ];
 
@@ -111,7 +100,6 @@ const Ejercicio = () => {
       return;
     }
     
-    // Convertir la duración (mm:ss) a segundos
     const [minutes, seconds] = exercise.duration.split(':').map(Number);
     setTimeRemaining(minutes * 60 + seconds);
   }, [exercise, navigate]);
@@ -184,37 +172,53 @@ const Ejercicio = () => {
                 {exercise.instructions}
               </p>
             )}
+
+            {exercise.type === "breathing" && exercise.videoUrl && (
+              <div className="aspect-video w-full rounded-lg overflow-hidden">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={exercise.videoUrl.replace('watch?v=', 'embed/')}
+                  title={exercise.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            )}
           </div>
           
-          <div className="flex flex-col items-center gap-4 pt-4">
-            <div className="text-4xl font-mono text-white">
-              {formatTime(timeRemaining)}
-            </div>
-            
-            <div className="flex gap-4">
-              <Button
-                size="lg"
-                variant="secondary"
-                className="w-16 h-16 rounded-full"
-                onClick={() => setIsPlaying(!isPlaying)}
-              >
-                {isPlaying ? (
-                  <Pause className="w-8 h-8" />
-                ) : (
-                  <Play className="w-8 h-8" />
-                )}
-              </Button>
+          {exercise.type === "meditation" && (
+            <div className="flex flex-col items-center gap-4 pt-4">
+              <div className="text-4xl font-mono text-white">
+                {formatTime(timeRemaining)}
+              </div>
               
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-16 h-16 rounded-full"
-                onClick={handleReset}
-              >
-                <RotateCcw className="w-8 h-8" />
-              </Button>
+              <div className="flex gap-4">
+                <Button
+                  size="lg"
+                  variant="secondary"
+                  className="w-16 h-16 rounded-full"
+                  onClick={() => setIsPlaying(!isPlaying)}
+                >
+                  {isPlaying ? (
+                    <Pause className="w-8 h-8" />
+                  ) : (
+                    <Play className="w-8 h-8" />
+                  )}
+                </Button>
+                
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-16 h-16 rounded-full"
+                  onClick={handleReset}
+                >
+                  <RotateCcw className="w-8 h-8" />
+                </Button>
+              </div>
             </div>
-          </div>
+          )}
         </CardContent>
       </Card>
     </div>

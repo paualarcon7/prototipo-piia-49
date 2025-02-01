@@ -1,22 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Flower2, Wind, PlayCircle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-type ExerciseType = "meditation" | "breathing" | "all";
-type Tag = "estrés" | "ansiedad" | "relajación" | "gratitud" | "all";
-
-interface Exercise {
-  id: number;
-  title: string;
-  type: Exclude<ExerciseType, "all">;
-  tags: Exclude<Tag, "all">[];
-  duration: string;
-  description?: string;
-  icon: typeof Flower2 | typeof Wind;
-}
+import { Flower2, Wind } from "lucide-react";
+import ExerciseFilters from "@/components/exercises/ExerciseFilters";
+import ExerciseCard from "@/components/exercises/ExerciseCard";
+import { Exercise, ExerciseType, Tag } from "@/types/exercises";
 
 const exercises: Exercise[] = [
   {
@@ -26,7 +13,8 @@ const exercises: Exercise[] = [
     tags: ["estrés", "ansiedad"],
     duration: "06:17",
     description: "Serenidad, enfoque y poder personal",
-    icon: Flower2
+    icon: Flower2,
+    instructions: "Encuentra un lugar tranquilo y cómodo. Siéntate con la espalda recta y los hombros relajados. Cierra los ojos suavemente y comienza a respirar de manera natural."
   },
   {
     id: 2,
@@ -35,7 +23,9 @@ const exercises: Exercise[] = [
     tags: ["estrés", "relajación"],
     duration: "02:50",
     description: "Reconecta con la fuente de poder dentro de ti",
-    icon: Wind
+    icon: Wind,
+    instructions: "Inhala profundamente por la nariz, expandiendo el abdomen. Mantén la respiración por 4 segundos. Exhala lentamente por la boca, contrayendo el abdomen.",
+    videoUrl: "https://www.youtube.com/watch?v=0BNejY1e9ik"
   },
   {
     id: 3,
@@ -105,94 +95,20 @@ const Bienestar = () => {
   return (
     <div className="flex flex-col h-screen bg-transparent">
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
-        {/* Filters Section */}
-        <div className="bg-secondary/30 backdrop-blur-sm rounded-lg p-3">
-          <div className="flex flex-col gap-3">
-            {/* Exercise Type Filter */}
-            <div className="flex items-center gap-2">
-              <Button
-                size="sm"
-                variant={selectedType === "all" ? "secondary" : "outline"}
-                onClick={() => setSelectedType("all")}
-                className={`h-8 px-3 ${
-                  selectedType === "all" ? "bg-white/20" : "bg-white/5"
-                }`}
-              >
-                Todos
-              </Button>
-              <Button
-                size="sm"
-                variant={selectedType === "meditation" ? "secondary" : "outline"}
-                onClick={() => setSelectedType("meditation")}
-                className={`h-8 px-3 ${
-                  selectedType === "meditation" ? "bg-white/20" : "bg-white/5"
-                }`}
-              >
-                <Flower2 className="w-4 h-4" />
-              </Button>
-              <Button
-                size="sm"
-                variant={selectedType === "breathing" ? "secondary" : "outline"}
-                onClick={() => setSelectedType("breathing")}
-                className={`h-8 px-3 ${
-                  selectedType === "breathing" ? "bg-white/20" : "bg-white/5"
-                }`}
-              >
-                <Wind className="w-4 h-4" />
-              </Button>
-            </div>
-
-            {/* Tags Filter */}
-            <div className="overflow-x-auto flex gap-2 pb-1">
-              {["all", "estrés", "ansiedad", "relajación", "gratitud"].map((tag) => (
-                <Badge
-                  key={tag}
-                  variant="secondary"
-                  className={`cursor-pointer whitespace-nowrap px-2 py-1 text-xs ${
-                    selectedTag === tag 
-                      ? "bg-white/30 hover:bg-white/40" 
-                      : "bg-white/10 hover:bg-white/20"
-                  }`}
-                  onClick={() => setSelectedTag(tag as Tag)}
-                >
-                  {tag === "all" ? "Todas" : tag}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Exercise Cards */}
+        <ExerciseFilters
+          selectedType={selectedType}
+          setSelectedType={setSelectedType}
+          selectedTag={selectedTag}
+          setSelectedTag={setSelectedTag}
+        />
+        
         <div className="grid gap-4 sm:grid-cols-2">
           {filteredExercises.map((exercise) => (
-            <Card 
-              key={exercise.id} 
-              className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4 space-y-2 hover:bg-secondary/60 transition-colors cursor-pointer relative"
-              onClick={() => handleExerciseClick(exercise.id)}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <exercise.icon className="w-6 h-6 text-white" />
-                  <div>
-                    <h2 className="text-lg font-semibold text-white">{exercise.title}</h2>
-                    {exercise.description && (
-                      <p className="text-sm text-gray-300">{exercise.description}</p>
-                    )}
-                  </div>
-                </div>
-                <PlayCircle className="w-10 h-10 text-white fill-white/10" />
-              </div>
-              <div className="flex items-center justify-between mt-2">
-                <div className="flex flex-wrap gap-2">
-                  {exercise.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary" className="bg-secondary/30">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-                <span className="text-sm text-gray-300">{exercise.duration} min</span>
-              </div>
-            </Card>
+            <ExerciseCard
+              key={exercise.id}
+              exercise={exercise}
+              onClick={handleExerciseClick}
+            />
           ))}
         </div>
       </div>
