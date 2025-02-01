@@ -51,6 +51,13 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
+				},
+				app: {
+					purple: '#9b87f5',
+					'purple-dark': '#6E59A5',
+					yellow: '#FFD93D',
+					pink: '#FF69B4',
+					'pink-light': '#FFB6C1'
 				}
 			},
 			borderRadius: {
@@ -76,6 +83,11 @@ export default {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'bounce': 'bounce 1s infinite'
+			},
+			backgroundImage: {
+				'gradient-app': 'linear-gradient(to bottom right, rgba(155, 135, 245, 0.2), rgba(110, 89, 165, 0.3))',
+				'gradient-card': 'linear-gradient(to right, #9b87f5, #6E59A5)',
+				'gradient-card-hover': 'linear-gradient(to right, #8b77e5, #5E499F)',
 			}
 		}
 	},
