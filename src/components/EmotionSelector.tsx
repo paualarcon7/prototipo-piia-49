@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 
 type Emotion = {
@@ -8,6 +6,11 @@ type Emotion = {
   color: string;
   icon: string;
 };
+
+interface EmotionSelectorProps {
+  onSelect: (emotion: Emotion) => void;
+  selectedEmotion: Emotion | null;
+}
 
 const emotions: Emotion[] = [
   { 
@@ -42,11 +45,6 @@ const emotions: Emotion[] = [
   },
 ];
 
-interface EmotionSelectorProps {
-  onSelect: (emotion: Emotion) => void;
-  selectedEmotion: Emotion | null;
-}
-
 const EmotionSelector = ({ onSelect, selectedEmotion }: EmotionSelectorProps) => {
   return (
     <Card className="p-6 bg-white/10 backdrop-blur-lg border-0 shadow-xl">
@@ -58,7 +56,7 @@ const EmotionSelector = ({ onSelect, selectedEmotion }: EmotionSelectorProps) =>
             onClick={() => onSelect(emotion)}
             className={`${
               emotion.color
-            } w-16 h-16 rounded-2xl flex items-center justify-center text-3xl transition-all duration-200 ${
+            } w-16 h-16 rounded-2xl flex items-center justify-center text-4xl transition-all duration-200 ${
               selectedEmotion?.id === emotion.id 
                 ? "scale-110 ring-4 ring-white/30 shadow-lg" 
                 : "hover:scale-105 shadow-md hover:shadow-lg"
