@@ -1,4 +1,4 @@
-import { Home, MessageSquare, Flower2, BookOpen } from "lucide-react";
+import { Home, MessageSquare, BookOpen } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const BottomNav = () => {
@@ -31,7 +31,11 @@ const BottomNav = () => {
             location.pathname === "/bienestar" ? "text-[#9b87f5]" : "text-gray-400"
           } transition-colors`}
         >
-          <Flower2 className="w-6 h-6" />
+          <img 
+            src={location.pathname === "/bienestar" ? "/mindfulness-active.png" : "/mindfulness-inactive.png"} 
+            alt="Mindfulness"
+            className="w-6 h-6"
+          />
           <span className="text-xs mt-1">Mindfulness</span>
         </Link>
         <Link
