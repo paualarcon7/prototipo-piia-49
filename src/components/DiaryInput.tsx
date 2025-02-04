@@ -2,6 +2,7 @@ import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { Pencil, SmilePlus, Mic, Square } from "lucide-react";
+import DiaryPromptMenu from "./DiaryPromptMenu";
 
 interface DiaryInputProps {
   currentEntry: string;
@@ -22,6 +23,13 @@ const DiaryInput = ({
   onStopRecording,
   date,
 }: DiaryInputProps) => {
+  const handlePromptSelect = (prompt: string) => {
+    const newText = currentEntry
+      ? `${currentEntry}\n\n${prompt}\n`
+      : `${prompt}\n`;
+    onEntryChange(newText);
+  };
+
   return (
     <Card className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4">
       <div className="flex items-center justify-between mb-4">
@@ -45,12 +53,15 @@ const DiaryInput = ({
         </Button>
       </div>
 
-      <Textarea
-        value={currentEntry}
-        onChange={(e) => onEntryChange(e.target.value)}
-        placeholder="¿Cómo te sientes hoy?"
-        className="min-h-[150px] bg-secondary/30 border-secondary/20 text-white placeholder:text-gray-400"
-      />
+      <div className="relative">
+        <DiaryPromptMenu onSelectPrompt={handlePromptSelect} />
+        <Textarea
+          value={currentEntry}
+          onChange={(e) => onEntryChange(e.target.value)}
+          placeholder="¿Cómo te sientes hoy?"
+          className="min-h-[150px] bg-secondary/30 border-secondary/20 text-white placeholder:text-gray-400 pl-10"
+        />
+      </div>
 
       <div className="flex justify-end mt-4">
         <Button 
