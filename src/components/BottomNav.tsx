@@ -32,7 +32,7 @@ const BottomNav = () => {
           } transition-colors`}
         >
           <Flower2 className="w-6 h-6" />
-          <span className="text-xs mt-1">Bienestar</span>
+          <span className="text-xs mt-1">Mindfulness</span>
         </Link>
         <Link
           to="/diario"

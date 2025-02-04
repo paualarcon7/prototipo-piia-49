@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Index from "./pages/Index";
 import Home from "./pages/Home";
-import Bienestar from "./pages/Bienestar";
+import Mindfulness from "./pages/Mindfulness";
 import Diario from "./pages/Diario";
 import Ejercicio from "./pages/Ejercicio";
 import ProgramaDetalle from "./pages/ProgramaDetalle";
@@ -58,7 +58,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/bienestar" element={<Bienestar />} />
+          <Route path="/bienestar" element={<Mindfulness />} />
           <Route path="/diario" element={<Diario />} />
           <Route path="/ejercicio/:id" element={<Ejercicio />} />
           <Route path="/programa/:id" element={<ProgramaDetalle />} />
