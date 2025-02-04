@@ -32,7 +32,7 @@ const BottomNav = () => {
           } transition-colors`}
         >
           <img 
-            src={location.pathname === "/bienestar" ? "/lovable-uploads/d5a43027-e4f7-4c41-b686-c97f6aa1268e.png" : "/lovable-uploads/1800bb2c-46c0-4acd-892f-cfe4d2fe0203.png"} 
+            src={location.pathname === "/bienestar" ? "/lovable-uploads/1800bb2c-46c0-4acd-892f-cfe4d2fe0203.png" : "/lovable-uploads/d5a43027-e4f7-4c41-b686-c97f6aa1268e.png"} 
             alt="Mindfulness"
             className="w-6 h-6 object-contain"
           />
