@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import DiaryCalendar from "@/components/DiaryCalendar";
 import EmotionSelector from "@/components/EmotionSelector";
@@ -17,7 +17,6 @@ type DiaryEntry = {
   text: string;
   emotion?: Emotion;
   words: string[];
-  audioUrl?: string;
   date: string;
 };
 
@@ -27,10 +26,7 @@ const Diario = () => {
   const [currentEntry, setCurrentEntry] = useState("");
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
-  const [isRecording, setIsRecording] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const audioChunksRef = useRef<Blob[]>([]);
   const { toast } = useToast();
 
   const handleSaveEntry = () => {
@@ -78,56 +74,6 @@ const Diario = () => {
     );
   };
 
-  const startRecording = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mediaRecorder = new MediaRecorder(stream);
-      mediaRecorderRef.current = mediaRecorder;
-      audioChunksRef.current = [];
-
-      mediaRecorder.ondataavailable = (event) => {
-        audioChunksRef.current.push(event.data);
-      };
-
-      mediaRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
-        const audioUrl = URL.createObjectURL(audioBlob);
-        
-        if (date) {
-          const dateKey = date.toISOString().split('T')[0];
-          setEntries(prev => ({
-            ...prev,
-            [dateKey]: {
-              ...prev[dateKey],
-              audioUrl
-            }
-          }));
-        }
-      };
-
-      mediaRecorder.start();
-      setIsRecording(true);
-    } catch (error) {
-      console.error('Error accessing microphone:', error);
-      toast({
-        title: "Error",
-        description: "No se pudo acceder al micrófono.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const stopRecording = () => {
-    if (mediaRecorderRef.current && isRecording) {
-      mediaRecorderRef.current.stop();
-      setIsRecording(false);
-      toast({
-        title: "Audio grabado",
-        description: "La grabación de audio ha sido guardada.",
-      });
-    }
-  };
-
   const isCurrentDate = (dateToCheck: Date | undefined) => {
     if (!dateToCheck) return false;
     const today = new Date();
@@ -163,9 +109,6 @@ const Diario = () => {
             currentEntry={currentEntry}
             onEntryChange={setCurrentEntry}
             onSave={handleSaveEntry}
-            isRecording={isRecording}
-            onStartRecording={startRecording}
-            onStopRecording={stopRecording}
             date={date}
           />
         </>

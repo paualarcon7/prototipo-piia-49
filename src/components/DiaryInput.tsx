@@ -1,16 +1,13 @@
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
-import { Pencil, SmilePlus, Mic, Square } from "lucide-react";
+import { Pencil, SmilePlus } from "lucide-react";
 import DiaryPromptMenu from "./DiaryPromptMenu";
 
 interface DiaryInputProps {
   currentEntry: string;
   onEntryChange: (text: string) => void;
   onSave: () => void;
-  isRecording: boolean;
-  onStartRecording: () => void;
-  onStopRecording: () => void;
   date: Date | undefined;
 }
 
@@ -18,9 +15,6 @@ const DiaryInput = ({
   currentEntry,
   onEntryChange,
   onSave,
-  isRecording,
-  onStartRecording,
-  onStopRecording,
   date,
 }: DiaryInputProps) => {
   const handlePromptSelect = (prompt: string) => {
@@ -43,14 +37,6 @@ const DiaryInput = ({
             })}
           </h2>
         </div>
-        <Button
-          variant="ghost"
-          size="icon"
-          className={isRecording ? "text-red-500 animate-pulse" : "text-purple-500"}
-          onClick={isRecording ? onStopRecording : onStartRecording}
-        >
-          {isRecording ? <Square className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
-        </Button>
       </div>
 
       <div className="relative">

@@ -14,7 +14,6 @@ interface DiaryEntryProps {
     text: string;
     emotion?: Emotion;
     words: string[];
-    audioUrl?: string;
   };
   isEditable?: boolean;
   onEdit?: () => void;
@@ -64,15 +63,6 @@ const DiaryEntry = ({ entry, isEditable = true, onEdit }: DiaryEntryProps) => {
       <p className="text-gray-200 whitespace-pre-wrap">
         {entry.text}
       </p>
-      {entry.audioUrl && (
-        <div className="mt-4">
-          <audio
-            controls
-            src={entry.audioUrl}
-            className="w-full"
-          />
-        </div>
-      )}
     </Card>
   );
 };
