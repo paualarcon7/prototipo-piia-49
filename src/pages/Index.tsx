@@ -8,6 +8,7 @@ import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { es } from 'date-fns/locale';
+import { addDays } from "date-fns";
 
 const Index = () => {
   const [messages, setMessages] = useState<Array<{text: string; isBot: boolean; date: Date}>>([
@@ -29,7 +30,13 @@ const Index = () => {
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [dateRange, setDateRange] = useState<{
+    from: Date | undefined;
+    to: Date | undefined;
+  }>({
+    from: undefined,
+    to: undefined
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -58,10 +65,9 @@ const Index = () => {
 
   const filteredMessages = messages.filter(message => {
     const matchesSearch = message.text.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesDate = selectedDate 
-      ? message.date.toDateString() === selectedDate.toDateString()
-      : true;
-    return matchesSearch && matchesDate;
+    const matchesDateRange = (!dateRange.from || message.date >= dateRange.from) &&
+                           (!dateRange.to || message.date <= addDays(dateRange.to, 1));
+    return matchesSearch && matchesDateRange;
   });
 
   return (
@@ -97,9 +103,9 @@ const Index = () => {
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0 bg-secondary/95 border-secondary/20">
               <CalendarComponent
-                mode="single"
-                selected={selectedDate}
-                onSelect={setSelectedDate}
+                mode="range"
+                selected={dateRange}
+                onSelect={setDateRange}
                 locale={es}
                 className="rounded-md border-0"
               />
