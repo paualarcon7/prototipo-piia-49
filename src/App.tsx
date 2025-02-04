@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import Bienestar from "./pages/Bienestar";
 import Diario from "./pages/Diario";
 import Ejercicio from "./pages/Ejercicio";
+import ProgramaDetalle from "./pages/ProgramaDetalle";
 import BottomNav from "./components/BottomNav";
 
 const queryClient = new QueryClient();
@@ -60,6 +61,7 @@ const App = () => (
           <Route path="/bienestar" element={<Bienestar />} />
           <Route path="/diario" element={<Diario />} />
           <Route path="/ejercicio/:id" element={<Ejercicio />} />
+          <Route path="/programa/:id" element={<ProgramaDetalle />} />
         </Routes>
         <BottomNav />
       </TooltipProvider>

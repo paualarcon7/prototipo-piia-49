@@ -1,7 +1,10 @@
 import { Trophy, Flame, CheckCircle2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+  
   // This is mock data - you should replace it with real data from your backend
   const streak = {
     current: 1,
@@ -72,7 +75,11 @@ const Home = () => {
         <h2 className="text-lg font-semibold">Programas Activos</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {activePrograms.map((program) => (
-            <Card key={program.id} className="overflow-hidden border-none">
+            <Card 
+              key={program.id} 
+              className="overflow-hidden border-none cursor-pointer transition-transform hover:scale-[1.02]"
+              onClick={() => navigate(`/programa/${program.id}`)}
+            >
               <div className={`bg-gradient-to-r ${program.color} p-6 text-white`}>
                 <CardTitle className="text-xl mb-2">{program.name}</CardTitle>
                 <CardDescription className="text-white/90 text-sm">
