@@ -4,8 +4,7 @@ import DiaryCalendar from "@/components/DiaryCalendar";
 import DiaryEntryList from "@/components/DiaryEntryList";
 import NewDiaryEntry from "@/components/NewDiaryEntry";
 import EmotionSelector from "@/components/EmotionSelector";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import EmotionWords from "@/components/EmotionWords";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type Emotion = {
@@ -29,8 +28,8 @@ type DiaryEntry = {
 const Diario = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [entries, setEntries] = useState<{[key: string]: DiaryEntry[]}>({});
-  const [isCreating, setIsCreating] = useState(false);
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
+  const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const { toast } = useToast();
 
   const handleSaveEntry = (newEntry: {
@@ -45,6 +44,8 @@ const Diario = () => {
     const entry: DiaryEntry = {
       id: crypto.randomUUID(),
       ...newEntry,
+      emotion: selectedEmotion || undefined,
+      words: selectedWords,
       createdAt: new Date(),
       date: dateKey,
     };
@@ -54,7 +55,8 @@ const Diario = () => {
       [dateKey]: [...(prev[dateKey] || []), entry],
     }));
     
-    setIsCreating(false);
+    setSelectedEmotion(null);
+    setSelectedWords([]);
     
     toast({
       title: "Entrada guardada",
@@ -79,34 +81,42 @@ const Diario = () => {
 
         <TabsContent value="today" className="space-y-4 mt-4">
           <EmotionSelector 
-            onSelect={(emotion) => setSelectedEmotion(emotion)} 
+            onSelect={setSelectedEmotion} 
             selectedEmotion={selectedEmotion}
           />
 
-          {isCreating ? (
+          {selectedEmotion && (
+            <EmotionWords
+              emotionName={selectedEmotion.name}
+              onSelectWord={(word) => {
+                setSelectedWords(prev =>
+                  prev.includes(word)
+                    ? prev.filter(w => w !== word)
+                    : [...prev, word]
+                );
+              }}
+              selectedWords={selectedWords}
+            />
+          )}
+
+          {(selectedEmotion || currentEntries.length > 0) && (
             <NewDiaryEntry
               onSave={handleSaveEntry}
-              onCancel={() => setIsCreating(false)}
+              onCancel={() => {
+                setSelectedEmotion(null);
+                setSelectedWords([]);
+              }}
               preselectedEmotion={selectedEmotion}
             />
-          ) : (
-            <>
-              <DiaryEntryList
-                entries={currentEntries}
-                onEntryClick={handleEntryClick}
-              />
-
-              <Button
-                className="fixed bottom-20 right-4 w-14 h-14 rounded-full shadow-lg bg-blue-500 hover:bg-blue-600"
-                onClick={() => setIsCreating(true)}
-              >
-                <Plus className="w-6 h-6" />
-              </Button>
-            </>
           )}
+
+          <DiaryEntryList
+            entries={currentEntries}
+            onEntryClick={handleEntryClick}
+          />
         </TabsContent>
 
-        <TabsContent value="calendar" className="space-y-4 mt-4">
+        <TabsContent value="calendar" className="mt-4">
           <DiaryCalendar
             date={date}
             onSelectDate={setDate}
