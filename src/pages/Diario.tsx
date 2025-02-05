@@ -6,6 +6,7 @@ import NewDiaryEntry from "@/components/NewDiaryEntry";
 import EmotionSelector from "@/components/EmotionSelector";
 import EmotionWords from "@/components/EmotionWords";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card } from "@/components/ui/card";
 
 type Emotion = {
   id: number;
@@ -80,24 +81,26 @@ const Diario = () => {
         </TabsList>
 
         <TabsContent value="today" className="space-y-4 mt-4">
-          <EmotionSelector 
-            onSelect={setSelectedEmotion} 
-            selectedEmotion={selectedEmotion}
-          />
-
-          {selectedEmotion && (
-            <EmotionWords
-              emotionName={selectedEmotion.name}
-              onSelectWord={(word) => {
-                setSelectedWords(prev =>
-                  prev.includes(word)
-                    ? prev.filter(w => w !== word)
-                    : [...prev, word]
-                );
-              }}
-              selectedWords={selectedWords}
+          <Card className="p-6 bg-white/10 backdrop-blur-lg border-0 shadow-xl">
+            <EmotionSelector 
+              onSelect={setSelectedEmotion} 
+              selectedEmotion={selectedEmotion}
             />
-          )}
+
+            {selectedEmotion && (
+              <EmotionWords
+                emotionName={selectedEmotion.name}
+                onSelectWord={(word) => {
+                  setSelectedWords(prev =>
+                    prev.includes(word)
+                      ? prev.filter(w => w !== word)
+                      : [...prev, word]
+                  );
+                }}
+                selectedWords={selectedWords}
+              />
+            )}
+          </Card>
 
           {(selectedEmotion || currentEntries.length > 0) && (
             <NewDiaryEntry

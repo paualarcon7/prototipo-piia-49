@@ -1,5 +1,4 @@
 import { Button } from "./ui/button";
-import { Card } from "./ui/card";
 
 const emotionWords = {
   "Muy bien": ["A gusto", "Emocionado", "Feliz", "Inspirado", "Alegre", "En paz", "Satisfecho", "Sereno"],
@@ -21,8 +20,7 @@ const EmotionWords = ({ emotionName, onSelectWord, selectedWords }: EmotionWords
   const words = emotionWords[emotionName as keyof typeof emotionWords] || [];
 
   return (
-    <Card className="p-4 mt-4 bg-secondary/50 backdrop-blur-sm border-secondary/20">
-      <h3 className="text-lg font-semibold mb-4 text-white">Me siento...</h3>
+    <div className="mt-6 pt-6 border-t border-white/10">
       <div className="flex flex-wrap gap-2">
         {words.map((word) => (
           <Button
@@ -35,7 +33,7 @@ const EmotionWords = ({ emotionName, onSelectWord, selectedWords }: EmotionWords
           </Button>
         ))}
       </div>
-    </Card>
+    </div>
   );
 };
 
