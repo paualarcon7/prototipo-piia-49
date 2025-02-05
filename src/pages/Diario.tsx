@@ -4,7 +4,6 @@ import DiaryCalendar from "@/components/DiaryCalendar";
 import DiaryEntryList from "@/components/DiaryEntryList";
 import NewDiaryEntry from "@/components/NewDiaryEntry";
 import EmotionSelector from "@/components/EmotionSelector";
-import EmotionWords from "@/components/EmotionWords";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type Emotion = {
@@ -86,20 +85,6 @@ const Diario = () => {
           />
 
           {selectedEmotion && (
-            <EmotionWords
-              emotionName={selectedEmotion.name}
-              onSelectWord={(word) => {
-                setSelectedWords(prev =>
-                  prev.includes(word)
-                    ? prev.filter(w => w !== word)
-                    : [...prev, word]
-                );
-              }}
-              selectedWords={selectedWords}
-            />
-          )}
-
-          {(selectedEmotion || currentEntries.length > 0) && (
             <NewDiaryEntry
               onSave={handleSaveEntry}
               onCancel={() => {
