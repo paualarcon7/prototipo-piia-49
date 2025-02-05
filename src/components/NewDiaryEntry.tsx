@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { Image as ImageIcon, MapPin, X } from "lucide-react";
@@ -63,7 +62,7 @@ const NewDiaryEntry = ({ onSave, onCancel, preselectedEmotion }: NewDiaryEntryPr
   };
 
   return (
-    <Card className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-6">
+    <div>
       {!preselectedEmotion && (
         <EmotionSelector
           onSelect={setSelectedEmotion}
@@ -91,7 +90,7 @@ const NewDiaryEntry = ({ onSave, onCancel, preselectedEmotion }: NewDiaryEntryPr
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="¿Qué está pasando?"
-          className="min-h-[150px] bg-secondary/30 border-secondary/20 text-white placeholder:text-gray-400 pl-10"
+          className="min-h-[150px] bg-[#1A1F2C]/90 border-0 text-white placeholder:text-gray-400 pl-10 focus:ring-1 focus:ring-purple-500"
         />
       </div>
 
@@ -138,7 +137,7 @@ const NewDiaryEntry = ({ onSave, onCancel, preselectedEmotion }: NewDiaryEntryPr
           Guardar
         </Button>
       </div>
-    </Card>
+    </div>
   );
 };
 
