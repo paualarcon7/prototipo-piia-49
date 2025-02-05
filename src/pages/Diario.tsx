@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import DiaryCalendar from "@/components/DiaryCalendar";
 import DiaryEntryList from "@/components/DiaryEntryList";
@@ -70,7 +69,7 @@ const Diario = () => {
   const currentEntries = currentDateKey ? entries[currentDateKey] || [] : [];
 
   return (
-    <div className="flex flex-col min-h-screen pb-20 p-4 space-y-4">
+    <div className="flex flex-col min-h-screen pb-20 p-4 pt-16 space-y-4">
       <Tabs defaultValue="today" className="w-full">
         <TabsList className="grid w-full grid-cols-2 bg-secondary/50 backdrop-blur-sm">
           <TabsTrigger value="today">Hoy</TabsTrigger>
