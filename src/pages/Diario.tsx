@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import DiaryCalendar from "@/components/DiaryCalendar";
-import EmotionSelector from "@/components/EmotionSelector";
-import EmotionWords from "@/components/EmotionWords";
-import DiaryInput from "@/components/DiaryInput";
-import DiaryEntry from "@/components/DiaryEntry";
+import DiaryEntryList from "@/components/DiaryEntryList";
+import NewDiaryEntry from "@/components/NewDiaryEntry";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 
 type Emotion = {
   id: number;
@@ -14,120 +14,91 @@ type Emotion = {
 };
 
 type DiaryEntry = {
+  id: string;
   text: string;
   emotion?: Emotion;
   words: string[];
+  imageUrl?: string;
+  location?: string;
+  createdAt: Date;
   date: string;
 };
 
 const Diario = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const [entries, setEntries] = useState<{[key: string]: DiaryEntry}>({});
-  const [currentEntry, setCurrentEntry] = useState("");
-  const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
-  const [selectedWords, setSelectedWords] = useState<string[]>([]);
-  const [isEditing, setIsEditing] = useState(false);
+  const [entries, setEntries] = useState<{[key: string]: DiaryEntry[]}>({});
+  const [isCreating, setIsCreating] = useState(false);
   const { toast } = useToast();
 
-  const handleSaveEntry = () => {
-    if (!date || !selectedEmotion) return;
+  const handleSaveEntry = (newEntry: {
+    text: string;
+    emotion?: Emotion;
+    words: string[];
+    imageUrl?: string;
+  }) => {
+    if (!date) return;
     
     const dateKey = date.toISOString().split('T')[0];
+    const entry: DiaryEntry = {
+      id: crypto.randomUUID(),
+      ...newEntry,
+      createdAt: new Date(),
+      date: dateKey,
+    };
+    
     setEntries(prev => ({
       ...prev,
-      [dateKey]: {
-        text: currentEntry,
-        emotion: selectedEmotion,
-        words: selectedWords,
-        date: dateKey
-      }
+      [dateKey]: [...(prev[dateKey] || []), entry],
     }));
     
-    setCurrentEntry("");
-    setSelectedEmotion(null);
-    setSelectedWords([]);
-    setIsEditing(false);
+    setIsCreating(false);
     
     toast({
       title: "Entrada guardada",
-      description: "Tu registro del día ha sido guardado exitosamente.",
+      description: "Tu registro ha sido guardado exitosamente.",
     });
   };
 
-  const handleEditEntry = () => {
-    if (!date) return;
-    const dateKey = date.toISOString().split('T')[0];
-    const entry = entries[dateKey];
-    if (entry) {
-      setCurrentEntry(entry.text);
-      setSelectedEmotion(entry.emotion || null);
-      setSelectedWords(entry.words);
-      setIsEditing(true);
-    }
-  };
-
-  const handleWordSelect = (word: string) => {
-    setSelectedWords(prev => 
-      prev.includes(word) 
-        ? prev.filter(w => w !== word)
-        : [...prev, word]
-    );
-  };
-
-  const isCurrentDate = (dateToCheck: Date | undefined) => {
-    if (!dateToCheck) return false;
-    const today = new Date();
-    return (
-      dateToCheck.getDate() === today.getDate() &&
-      dateToCheck.getMonth() === today.getMonth() &&
-      dateToCheck.getFullYear() === today.getFullYear()
-    );
+  const handleEntryClick = (entry: DiaryEntry) => {
+    // Aquí iría la lógica para ver/editar una entrada existente
+    console.log("Entry clicked:", entry);
   };
 
   const currentDateKey = date?.toISOString().split('T')[0];
-  const currentDateEntry = currentDateKey ? entries[currentDateKey] : undefined;
-  const showCalendar = !selectedEmotion || (currentDateEntry && !isEditing);
+  const currentEntries = currentDateKey ? entries[currentDateKey] || [] : [];
 
   return (
     <div className="flex flex-col min-h-screen pb-20 p-4 space-y-4">
-      {isCurrentDate(date) && (
-        <EmotionSelector 
-          onSelect={setSelectedEmotion}
-          selectedEmotion={selectedEmotion}
+      {isCreating ? (
+        <NewDiaryEntry
+          onSave={handleSaveEntry}
+          onCancel={() => setIsCreating(false)}
         />
-      )}
-
-      {selectedEmotion && isCurrentDate(date) && (
+      ) : (
         <>
-          <EmotionWords
-            emotionName={selectedEmotion?.name || null}
-            onSelectWord={handleWordSelect}
-            selectedWords={selectedWords}
+          <DiaryEntryList
+            entries={currentEntries}
+            onEntryClick={handleEntryClick}
           />
 
-          <DiaryInput
-            currentEntry={currentEntry}
-            onEntryChange={setCurrentEntry}
-            onSave={handleSaveEntry}
+          <Button
+            className="fixed bottom-20 right-4 w-14 h-14 rounded-full shadow-lg bg-blue-500 hover:bg-blue-600"
+            onClick={() => setIsCreating(true)}
+          >
+            <Plus className="w-6 h-6" />
+          </Button>
+
+          <DiaryCalendar
             date={date}
+            onSelectDate={setDate}
+            entries={Object.fromEntries(
+              Object.entries(entries).map(([key, dayEntries]) => [
+                key,
+                dayEntries[0], // Usamos la primera entrada del día para mantener compatibilidad
+              ])
+            )}
           />
         </>
-      )}
-
-      {currentDateEntry && !isEditing && (
-        <DiaryEntry 
-          entry={currentDateEntry}
-          isEditable={isCurrentDate(date)}
-          onEdit={handleEditEntry}
-        />
-      )}
-
-      {showCalendar && (
-        <DiaryCalendar
-          date={date}
-          onSelectDate={setDate}
-          entries={entries}
-        />
       )}
     </div>
   );
