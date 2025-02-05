@@ -1,4 +1,3 @@
-import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { Pencil, SmilePlus } from "lucide-react";
@@ -25,7 +24,7 @@ const DiaryInput = ({
   };
 
   return (
-    <Card className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4">
+    <div className="space-y-4">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <SmilePlus className="w-6 h-6 text-purple-500" />
@@ -45,7 +44,7 @@ const DiaryInput = ({
           value={currentEntry}
           onChange={(e) => onEntryChange(e.target.value)}
           placeholder="¿Cómo te sientes hoy?"
-          className="min-h-[150px] bg-secondary/30 border-secondary/20 text-white placeholder:text-gray-400 pl-10"
+          className="min-h-[150px] bg-[#1A1F2C]/90 border-0 text-white placeholder:text-gray-400 pl-10 focus:ring-1 focus:ring-purple-500"
         />
       </div>
 
@@ -58,7 +57,7 @@ const DiaryInput = ({
           Guardar
         </Button>
       </div>
-    </Card>
+    </div>
   );
 };
 
