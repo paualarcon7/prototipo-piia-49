@@ -22,6 +22,7 @@ const EmotionWords = ({ emotionName, onSelectWord, selectedWords }: EmotionWords
 
   return (
     <Card className="p-4 mt-4 bg-secondary/50 backdrop-blur-sm border-secondary/20">
+      <h3 className="text-lg font-semibold mb-4 text-white">Me siento...</h3>
       <div className="flex flex-wrap gap-2">
         {words.map((word) => (
           <Button
