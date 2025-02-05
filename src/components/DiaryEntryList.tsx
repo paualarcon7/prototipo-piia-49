@@ -35,36 +35,29 @@ const DiaryEntryList = ({ entries, onEntryClick }: DiaryEntryListProps) => {
         {entries.map((entry) => (
           <Card
             key={entry.id}
-            className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4 cursor-pointer hover:bg-secondary/60 transition-colors"
+            className="bg-black/40 backdrop-blur-sm border-0 p-4 cursor-pointer hover:bg-black/50 transition-colors"
             onClick={() => onEntryClick(entry)}
           >
-            <div className="flex justify-between items-start mb-2">
-              <div className="flex items-center gap-2">
-                {entry.emotion && (
-                  <span className={`${entry.emotion.color} w-8 h-8 rounded-xl flex items-center justify-center`}>
-                    {entry.emotion.icon}
+            <div className="flex justify-between items-start">
+              <div className="flex-1">
+                <h3 className="text-xl font-semibold text-white line-clamp-1">
+                  {entry.text.split('\n')[0]}
+                </h3>
+                <div className="flex items-center gap-4 text-sm text-gray-400 mt-2">
+                  <span className="flex items-center gap-1">
+                    <Clock className="w-4 h-4" />
+                    {format(entry.createdAt, "h:mm a")}
                   </span>
-                )}
-                <div>
-                  <h3 className="text-lg font-semibold text-white line-clamp-1">
-                    {entry.text.split('\n')[0]}
-                  </h3>
-                  <div className="flex items-center gap-4 text-sm text-gray-400">
+                  {entry.location && (
                     <span className="flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
-                      {format(entry.createdAt, "h:mm a")}
+                      <MapPin className="w-4 h-4" />
+                      {entry.location}
                     </span>
-                    {entry.location && (
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-4 h-4" />
-                        {entry.location}
-                      </span>
-                    )}
-                  </div>
+                  )}
                 </div>
               </div>
               {entry.imageUrl && (
-                <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 ml-4">
                   <img
                     src={entry.imageUrl}
                     alt=""

@@ -73,15 +73,17 @@ const Diario = () => {
   const currentEntries = currentDateKey ? entries[currentDateKey] || [] : [];
 
   return (
-    <div className="flex flex-col min-h-screen pb-20 p-4 pt-16 space-y-4">
+    <div className="flex flex-col min-h-screen pb-20 p-4 pt-16 space-y-4 bg-gradient-to-b from-black/90 to-black/70">
       <Tabs defaultValue="today" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 bg-secondary/50 backdrop-blur-sm">
-          <TabsTrigger value="today">Hoy</TabsTrigger>
-          <TabsTrigger value="calendar">Calendario</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-4 bg-black/50 backdrop-blur-sm rounded-xl p-1">
+          <TabsTrigger value="today" className="data-[state=active]:bg-white/10">Lista</TabsTrigger>
+          <TabsTrigger value="calendar" className="data-[state=active]:bg-white/10">Calendario</TabsTrigger>
+          <TabsTrigger value="attachments" className="data-[state=active]:bg-white/10">Adjuntos</TabsTrigger>
+          <TabsTrigger value="map" className="data-[state=active]:bg-white/10">Mapa</TabsTrigger>
         </TabsList>
 
         <TabsContent value="today" className="space-y-4 mt-4">
-          <Card className="p-6 bg-white/10 backdrop-blur-lg border-0 shadow-xl">
+          <Card className="p-6 bg-black/40 backdrop-blur-lg border-0 shadow-xl">
             <EmotionSelector 
               onSelect={setSelectedEmotion} 
               selectedEmotion={selectedEmotion}
