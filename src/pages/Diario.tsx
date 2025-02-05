@@ -3,8 +3,10 @@ import { useToast } from "@/hooks/use-toast";
 import DiaryCalendar from "@/components/DiaryCalendar";
 import DiaryEntryList from "@/components/DiaryEntryList";
 import NewDiaryEntry from "@/components/NewDiaryEntry";
+import EmotionSelector from "@/components/EmotionSelector";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type Emotion = {
   id: number;
@@ -28,6 +30,7 @@ const Diario = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [entries, setEntries] = useState<{[key: string]: DiaryEntry[]}>({});
   const [isCreating, setIsCreating] = useState(false);
+  const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
   const { toast } = useToast();
 
   const handleSaveEntry = (newEntry: {
@@ -60,7 +63,6 @@ const Diario = () => {
   };
 
   const handleEntryClick = (entry: DiaryEntry) => {
-    // Aquí iría la lógica para ver/editar una entrada existente
     console.log("Entry clicked:", entry);
   };
 
@@ -69,37 +71,54 @@ const Diario = () => {
 
   return (
     <div className="flex flex-col min-h-screen pb-20 p-4 space-y-4">
-      {isCreating ? (
-        <NewDiaryEntry
-          onSave={handleSaveEntry}
-          onCancel={() => setIsCreating(false)}
-        />
-      ) : (
-        <>
-          <DiaryEntryList
-            entries={currentEntries}
-            onEntryClick={handleEntryClick}
+      <Tabs defaultValue="today" className="w-full">
+        <TabsList className="grid w-full grid-cols-2 bg-secondary/50 backdrop-blur-sm">
+          <TabsTrigger value="today">Hoy</TabsTrigger>
+          <TabsTrigger value="calendar">Calendario</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="today" className="space-y-4 mt-4">
+          <EmotionSelector 
+            onSelect={(emotion) => setSelectedEmotion(emotion)} 
+            selectedEmotion={selectedEmotion}
           />
 
-          <Button
-            className="fixed bottom-20 right-4 w-14 h-14 rounded-full shadow-lg bg-blue-500 hover:bg-blue-600"
-            onClick={() => setIsCreating(true)}
-          >
-            <Plus className="w-6 h-6" />
-          </Button>
+          {isCreating ? (
+            <NewDiaryEntry
+              onSave={handleSaveEntry}
+              onCancel={() => setIsCreating(false)}
+              preselectedEmotion={selectedEmotion}
+            />
+          ) : (
+            <>
+              <DiaryEntryList
+                entries={currentEntries}
+                onEntryClick={handleEntryClick}
+              />
 
+              <Button
+                className="fixed bottom-20 right-4 w-14 h-14 rounded-full shadow-lg bg-blue-500 hover:bg-blue-600"
+                onClick={() => setIsCreating(true)}
+              >
+                <Plus className="w-6 h-6" />
+              </Button>
+            </>
+          )}
+        </TabsContent>
+
+        <TabsContent value="calendar" className="space-y-4 mt-4">
           <DiaryCalendar
             date={date}
             onSelectDate={setDate}
             entries={Object.fromEntries(
               Object.entries(entries).map(([key, dayEntries]) => [
                 key,
-                dayEntries[0], // Usamos la primera entrada del día para mantener compatibilidad
+                dayEntries[0],
               ])
             )}
           />
-        </>
-      )}
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

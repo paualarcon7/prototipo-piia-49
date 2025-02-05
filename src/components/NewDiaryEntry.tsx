@@ -22,11 +22,12 @@ interface NewDiaryEntryProps {
     imageUrl?: string;
   }) => void;
   onCancel: () => void;
+  preselectedEmotion?: Emotion | null;
 }
 
-const NewDiaryEntry = ({ onSave, onCancel }: NewDiaryEntryProps) => {
+const NewDiaryEntry = ({ onSave, onCancel, preselectedEmotion }: NewDiaryEntryProps) => {
   const [text, setText] = useState("");
-  const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
+  const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(preselectedEmotion || null);
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const [imageUrl, setImageUrl] = useState<string>();
   const [isUploading, setIsUploading] = useState(false);
@@ -63,7 +64,12 @@ const NewDiaryEntry = ({ onSave, onCancel }: NewDiaryEntryProps) => {
 
   return (
     <Card className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-6">
-      <EmotionSelector onSelect={setSelectedEmotion} selectedEmotion={selectedEmotion} />
+      {!preselectedEmotion && (
+        <EmotionSelector
+          onSelect={setSelectedEmotion}
+          selectedEmotion={selectedEmotion}
+        />
+      )}
       
       {selectedEmotion && (
         <EmotionWords
