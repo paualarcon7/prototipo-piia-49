@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import DiaryCalendar from "@/components/DiaryCalendar";
-import DiaryEntryList from "@/components/DiaryEntryList";
-import NewDiaryEntry from "@/components/NewDiaryEntry";
 import EmotionSelector from "@/components/EmotionSelector";
 import EmotionWords from "@/components/EmotionWords";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -32,42 +30,6 @@ const Diario = () => {
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const { toast } = useToast();
-
-  const handleSaveEntry = (newEntry: {
-    text: string;
-    emotion?: Emotion;
-    words: string[];
-    imageUrl?: string;
-  }) => {
-    if (!date) return;
-    
-    const dateKey = date.toISOString().split('T')[0];
-    const entry: DiaryEntry = {
-      id: crypto.randomUUID(),
-      ...newEntry,
-      emotion: selectedEmotion || undefined,
-      words: selectedWords,
-      createdAt: new Date(),
-      date: dateKey,
-    };
-    
-    setEntries(prev => ({
-      ...prev,
-      [dateKey]: [...(prev[dateKey] || []), entry],
-    }));
-    
-    setSelectedEmotion(null);
-    setSelectedWords([]);
-    
-    toast({
-      title: "Entrada guardada",
-      description: "Tu registro ha sido guardado exitosamente.",
-    });
-  };
-
-  const handleEntryClick = (entry: DiaryEntry) => {
-    console.log("Entry clicked:", entry);
-  };
 
   const currentDateKey = date?.toISOString().split('T')[0];
   const currentEntries = currentDateKey ? entries[currentDateKey] || [] : [];
@@ -101,22 +63,6 @@ const Diario = () => {
               />
             )}
           </Card>
-
-          {(selectedEmotion || currentEntries.length > 0) && (
-            <NewDiaryEntry
-              onSave={handleSaveEntry}
-              onCancel={() => {
-                setSelectedEmotion(null);
-                setSelectedWords([]);
-              }}
-              preselectedEmotion={selectedEmotion}
-            />
-          )}
-
-          <DiaryEntryList
-            entries={currentEntries}
-            onEntryClick={handleEntryClick}
-          />
         </TabsContent>
 
         <TabsContent value="calendar" className="mt-4">
