@@ -38,19 +38,21 @@ const Diario = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Check for new entry from location state
     const newEntry = location.state?.newEntry;
     if (newEntry) {
       const dateKey = newEntry.date;
       setEntries(prevEntries => {
-        const updatedEntries = {
+        // Ensure we keep all previous entries and add the new one
+        const existingEntries = prevEntries[dateKey] || [];
+        console.log('Existing entries:', existingEntries);
+        console.log('New entry:', newEntry);
+        
+        return {
           ...prevEntries,
-          [dateKey]: [...(prevEntries[dateKey] || []), newEntry]
+          [dateKey]: [...existingEntries, newEntry]
         };
-        return updatedEntries;
       });
       
-      // Clear the location state but keep emotion and words
       window.history.replaceState({}, '');
       
       toast({
