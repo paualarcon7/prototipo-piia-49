@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
@@ -41,19 +42,33 @@ const Diario = () => {
     const newEntry = location.state?.newEntry;
     if (newEntry) {
       const dateKey = newEntry.date;
+      
       setEntries(prevEntries => {
-        // Ensure we keep all previous entries and add the new one
         const existingEntries = prevEntries[dateKey] || [];
-        console.log('Existing entries:', existingEntries);
-        console.log('New entry:', newEntry);
+        console.log('Estado actual de entradas:', prevEntries);
+        console.log('Entradas existentes para la fecha:', existingEntries);
+        console.log('Nueva entrada a agregar:', newEntry);
         
-        return {
+        const updatedEntries = {
           ...prevEntries,
           [dateKey]: [...existingEntries, newEntry]
         };
+        
+        console.log('Estado actualizado de entradas:', updatedEntries);
+        return updatedEntries;
       });
+
+      // Mantenemos la emoción y palabras seleccionadas
+      if (location.state?.selectedEmotion) {
+        setSelectedEmotion(location.state.selectedEmotion);
+      }
+      if (location.state?.selectedWords) {
+        setSelectedWords(location.state.selectedWords);
+      }
       
-      window.history.replaceState({}, '');
+      // Limpiamos solo la nueva entrada del estado
+      const { newEntry: _, ...restState } = location.state;
+      window.history.replaceState(restState, '');
       
       toast({
         title: "¡Entrada guardada!",
@@ -144,3 +159,4 @@ const Diario = () => {
 };
 
 export default Diario;
+
