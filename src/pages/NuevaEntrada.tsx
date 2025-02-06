@@ -37,6 +37,16 @@ const NuevaEntrada = () => {
       return;
     }
 
+    // Aquí se guardaría la entrada con la fecha y hora actual
+    const newEntry = {
+      id: Date.now().toString(),
+      text: text.trim(),
+      createdAt: new Date(),
+      date: new Date().toISOString().split('T')[0],
+      imageUrl,
+    };
+
+    // Por ahora solo mostramos un toast de éxito
     toast({
       title: "¡Entrada guardada!",
       description: "Tu entrada ha sido guardada exitosamente",

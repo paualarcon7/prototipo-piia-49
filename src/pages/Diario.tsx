@@ -9,6 +9,7 @@ import EmotionSelector from "@/components/EmotionSelector";
 import EmotionWords from "@/components/EmotionWords";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
+import DiaryEntryList from "@/components/DiaryEntryList";
 
 type Emotion = {
   id: number;
@@ -31,13 +32,32 @@ type DiaryEntry = {
 const Diario = () => {
   const navigate = useNavigate();
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const [entries, setEntries] = useState<{[key: string]: DiaryEntry[]}>({});
+  const [entries, setEntries] = useState<{[key: string]: DiaryEntry[]}>({
+    // Ejemplo de entrada para pruebas
+    [new Date().toISOString().split('T')[0]]: [
+      {
+        id: "1",
+        text: "Mi primera entrada del día",
+        createdAt: new Date(),
+        date: new Date().toISOString().split('T')[0],
+        words: [],
+      }
+    ]
+  });
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const { toast } = useToast();
 
   const currentDateKey = date?.toISOString().split('T')[0];
   const currentEntries = currentDateKey ? entries[currentDateKey] || [] : [];
+
+  const handleEntryClick = (entry: DiaryEntry) => {
+    // Por ahora solo mostraremos un toast, pero aquí podrías navegar a una vista detallada
+    toast({
+      title: "Entrada seleccionada",
+      description: entry.text.substring(0, 50) + "...",
+    });
+  };
 
   return (
     <div className="flex flex-col min-h-screen pb-20 p-4 pt-16 space-y-4">
@@ -68,6 +88,13 @@ const Diario = () => {
               />
             )}
           </Card>
+
+          {currentEntries.length > 0 && (
+            <DiaryEntryList 
+              entries={currentEntries}
+              onEntryClick={handleEntryClick}
+            />
+          )}
           
           <Button
             onClick={() => navigate('/diario/nueva')}
