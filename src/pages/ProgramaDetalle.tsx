@@ -1,34 +1,138 @@
+
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, CheckCircle2 } from "lucide-react";
 
 const ProgramaDetalle = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   // Mock data - esto debería venir de una API en una implementación real
-  const programa = {
-    id: 1,
-    name: "Elementia",
-    description: "Programa para que alcances tu máximo potencial a través de las metodologías del alto rendimiento",
-    fullDescription: "Elementia es un programa integral diseñado para potenciar tu desarrollo personal y profesional. A través de técnicas probadas y metodologías de alto rendimiento, te ayudaremos a descubrir y maximizar tu potencial innato.",
-    duration: "12 semanas",
-    modules: [
-      {
-        title: "Módulo 1: Fundamentos",
-        description: "Estableciendo las bases para el éxito"
-      },
-      {
-        title: "Módulo 2: Desarrollo Personal",
-        description: "Descubriendo tu potencial interior"
-      },
-      {
-        title: "Módulo 3: Alto Rendimiento",
-        description: "Implementando técnicas avanzadas"
-      }
-    ],
-    color: "from-[#9b87f5] to-[#6E59A5]"
+  const programas = {
+    "1": {
+      id: 1,
+      name: "Elementia",
+      description: "Programa para que alcances tu máximo potencial a través de las metodologías del alto rendimiento",
+      fullDescription: "Elementia es un programa integral diseñado para potenciar tu desarrollo personal y profesional. A través de técnicas probadas y metodologías de alto rendimiento, te ayudaremos a descubrir y maximizar tu potencial innato.",
+      duration: "12 semanas",
+      modules: [
+        {
+          title: "Módulo 1: Fundamentos",
+          description: "Estableciendo las bases para el éxito",
+          completed: true
+        },
+        {
+          title: "Módulo 2: Desarrollo Personal",
+          description: "Descubriendo tu potencial interior",
+          completed: true
+        },
+        {
+          title: "Módulo 3: Alto Rendimiento",
+          description: "Implementando técnicas avanzadas",
+          completed: true
+        }
+      ],
+      color: "from-[#4CAF50] to-[#2E7D32]"
+    },
+    "2": {
+      id: 2,
+      name: "Elementia 2",
+      description: "Descubre tu poder interior y desarrolla habilidades extraordinarias para el éxito",
+      fullDescription: "Elementia 2 es la evolución natural de nuestro programa insignia. En esta nueva etapa, profundizaremos en técnicas avanzadas de desarrollo personal y profesional, llevándote a nuevos niveles de excelencia.",
+      duration: "24 semanas",
+      modules: [
+        {
+          title: "Módulo 1: Consciencia Expandida",
+          description: "Desarrolla una perspectiva más amplia de tu potencial",
+          completed: true
+        },
+        {
+          title: "Módulo 2: Poder Interior",
+          description: "Activa y desarrolla tu fuerza interior",
+          completed: true
+        },
+        {
+          title: "Módulo 3: Maestría Mental",
+          description: "Técnicas avanzadas de control mental",
+          completed: true
+        },
+        {
+          title: "Módulo 4: Transformación Profunda",
+          description: "Implementa cambios duraderos en tu vida",
+          completed: false,
+          current: true
+        },
+        {
+          title: "Módulo 5: Liderazgo Consciente",
+          description: "Desarrolla habilidades de liderazgo auténtico",
+          completed: false
+        },
+        {
+          title: "Módulo 6: Influencia Positiva",
+          description: "Aprende a impactar positivamente en otros",
+          completed: false
+        },
+        {
+          title: "Módulo 7: Abundancia y Prosperidad",
+          description: "Cultiva una mentalidad de abundancia",
+          completed: false
+        },
+        {
+          title: "Módulo 8: Relaciones Poderosas",
+          description: "Construye conexiones significativas",
+          completed: false
+        },
+        {
+          title: "Módulo 9: Comunicación Efectiva",
+          description: "Mejora tus habilidades de comunicación",
+          completed: false
+        },
+        {
+          title: "Módulo 10: Gestión Emocional",
+          description: "Domina tus emociones y estados internos",
+          completed: false
+        },
+        {
+          title: "Módulo 11: Propósito y Visión",
+          description: "Alinea tu vida con tu propósito más alto",
+          completed: false
+        },
+        {
+          title: "Módulo 12: Integración y Maestría",
+          description: "Consolida tu transformación personal",
+          completed: false
+        }
+      ],
+      color: "from-[#FF6B6B] to-[#C23A3A]"
+    },
+    "3": {
+      id: 3,
+      name: "Elementia 3",
+      description: "Transforma tu mentalidad y alcanza nuevos niveles de excelencia personal",
+      fullDescription: "Elementia 3 representa la cumbre de nuestra metodología. Este programa avanzado está diseñado para aquellos que buscan alcanzar la maestría en su desarrollo personal y profesional.",
+      duration: "36 semanas",
+      modules: [
+        {
+          title: "Módulo 1: Nivel Avanzado",
+          description: "Preparación para la maestría personal",
+          completed: false
+        },
+        {
+          title: "Módulo 2: Transformación Total",
+          description: "Cambios profundos y duraderos",
+          completed: false
+        },
+        {
+          title: "Módulo 3: Excelencia Suprema",
+          description: "Alcanza tu máximo potencial",
+          completed: false
+        }
+      ],
+      color: "from-[#8E9196] to-[#333333]"
+    }
   };
+
+  const programa = programas[id as keyof typeof programas];
 
   return (
     <div className="container mx-auto px-4 py-6 space-y-6 pb-20">
@@ -61,9 +165,28 @@ const ProgramaDetalle = () => {
           <h2 className="text-xl font-semibold mb-4">Módulos</h2>
           <div className="space-y-4">
             {programa.modules.map((module, index) => (
-              <div key={index} className="border border-secondary/20 rounded-lg p-4">
-                <h3 className="font-semibold text-white">{module.title}</h3>
-                <p className="text-gray-300 text-sm mt-1">{module.description}</p>
+              <div 
+                key={index} 
+                className={`border border-secondary/20 rounded-lg p-4 ${
+                  module.current ? 'bg-secondary/30' : ''
+                }`}
+              >
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className="font-semibold text-white flex items-center gap-2">
+                      {module.title}
+                      {module.completed && (
+                        <CheckCircle2 className="h-4 w-4 text-green-500" />
+                      )}
+                    </h3>
+                    <p className="text-gray-300 text-sm mt-1">{module.description}</p>
+                  </div>
+                  {module.current && (
+                    <span className="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded-full">
+                      En progreso
+                    </span>
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -74,3 +197,4 @@ const ProgramaDetalle = () => {
 };
 
 export default ProgramaDetalle;
+
