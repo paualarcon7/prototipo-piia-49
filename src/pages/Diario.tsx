@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
@@ -43,12 +42,15 @@ const Diario = () => {
     const newEntry = location.state?.newEntry;
     if (newEntry) {
       const dateKey = newEntry.date;
-      setEntries(prevEntries => ({
-        ...prevEntries,
-        [dateKey]: [...(prevEntries[dateKey] || []), newEntry]
-      }));
+      setEntries(prevEntries => {
+        const updatedEntries = {
+          ...prevEntries,
+          [dateKey]: [...(prevEntries[dateKey] || []), newEntry]
+        };
+        return updatedEntries;
+      });
       
-      // Clear the location state
+      // Clear the location state but keep emotion and words
       window.history.replaceState({}, '');
       
       toast({
@@ -65,6 +67,15 @@ const Diario = () => {
     toast({
       title: "Entrada seleccionada",
       description: entry.text.substring(0, 50) + "...",
+    });
+  };
+
+  const handleNewEntry = () => {
+    navigate('/diario/nueva', { 
+      state: { 
+        selectedEmotion,
+        selectedWords 
+      } 
     });
   };
 
@@ -106,12 +117,7 @@ const Diario = () => {
           )}
           
           <Button
-            onClick={() => navigate('/diario/nueva', { 
-              state: { 
-                selectedEmotion,
-                selectedWords 
-              } 
-            })}
+            onClick={handleNewEntry}
             className="fixed bottom-24 right-4 h-14 w-14 rounded-full shadow-lg bg-purple-500 hover:bg-purple-600"
           >
             <Plus className="h-6 w-6" />
