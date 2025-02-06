@@ -1,14 +1,16 @@
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Image as ImageIcon, ChevronLeft } from "lucide-react";
 import DiaryPromptMenu from "@/components/DiaryPromptMenu";
+import type { DiaryEntry } from "./Diario";
 
 const NuevaEntrada = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
   const [text, setText] = useState("");
   const [imageUrl, setImageUrl] = useState<string>();
@@ -37,16 +39,21 @@ const NuevaEntrada = () => {
       return;
     }
 
-    // Aquí se guardaría la entrada con la fecha y hora actual
-    const newEntry = {
+    const newEntry: DiaryEntry = {
       id: Date.now().toString(),
       text: text.trim(),
       createdAt: new Date(),
       date: new Date().toISOString().split('T')[0],
       imageUrl,
+      words: [],
     };
 
-    // Por ahora solo mostramos un toast de éxito
+    // Acceder al estado de Diario a través del estado de la ruta
+    const saveEntry = location.state?.saveEntry;
+    if (saveEntry) {
+      saveEntry(newEntry);
+    }
+
     toast({
       title: "¡Entrada guardada!",
       description: "Tu entrada ha sido guardada exitosamente",

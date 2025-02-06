@@ -18,7 +18,7 @@ type Emotion = {
   icon: string;
 };
 
-type DiaryEntry = {
+export type DiaryEntry = {
   id: string;
   text: string;
   emotion?: Emotion;
@@ -52,11 +52,18 @@ const Diario = () => {
   const currentEntries = currentDateKey ? entries[currentDateKey] || [] : [];
 
   const handleEntryClick = (entry: DiaryEntry) => {
-    // Por ahora solo mostraremos un toast, pero aquí podrías navegar a una vista detallada
     toast({
       title: "Entrada seleccionada",
       description: entry.text.substring(0, 50) + "...",
     });
+  };
+
+  const saveEntry = (newEntry: DiaryEntry) => {
+    const dateKey = newEntry.date;
+    setEntries(prevEntries => ({
+      ...prevEntries,
+      [dateKey]: [...(prevEntries[dateKey] || []), newEntry]
+    }));
   };
 
   return (
