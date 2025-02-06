@@ -1,5 +1,9 @@
+
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import DiaryCalendar from "@/components/DiaryCalendar";
 import EmotionSelector from "@/components/EmotionSelector";
 import EmotionWords from "@/components/EmotionWords";
@@ -25,6 +29,7 @@ type DiaryEntry = {
 };
 
 const Diario = () => {
+  const navigate = useNavigate();
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [entries, setEntries] = useState<{[key: string]: DiaryEntry[]}>({});
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
@@ -63,6 +68,13 @@ const Diario = () => {
               />
             )}
           </Card>
+          
+          <Button
+            onClick={() => navigate('/diario/nueva')}
+            className="fixed bottom-24 right-4 h-14 w-14 rounded-full shadow-lg bg-purple-500 hover:bg-purple-600"
+          >
+            <Plus className="h-6 w-6" />
+          </Button>
         </TabsContent>
 
         <TabsContent value="calendar" className="mt-4">
