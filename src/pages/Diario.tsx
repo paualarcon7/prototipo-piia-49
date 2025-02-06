@@ -53,6 +53,11 @@ const Diario = () => {
       ...prevEntries,
       [dateKey]: [...(prevEntries[dateKey] || []), newEntry]
     }));
+
+    toast({
+      title: "¡Entrada guardada!",
+      description: "Tu entrada ha sido guardada exitosamente",
+    });
   };
 
   return (
@@ -93,7 +98,13 @@ const Diario = () => {
           )}
           
           <Button
-            onClick={() => navigate('/diario/nueva', { state: { saveEntry } })}
+            onClick={() => navigate('/diario/nueva', { 
+              state: { 
+                saveEntry,
+                selectedEmotion,
+                selectedWords 
+              } 
+            })}
             className="fixed bottom-24 right-4 h-14 w-14 rounded-full shadow-lg bg-purple-500 hover:bg-purple-600"
           >
             <Plus className="h-6 w-6" />
@@ -118,4 +129,3 @@ const Diario = () => {
 };
 
 export default Diario;
-

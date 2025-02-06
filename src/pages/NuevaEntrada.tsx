@@ -16,6 +16,8 @@ const NuevaEntrada = () => {
   const [imageUrl, setImageUrl] = useState<string>();
   const [isUploading, setIsUploading] = useState(false);
 
+  const { saveEntry, selectedEmotion, selectedWords } = location.state || {};
+
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -45,20 +47,20 @@ const NuevaEntrada = () => {
       createdAt: new Date(),
       date: new Date().toISOString().split('T')[0],
       imageUrl,
-      words: [],
+      emotion: selectedEmotion,
+      words: selectedWords || [],
     };
 
-    // Acceder al estado de Diario a través del estado de la ruta
-    const saveEntry = location.state?.saveEntry;
     if (saveEntry) {
       saveEntry(newEntry);
+      navigate('/diario');
+    } else {
+      toast({
+        title: "Error",
+        description: "No se pudo guardar la entrada",
+        variant: "destructive",
+      });
     }
-
-    toast({
-      title: "¡Entrada guardada!",
-      description: "Tu entrada ha sido guardada exitosamente",
-    });
-    navigate('/diario');
   };
 
   const handlePromptSelect = (prompt: string) => {
