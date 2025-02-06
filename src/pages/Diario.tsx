@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import DiaryCalendar from "@/components/DiaryCalendar";
 import EmotionSelector from "@/components/EmotionSelector";
@@ -7,7 +8,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import NewDiaryEntry from "@/components/NewDiaryEntry";
 
 type Emotion = {
   id: number;
@@ -28,45 +28,12 @@ type DiaryEntry = {
 };
 
 const Diario = () => {
+  const navigate = useNavigate();
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [entries, setEntries] = useState<{[key: string]: DiaryEntry[]}>({});
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
-  const [showNewEntry, setShowNewEntry] = useState(false);
   const { toast } = useToast();
-
-  const handleSaveEntry = (newEntry: {
-    text: string;
-    emotion?: Emotion;
-    words: string[];
-    imageUrl?: string;
-  }) => {
-    if (!date) return;
-    
-    const dateKey = date.toISOString().split('T')[0];
-    const entry: DiaryEntry = {
-      id: crypto.randomUUID(),
-      ...newEntry,
-      emotion: selectedEmotion || undefined,
-      words: selectedWords,
-      createdAt: new Date(),
-      date: dateKey,
-    };
-    
-    setEntries(prev => ({
-      ...prev,
-      [dateKey]: [...(prev[dateKey] || []), entry],
-    }));
-    
-    setSelectedEmotion(null);
-    setSelectedWords([]);
-    setShowNewEntry(false);
-    
-    toast({
-      title: "Entrada guardada",
-      description: "Tu registro ha sido guardado exitosamente.",
-    });
-  };
 
   const currentDateKey = date?.toISOString().split('T')[0];
   const currentEntries = currentDateKey ? entries[currentDateKey] || [] : [];
@@ -100,18 +67,6 @@ const Diario = () => {
               />
             )}
           </Card>
-
-          {showNewEntry && (
-            <NewDiaryEntry
-              onSave={handleSaveEntry}
-              onCancel={() => {
-                setShowNewEntry(false);
-                setSelectedEmotion(null);
-                setSelectedWords([]);
-              }}
-              preselectedEmotion={selectedEmotion}
-            />
-          )}
         </TabsContent>
 
         <TabsContent value="calendar" className="mt-4">
@@ -130,7 +85,7 @@ const Diario = () => {
 
       <Button
         className="fixed bottom-20 right-4 rounded-full w-12 h-12 shadow-lg"
-        onClick={() => setShowNewEntry(true)}
+        onClick={() => navigate("/nueva-entrada")}
       >
         <Plus className="w-6 h-6" />
       </Button>
