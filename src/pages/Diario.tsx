@@ -32,18 +32,7 @@ export type DiaryEntry = {
 const Diario = () => {
   const navigate = useNavigate();
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const [entries, setEntries] = useState<{[key: string]: DiaryEntry[]}>({
-    // Ejemplo de entrada para pruebas
-    [new Date().toISOString().split('T')[0]]: [
-      {
-        id: "1",
-        text: "Mi primera entrada del día",
-        createdAt: new Date(),
-        date: new Date().toISOString().split('T')[0],
-        words: [],
-      }
-    ]
-  });
+  const [entries, setEntries] = useState<{[key: string]: DiaryEntry[]}>({});
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const { toast } = useToast();
@@ -104,7 +93,7 @@ const Diario = () => {
           )}
           
           <Button
-            onClick={() => navigate('/diario/nueva')}
+            onClick={() => navigate('/diario/nueva', { state: { saveEntry } })}
             className="fixed bottom-24 right-4 h-14 w-14 rounded-full shadow-lg bg-purple-500 hover:bg-purple-600"
           >
             <Plus className="h-6 w-6" />
@@ -129,3 +118,4 @@ const Diario = () => {
 };
 
 export default Diario;
+
