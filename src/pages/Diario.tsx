@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { Plus } from "lucide-react";
@@ -38,23 +38,25 @@ const Diario = () => {
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const { toast } = useToast();
 
-  // Check for new entry from location state
-  const newEntry = location.state?.newEntry;
-  if (newEntry) {
-    const dateKey = newEntry.date;
-    setEntries(prevEntries => ({
-      ...prevEntries,
-      [dateKey]: [...(prevEntries[dateKey] || []), newEntry]
-    }));
-    
-    // Clear the location state
-    window.history.replaceState({}, '');
-    
-    toast({
-      title: "¡Entrada guardada!",
-      description: "Tu entrada ha sido guardada exitosamente",
-    });
-  }
+  useEffect(() => {
+    // Check for new entry from location state
+    const newEntry = location.state?.newEntry;
+    if (newEntry) {
+      const dateKey = newEntry.date;
+      setEntries(prevEntries => ({
+        ...prevEntries,
+        [dateKey]: [...(prevEntries[dateKey] || []), newEntry]
+      }));
+      
+      // Clear the location state
+      window.history.replaceState({}, '');
+      
+      toast({
+        title: "¡Entrada guardada!",
+        description: "Tu entrada ha sido guardada exitosamente",
+      });
+    }
+  }, [location.state, toast]);
 
   const currentDateKey = date?.toISOString().split('T')[0];
   const currentEntries = currentDateKey ? entries[currentDateKey] || [] : [];
@@ -134,4 +136,3 @@ const Diario = () => {
 };
 
 export default Diario;
-
