@@ -1,11 +1,114 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, CheckCircle2, PlayCircle, ClipboardList, Dumbbell, MessageSquare } from "lucide-react";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
+interface Module {
+  title: string;
+  description: string;
+  completed: boolean;
+  current?: boolean;
+}
+
+const ModuleStages = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  const [activeStage, setActiveStage] = useState(0);
+
+  const stages = [
+    {
+      title: "Inicio",
+      icon: <PlayCircle className="w-6 h-6" />,
+      description: "Escucha el audio introductorio y registra tu reflexión mediante una nota de voz.",
+      steps: [
+        "Escuchar audio introductorio",
+        "Opción de audio adicional para profundizar",
+        "Grabar reflexión por voz"
+      ]
+    },
+    {
+      title: "Sesión de trabajo",
+      icon: <ClipboardList className="w-6 h-6" />,
+      description: "Aprende sobre el protocolo, realiza un test y participa en una sesión de Q&A.",
+      steps: [
+        "Audio explicativo del protocolo",
+        "Test de 3 preguntas",
+        "Sesión de Q&A (voz o texto)"
+      ]
+    },
+    {
+      title: "Entrenamiento",
+      icon: <Dumbbell className="w-6 h-6" />,
+      description: "Practica los ejercicios y regístralos en tu calendario.",
+      steps: [
+        "Acceso al protocolo de ejercicios",
+        "Registro de ejercicios en el calendario",
+        "Seguimiento periódico"
+      ]
+    },
+    {
+      title: "Feedback",
+      icon: <MessageSquare className="w-6 h-6" />,
+      description: "Evalúa tu progreso y comparte tu experiencia con el protocolo.",
+      steps: [
+        "Test de evaluación",
+        "Registro de feedback",
+        "Revisión de progreso"
+      ]
+    }
+  ];
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-2xl">
+        <DialogHeader>
+          <DialogTitle>Etapas del Módulo</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-6">
+          {stages.map((stage, index) => (
+            <div
+              key={index}
+              className={`p-4 rounded-lg cursor-pointer transition-all ${
+                activeStage === index
+                  ? "bg-secondary"
+                  : "bg-secondary/50 hover:bg-secondary/70"
+              }`}
+              onClick={() => setActiveStage(index)}
+            >
+              <div className="flex items-center gap-3 mb-2">
+                {stage.icon}
+                <h3 className="text-lg font-semibold">{stage.title}</h3>
+              </div>
+              <p className="text-sm text-gray-400 mb-2">{stage.description}</p>
+              {activeStage === index && (
+                <div className="mt-4 space-y-2">
+                  {stage.steps.map((step, stepIndex) => (
+                    <div
+                      key={stepIndex}
+                      className="flex items-center gap-2 text-sm text-gray-300"
+                    >
+                      <div className="w-2 h-2 rounded-full bg-purple-500" />
+                      {step}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
 
 const ProgramaDetalle = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [selectedModule, setSelectedModule] = useState<null | number>(null);
 
   // Mock data - esto debería venir de una API en una implementación real
   const programas = {
@@ -134,6 +237,10 @@ const ProgramaDetalle = () => {
 
   const programa = programas[id as keyof typeof programas];
 
+  const handleModuleClick = (moduleIndex: number) => {
+    setSelectedModule(moduleIndex);
+  };
+
   return (
     <div className="container mx-auto px-4 py-6 space-y-6 pb-20">
       <Button
@@ -169,7 +276,8 @@ const ProgramaDetalle = () => {
                 key={index} 
                 className={`border border-secondary/20 rounded-lg p-4 ${
                   module.current ? 'bg-secondary/30' : ''
-                }`}
+                } cursor-pointer hover:bg-secondary/40 transition-colors`}
+                onClick={() => handleModuleClick(index)}
               >
                 <div className="flex items-start justify-between">
                   <div>
@@ -192,9 +300,13 @@ const ProgramaDetalle = () => {
           </div>
         </div>
       </div>
+
+      <ModuleStages 
+        isOpen={selectedModule !== null}
+        onClose={() => setSelectedModule(null)}
+      />
     </div>
   );
 };
 
 export default ProgramaDetalle;
-
