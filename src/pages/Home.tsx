@@ -1,3 +1,4 @@
+
 import { Trophy, Flame, CheckCircle2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +19,20 @@ const Home = () => {
       description: "Programa para que alcances tu máximo potencial a través de las metodologías del alto rendimiento",
       progress: 60,
       color: "from-[#9b87f5] to-[#6E59A5]"
+    },
+    {
+      id: 2,
+      name: "Elementia 2",
+      description: "Descubre tu poder interior y desarrolla habilidades extraordinarias para el éxito",
+      progress: 35,
+      color: "from-[#FF6B6B] to-[#C23A3A]"
+    },
+    {
+      id: 3,
+      name: "Elementia 3",
+      description: "Transforma tu mentalidad y alcanza nuevos niveles de excelencia personal",
+      progress: 15,
+      color: "from-[#4CAF50] to-[#2E7D32]"
     }
   ];
 
