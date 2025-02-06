@@ -16,7 +16,7 @@ const NuevaEntrada = () => {
   const [imageUrl, setImageUrl] = useState<string>();
   const [isUploading, setIsUploading] = useState(false);
 
-  const { saveEntry, selectedEmotion, selectedWords } = location.state || {};
+  const { selectedEmotion, selectedWords } = location.state || {};
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -51,16 +51,7 @@ const NuevaEntrada = () => {
       words: selectedWords || [],
     };
 
-    if (saveEntry) {
-      saveEntry(newEntry);
-      navigate('/diario');
-    } else {
-      toast({
-        title: "Error",
-        description: "No se pudo guardar la entrada",
-        variant: "destructive",
-      });
-    }
+    navigate('/diario', { state: { newEntry } });
   };
 
   const handlePromptSelect = (prompt: string) => {
@@ -128,3 +119,4 @@ const NuevaEntrada = () => {
 };
 
 export default NuevaEntrada;
+

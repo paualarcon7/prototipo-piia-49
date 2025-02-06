@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -31,11 +31,30 @@ export type DiaryEntry = {
 
 const Diario = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [entries, setEntries] = useState<{[key: string]: DiaryEntry[]}>({});
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const { toast } = useToast();
+
+  // Check for new entry from location state
+  const newEntry = location.state?.newEntry;
+  if (newEntry) {
+    const dateKey = newEntry.date;
+    setEntries(prevEntries => ({
+      ...prevEntries,
+      [dateKey]: [...(prevEntries[dateKey] || []), newEntry]
+    }));
+    
+    // Clear the location state
+    window.history.replaceState({}, '');
+    
+    toast({
+      title: "¡Entrada guardada!",
+      description: "Tu entrada ha sido guardada exitosamente",
+    });
+  }
 
   const currentDateKey = date?.toISOString().split('T')[0];
   const currentEntries = currentDateKey ? entries[currentDateKey] || [] : [];
@@ -44,19 +63,6 @@ const Diario = () => {
     toast({
       title: "Entrada seleccionada",
       description: entry.text.substring(0, 50) + "...",
-    });
-  };
-
-  const saveEntry = (newEntry: DiaryEntry) => {
-    const dateKey = newEntry.date;
-    setEntries(prevEntries => ({
-      ...prevEntries,
-      [dateKey]: [...(prevEntries[dateKey] || []), newEntry]
-    }));
-
-    toast({
-      title: "¡Entrada guardada!",
-      description: "Tu entrada ha sido guardada exitosamente",
     });
   };
 
@@ -100,7 +106,6 @@ const Diario = () => {
           <Button
             onClick={() => navigate('/diario/nueva', { 
               state: { 
-                saveEntry,
                 selectedEmotion,
                 selectedWords 
               } 
@@ -129,3 +134,4 @@ const Diario = () => {
 };
 
 export default Diario;
+
