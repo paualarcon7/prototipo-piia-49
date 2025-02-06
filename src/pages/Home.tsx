@@ -1,12 +1,11 @@
 
-import { Trophy, Flame, CheckCircle2 } from "lucide-react";
+import { Trophy, Flame, CheckCircle2, Lock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const navigate = useNavigate();
   
-  // This is mock data - you should replace it with real data from your backend
   const streak = {
     current: 1,
     best: 1
@@ -17,22 +16,25 @@ const Home = () => {
       id: 1,
       name: "Elementia",
       description: "Programa para que alcances tu máximo potencial a través de las metodologías del alto rendimiento",
-      progress: 60,
-      color: "from-[#9b87f5] to-[#6E59A5]"
+      progress: 100,
+      color: "from-[#4CAF50] to-[#2E7D32]",
+      status: "completed"
     },
     {
       id: 2,
       name: "Elementia 2",
       description: "Descubre tu poder interior y desarrolla habilidades extraordinarias para el éxito",
       progress: 35,
-      color: "from-[#FF6B6B] to-[#C23A3A]"
+      color: "from-[#FF6B6B] to-[#C23A3A]",
+      status: "in-progress"
     },
     {
       id: 3,
       name: "Elementia 3",
       description: "Transforma tu mentalidad y alcanza nuevos niveles de excelencia personal",
-      progress: 15,
-      color: "from-[#4CAF50] to-[#2E7D32]"
+      progress: 0,
+      color: "from-[#8E9196] to-[#333333]",
+      status: "blocked"
     }
   ];
 
@@ -92,11 +94,17 @@ const Home = () => {
           {activePrograms.map((program) => (
             <Card 
               key={program.id} 
-              className="overflow-hidden border-none cursor-pointer transition-transform hover:scale-[1.02]"
-              onClick={() => navigate(`/programa/${program.id}`)}
+              className={`overflow-hidden border-none cursor-pointer transition-transform hover:scale-[1.02] ${
+                program.status === 'blocked' ? 'opacity-75' : ''
+              }`}
+              onClick={() => program.status !== 'blocked' && navigate(`/programa/${program.id}`)}
             >
-              <div className={`bg-gradient-to-r ${program.color} p-6 text-white`}>
-                <CardTitle className="text-xl mb-2">{program.name}</CardTitle>
+              <div className={`bg-gradient-to-r ${program.color} p-6 text-white relative`}>
+                <CardTitle className="text-xl mb-2 flex items-center gap-2">
+                  {program.name}
+                  {program.status === 'completed' && <CheckCircle2 className="h-5 w-5 text-white" />}
+                  {program.status === 'blocked' && <Lock className="h-5 w-5 text-white" />}
+                </CardTitle>
                 <CardDescription className="text-white/90 text-sm">
                   {program.description}
                 </CardDescription>
@@ -110,7 +118,10 @@ const Home = () => {
                   <div className="w-full bg-secondary rounded-full h-2">
                     <div 
                       className={`bg-gradient-to-r ${program.color} h-2 rounded-full transition-all duration-300`}
-                      style={{ width: `${program.progress}%` }}
+                      style={{ 
+                        width: `${program.progress}%`,
+                        opacity: program.status === 'blocked' ? '0.5' : '1'
+                      }}
                     ></div>
                   </div>
                 </div>
