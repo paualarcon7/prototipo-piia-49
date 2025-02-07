@@ -15,6 +15,7 @@ import NuevaEntrada from "./pages/NuevaEntrada";
 import Ejercicio from "./pages/Ejercicio";
 import ProgramaDetalle from "./pages/ProgramaDetalle";
 import ModuloDetalle from "./pages/ModuloDetalle";
+import InicioStage from "./pages/InicioStage";
 import BottomNav from "./components/BottomNav";
 
 const queryClient = new QueryClient();
@@ -67,6 +68,7 @@ const App = () => (
           <Route path="/ejercicio/:id" element={<Ejercicio />} />
           <Route path="/programa/:id" element={<ProgramaDetalle />} />
           <Route path="/programa/:id/modulo/:moduleId" element={<ModuloDetalle />} />
+          <Route path="/programa/:id/modulo/:moduleId/inicio" element={<InicioStage />} />
         </Routes>
         <BottomNav />
       </TooltipProvider>

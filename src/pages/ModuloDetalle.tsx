@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { 
   ArrowLeft, 
-  PlayCircle,
+  Lightbulb,
   ClipboardList,
   Dumbbell,
   MessageSquare,
@@ -59,7 +59,7 @@ const ModuloDetalle = () => {
   const stages = [
     {
       title: "Inicio",
-      icon: <PlayCircle className="w-6 h-6" />,
+      icon: <Lightbulb className="w-6 h-6" />,
       description: "Escucha el audio introductorio y registra tu reflexión mediante una nota de voz.",
       steps: [
         "Escuchar audio introductorio",
@@ -134,6 +134,13 @@ const ModuloDetalle = () => {
     setShowTest(false);
   };
 
+  const handleStageClick = (index: number) => {
+    setActiveStage(index);
+    if (index === 0) {
+      navigate(`/programa/${id}/modulo/${moduleId}/inicio`);
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-6 pb-32">
       {showTest ? (
@@ -169,7 +176,7 @@ const ModuloDetalle = () => {
                 key={index}
                 {...stage}
                 isActive={activeStage === index}
-                onSelect={() => setActiveStage(index)}
+                onSelect={() => handleStageClick(index)}
               />
             ))}
           </div>
