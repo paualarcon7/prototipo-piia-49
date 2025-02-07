@@ -136,7 +136,7 @@ const ModuloDetalle = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-6 mb-24">
+    <div className="container mx-auto px-4 py-6 pb-32">
       {showTest ? (
         <TestQuestion
           questions={mockQuestions}
@@ -163,7 +163,7 @@ const ModuloDetalle = () => {
             </div>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-4 mb-24">
             {stages.map((stage, index) => (
               <Stage
                 key={index}
@@ -176,7 +176,7 @@ const ModuloDetalle = () => {
         </>
       )}
 
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/80 backdrop-blur-sm border-t">
+      <div className="fixed bottom-16 left-0 right-0 p-4 bg-background/80 backdrop-blur-sm border-t">
         <div className="container mx-auto flex justify-between items-center">
           <Button
             variant="outline"
