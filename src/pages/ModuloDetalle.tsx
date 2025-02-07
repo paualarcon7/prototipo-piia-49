@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { 
@@ -157,7 +156,8 @@ const ModuloDetalle = () => {
           <div className="bg-secondary/50 backdrop-blur-sm rounded-lg p-6 mb-6">
             <h1 className="text-2xl font-bold mb-4">Módulo {moduleId}</h1>
             <div className="flex items-center gap-2">
-              <span className="text-sm bg-purple-500/20 text-purple-300 px-2 py-1 rounded-full">
+              <span className="text-sm bg-purple-500/30 text-purple-300 px-3 py-1.5 rounded-full font-medium flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
                 En progreso
               </span>
             </div>
@@ -178,28 +178,15 @@ const ModuloDetalle = () => {
 
       <div className="fixed bottom-16 left-0 right-0 p-4 bg-background/80 backdrop-blur-sm border-t">
         <div className="container mx-auto flex justify-between items-center">
-          <Button
-            variant="outline"
-            onClick={() => setActiveStage(prev => Math.max(0, prev - 1))}
-            disabled={activeStage === 0}
-          >
-            Anterior
-          </Button>
           {activeStage === 1 && (
             <Button
               variant="secondary"
               onClick={() => setShowTest(true)}
-              className="mx-2"
+              className="w-full"
             >
               Realizar Test
             </Button>
           )}
-          <Button
-            onClick={() => setActiveStage(prev => Math.min(stages.length - 1, prev + 1))}
-            disabled={activeStage === stages.length - 1}
-          >
-            Siguiente
-          </Button>
         </div>
       </div>
     </div>
@@ -207,4 +194,3 @@ const ModuloDetalle = () => {
 };
 
 export default ModuloDetalle;
-
