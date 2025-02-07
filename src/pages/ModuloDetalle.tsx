@@ -138,6 +138,8 @@ const ModuloDetalle = () => {
     setActiveStage(index);
     if (index === 0) {
       navigate(`/programa/${id}/modulo/${moduleId}/inicio`);
+    } else if (index === 1) {
+      navigate(`/programa/${id}/modulo/${moduleId}/trabajo`);
     }
   };
 
