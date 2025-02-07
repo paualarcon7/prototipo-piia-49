@@ -10,6 +10,7 @@ import {
 import { useState, useRef, useEffect } from "react";
 import ChatMessage from "@/components/ChatMessage";
 import ChatInput from "@/components/ChatInput";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const TrabajoStage = () => {
   const { id, moduleId } = useParams();
@@ -20,6 +21,7 @@ const TrabajoStage = () => {
   const progressInterval = useRef<number>();
   const [messages, setMessages] = useState<Array<{ text: string; isBot: boolean }>>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const simulateAudioProgress = () => {
     setIsPlaying(true);
@@ -45,11 +47,9 @@ const TrabajoStage = () => {
   };
 
   const handleSendMessage = async (text: string) => {
-    // Add user message
     setMessages(prev => [...prev, { text, isBot: false }]);
     setIsLoading(true);
 
-    // Simulate bot response after a delay
     setTimeout(() => {
       setMessages(prev => [...prev, { 
         text: "Esta es una respuesta simulada del asistente. En una implementación real, aquí se conectaría con un backend para procesar las preguntas y generar respuestas apropiadas.", 
@@ -66,6 +66,10 @@ const TrabajoStage = () => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   return (
     <div className="container mx-auto px-4 py-6 pb-32">
@@ -122,27 +126,32 @@ const TrabajoStage = () => {
                   Preguntas y Respuestas
                 </h2>
                 
-                <div className="space-y-4 mb-4 max-h-[400px] overflow-y-auto">
-                  {messages.map((message, index) => (
-                    <ChatMessage
-                      key={index}
-                      text={message.text}
-                      isBot={message.isBot}
-                    />
-                  ))}
-                  {isLoading && (
-                    <ChatMessage
-                      text=""
-                      isBot={true}
-                      isLoading={true}
-                    />
-                  )}
-                </div>
+                <ScrollArea className="h-[400px] pr-4">
+                  <div className="space-y-4">
+                    {messages.map((message, index) => (
+                      <ChatMessage
+                        key={index}
+                        text={message.text}
+                        isBot={message.isBot}
+                      />
+                    ))}
+                    {isLoading && (
+                      <ChatMessage
+                        text=""
+                        isBot={true}
+                        isLoading={true}
+                      />
+                    )}
+                    <div ref={messagesEndRef} />
+                  </div>
+                </ScrollArea>
 
-                <ChatInput
-                  onSendMessage={handleSendMessage}
-                  isLoading={isLoading}
-                />
+                <div className="mt-4">
+                  <ChatInput
+                    onSendMessage={handleSendMessage}
+                    isLoading={isLoading}
+                  />
+                </div>
               </div>
             </div>
           )}
