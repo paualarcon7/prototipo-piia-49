@@ -133,11 +133,10 @@ const ModuloDetalle = () => {
   const handleTestComplete = (results: Record<number, string>) => {
     console.log("Test results:", results);
     setShowTest(false);
-    // Aquí puedes implementar la lógica para guardar los resultados
   };
 
   return (
-    <div className="container mx-auto px-4 py-6 pb-20">
+    <div className="container mx-auto px-4 py-6 mb-24">
       {showTest ? (
         <TestQuestion
           questions={mockQuestions}
@@ -174,37 +173,38 @@ const ModuloDetalle = () => {
               />
             ))}
           </div>
-
-          <div className="fixed bottom-20 left-0 right-0 p-4 bg-background/80 backdrop-blur-sm border-t">
-            <div className="container mx-auto flex justify-between items-center">
-              <Button
-                variant="outline"
-                onClick={() => setActiveStage(prev => Math.max(0, prev - 1))}
-                disabled={activeStage === 0}
-              >
-                Anterior
-              </Button>
-              {activeStage === 1 && (
-                <Button
-                  variant="secondary"
-                  onClick={() => setShowTest(true)}
-                  className="mx-2"
-                >
-                  Realizar Test
-                </Button>
-              )}
-              <Button
-                onClick={() => setActiveStage(prev => Math.min(stages.length - 1, prev + 1))}
-                disabled={activeStage === stages.length - 1}
-              >
-                Siguiente
-              </Button>
-            </div>
-          </div>
         </>
       )}
+
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/80 backdrop-blur-sm border-t">
+        <div className="container mx-auto flex justify-between items-center">
+          <Button
+            variant="outline"
+            onClick={() => setActiveStage(prev => Math.max(0, prev - 1))}
+            disabled={activeStage === 0}
+          >
+            Anterior
+          </Button>
+          {activeStage === 1 && (
+            <Button
+              variant="secondary"
+              onClick={() => setShowTest(true)}
+              className="mx-2"
+            >
+              Realizar Test
+            </Button>
+          )}
+          <Button
+            onClick={() => setActiveStage(prev => Math.min(stages.length - 1, prev + 1))}
+            disabled={activeStage === stages.length - 1}
+          >
+            Siguiente
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default ModuloDetalle;
+
