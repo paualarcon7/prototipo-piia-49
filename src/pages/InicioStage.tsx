@@ -6,7 +6,8 @@ import {
   Play, 
   Pause, 
   Mic,
-  Forward
+  Forward,
+  CheckCircle
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import {
@@ -25,6 +26,7 @@ const InicioStage = () => {
   const [progress, setProgress] = useState(0);
   const [audioCompleted, setAudioCompleted] = useState(false);
   const progressInterval = useRef<number>();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const simulateAudioProgress = () => {
     setIsPlaying(true);
@@ -47,6 +49,11 @@ const InicioStage = () => {
     } else {
       simulateAudioProgress();
     }
+  };
+
+  const handleFinishRecording = () => {
+    setIsDialogOpen(false);
+    navigate(`/programa/${id}/modulo/${moduleId}`);
   };
 
   useEffect(() => {
@@ -116,7 +123,7 @@ const InicioStage = () => {
                 Profundizar con audio adicional
               </Button>
 
-              <Dialog>
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogTrigger asChild>
                   <Button className="w-full">
                     <Mic className="mr-2 h-4 w-4" />
@@ -131,13 +138,20 @@ const InicioStage = () => {
                       Presiona el botón para comenzar a grabar.
                     </DialogDescription>
                   </DialogHeader>
-                  <div className="flex justify-center p-6">
+                  <div className="flex flex-col items-center gap-6 p-6">
                     <Button
                       size="lg"
                       variant="outline"
                       className="rounded-full w-16 h-16"
                     >
                       <Mic className="h-8 w-8" />
+                    </Button>
+                    <Button 
+                      className="w-full" 
+                      onClick={handleFinishRecording}
+                    >
+                      <CheckCircle className="mr-2 h-4 w-4" />
+                      Finalizar
                     </Button>
                   </div>
                 </DialogContent>
