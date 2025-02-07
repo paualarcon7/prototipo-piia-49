@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CheckCircle2, PlayCircle, ClipboardList, Dumbbell, MessageSquare } from "lucide-react";
+import { ArrowLeft, CheckCircle2, PlayCircle, ClipboardList, Dumbbell, MessageSquare, Lock } from "lucide-react";
 import { useState } from "react";
 import {
   Dialog,
@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 interface Module {
   title: string;
@@ -237,7 +238,15 @@ const ProgramaDetalle = () => {
 
   const programa = programas[id as keyof typeof programas];
 
-  const handleModuleClick = (moduleIndex: number) => {
+  const handleModuleClick = (moduleIndex: number, module: Module) => {
+    // Si el módulo está bloqueado (no completado y no es el actual), mostrar mensaje
+    if (!module.completed && !module.current) {
+      toast.error("Este módulo aún no está disponible");
+      return;
+    }
+
+    // Si el módulo está disponible, navegar a la ruta del módulo
+    navigate(`/programa/${id}/modulo/${moduleIndex + 1}`);
     setSelectedModule(moduleIndex);
   };
 
@@ -276,15 +285,17 @@ const ProgramaDetalle = () => {
                 key={index} 
                 className={`border border-secondary/20 rounded-lg p-4 ${
                   module.current ? 'bg-secondary/30' : ''
-                } cursor-pointer hover:bg-secondary/40 transition-colors`}
-                onClick={() => handleModuleClick(index)}
+                } ${(!module.completed && !module.current) ? 'opacity-50' : 'cursor-pointer hover:bg-secondary/40'} transition-colors`}
+                onClick={() => handleModuleClick(index, module)}
               >
                 <div className="flex items-start justify-between">
                   <div>
                     <h3 className="font-semibold text-white flex items-center gap-2">
                       {module.title}
-                      {module.completed && (
+                      {module.completed ? (
                         <CheckCircle2 className="h-4 w-4 text-green-500" />
+                      ) : !module.current && (
+                        <Lock className="h-4 w-4 text-gray-400" />
                       )}
                     </h3>
                     <p className="text-gray-300 text-sm mt-1">{module.description}</p>
