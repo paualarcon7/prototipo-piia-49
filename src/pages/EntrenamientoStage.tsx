@@ -8,12 +8,22 @@ import {
   Flower2
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import ReactConfetti from 'react-confetti';
 
 const EntrenamientoStage = () => {
   const { id, moduleId } = useParams();
   const navigate = useNavigate();
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
   const progressInterval = useRef<number>();
 
   const simulateMeditation = () => {
@@ -25,8 +35,16 @@ const EntrenamientoStage = () => {
       if (currentProgress >= 20) {
         clearInterval(progressInterval.current);
         setIsPlaying(false);
+        handleMeditationComplete();
       }
     }, 1000);
+  };
+
+  const handleMeditationComplete = () => {
+    setShowModal(true);
+    setTimeout(() => {
+      setShowConfetti(true);
+    }, 3000);
   };
 
   const handlePlayPause = () => {
@@ -48,6 +66,16 @@ const EntrenamientoStage = () => {
 
   return (
     <div className="container mx-auto px-4 py-6 pb-32">
+      {showConfetti && (
+        <ReactConfetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          recycle={false}
+          numberOfPieces={200}
+          onConfettiComplete={() => setShowConfetti(false)}
+        />
+      )}
+
       <Button
         variant="ghost"
         className="mb-4"
@@ -116,6 +144,30 @@ const EntrenamientoStage = () => {
           </div>
         </div>
       </div>
+
+      <Dialog open={showModal} onOpenChange={setShowModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>¡Felicitaciones! 🎉</DialogTitle>
+            <DialogDescription className="space-y-4">
+              <p className="mt-4">
+                Has completado exitosamente tu sesión de meditación. 
+                ¿Cómo te sientes después de esta práctica?
+              </p>
+              <textarea 
+                className="w-full h-24 p-2 rounded-md border border-gray-300 bg-background"
+                placeholder="Comparte tu experiencia..."
+              />
+              <Button 
+                className="w-full"
+                onClick={() => setShowModal(false)}
+              >
+                Enviar feedback
+              </Button>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
