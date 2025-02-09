@@ -5,7 +5,9 @@ import {
   ArrowLeft, 
   Play, 
   Pause,
-  Flower2
+  Flower2,
+  Calendar,
+  Clock
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import {
@@ -16,6 +18,17 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import ReactConfetti from 'react-confetti';
+import { addDays, format } from 'date-fns';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { toast } from "sonner";
 
 const EntrenamientoStage = () => {
   const { id, moduleId } = useParams();
@@ -24,7 +37,11 @@ const EntrenamientoStage = () => {
   const [progress, setProgress] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [selectedTime, setSelectedTime] = useState("08:00");
   const progressInterval = useRef<number>();
+
+  const startDate = new Date();
+  const endDate = addDays(startDate, 21);
 
   const simulateMeditation = () => {
     setIsPlaying(true);
@@ -56,6 +73,24 @@ const EntrenamientoStage = () => {
     }
   };
 
+  const handleAddToCalendar = () => {
+    const title = `Meditación - Módulo ${moduleId}`;
+    const description = `Protocolo de Meditación para el Manejo del Estrés - Duración: 21 días`;
+    const [hours, minutes] = selectedTime.split(':');
+    
+    // Crear evento para Google Calendar
+    const startDateTime = new Date();
+    startDateTime.setHours(parseInt(hours), parseInt(minutes), 0);
+    
+    const endDateTime = new Date(startDateTime);
+    endDateTime.setMinutes(endDateTime.getMinutes() + 20);
+
+    const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&details=${encodeURIComponent(description)}&dates=${format(startDateTime, "yyyyMMdd'T'HHmmss'Z'").slice(0, -1)}/${format(endDateTime, "yyyyMMdd'T'HHmmss'Z'").slice(0, -1)}&recur=RRULE:FREQ=DAILY;COUNT=21`;
+    
+    window.open(googleCalendarUrl, '_blank');
+    toast.success("¡Recordatorio creado exitosamente!");
+  };
+
   useEffect(() => {
     return () => {
       if (progressInterval.current) {
@@ -63,6 +98,15 @@ const EntrenamientoStage = () => {
       }
     };
   }, []);
+
+  const timeOptions = [];
+  for (let i = 0; i < 24; i++) {
+    for (let j = 0; j < 60; j += 30) {
+      const hour = i.toString().padStart(2, '0');
+      const minute = j.toString().padStart(2, '0');
+      timeOptions.push(`${hour}:${minute}`);
+    }
+  }
 
   return (
     <>
@@ -97,6 +141,45 @@ const EntrenamientoStage = () => {
                 <Flower2 className="h-5 w-5" />
                 Protocolo de Meditación para el Manejo del Estrés
               </h2>
+
+              <div className="bg-secondary/50 p-4 rounded-lg mb-6">
+                <h3 className="font-medium mb-3 flex items-center gap-2">
+                  <Calendar className="h-4 w-4" />
+                  Duración del protocolo
+                </h3>
+                <p className="text-sm text-gray-300">
+                  Este protocolo tiene una duración de 21 días, desde el {format(startDate, 'dd/MM/yyyy')} hasta el {format(endDate, 'dd/MM/yyyy')}.
+                </p>
+              </div>
+
+              <div className="bg-secondary/50 p-4 rounded-lg mb-6">
+                <h3 className="font-medium mb-3 flex items-center gap-2">
+                  <Clock className="h-4 w-4" />
+                  Recordatorio diario
+                </h3>
+                <div className="flex items-center gap-4">
+                  <Select value={selectedTime} onValueChange={setSelectedTime}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Seleccionar hora" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Hora del recordatorio</SelectLabel>
+                        {timeOptions.map((time) => (
+                          <SelectItem key={time} value={time}>
+                            {time}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <Button variant="outline" onClick={handleAddToCalendar}>
+                    <Calendar className="mr-2 h-4 w-4" />
+                    Agendar en calendario
+                  </Button>
+                </div>
+              </div>
+              
               <p className="text-gray-300 mb-6 leading-relaxed">
                 Este protocolo está diseñado para ayudarte a desarrollar una práctica de meditación efectiva 
                 que te permitirá manejar mejor el estrés en tu vida diaria. A través de esta práctica, 
@@ -177,3 +260,4 @@ const EntrenamientoStage = () => {
 };
 
 export default EntrenamientoStage;
+
