@@ -7,7 +7,8 @@ import {
   Pause,
   Flower2,
   Calendar,
-  Clock
+  Clock,
+  CalendarIcon
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import {
@@ -28,6 +29,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { toast } from "sonner";
 
 const EntrenamientoStage = () => {
@@ -38,9 +45,9 @@ const EntrenamientoStage = () => {
   const [showModal, setShowModal] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [selectedTime, setSelectedTime] = useState("08:00");
+  const [startDate, setStartDate] = useState<Date>(new Date());
   const progressInterval = useRef<number>();
 
-  const startDate = new Date();
   const endDate = addDays(startDate, 21);
 
   const simulateMeditation = () => {
@@ -79,13 +86,13 @@ const EntrenamientoStage = () => {
     const [hours, minutes] = selectedTime.split(':');
     
     // Crear evento para Google Calendar
-    const startDateTime = new Date();
-    startDateTime.setHours(parseInt(hours), parseInt(minutes), 0);
+    const eventStartDate = new Date(startDate);
+    eventStartDate.setHours(parseInt(hours), parseInt(minutes), 0);
     
-    const endDateTime = new Date(startDateTime);
+    const endDateTime = new Date(eventStartDate);
     endDateTime.setMinutes(endDateTime.getMinutes() + 20);
 
-    const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&details=${encodeURIComponent(description)}&dates=${format(startDateTime, "yyyyMMdd'T'HHmmss'Z'").slice(0, -1)}/${format(endDateTime, "yyyyMMdd'T'HHmmss'Z'").slice(0, -1)}&recur=RRULE:FREQ=DAILY;COUNT=21`;
+    const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&details=${encodeURIComponent(description)}&dates=${format(eventStartDate, "yyyyMMdd'T'HHmmss'Z'").slice(0, -1)}/${format(endDateTime, "yyyyMMdd'T'HHmmss'Z'").slice(0, -1)}&recur=RRULE:FREQ=DAILY;COUNT=21`;
     
     window.open(googleCalendarUrl, '_blank');
     toast.success("¡Recordatorio creado exitosamente!");
@@ -147,9 +154,33 @@ const EntrenamientoStage = () => {
                   <Calendar className="h-4 w-4" />
                   Duración del protocolo
                 </h3>
-                <p className="text-sm text-gray-300">
-                  Este protocolo tiene una duración de 21 días, desde el {format(startDate, 'dd/MM/yyyy')} hasta el {format(endDate, 'dd/MM/yyyy')}.
-                </p>
+                <div className="space-y-4">
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm text-gray-400">Fecha de inicio</label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="w-[240px] justify-start text-left font-normal"
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {format(startDate, 'dd/MM/yyyy')}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <CalendarComponent
+                          mode="single"
+                          selected={startDate}
+                          onSelect={(date) => date && setStartDate(date)}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                  <p className="text-sm text-gray-300">
+                    Este protocolo tiene una duración de 21 días, desde el {format(startDate, 'dd/MM/yyyy')} hasta el {format(endDate, 'dd/MM/yyyy')}.
+                  </p>
+                </div>
               </div>
 
               <div className="bg-secondary/50 p-4 rounded-lg mb-6">
@@ -260,4 +291,3 @@ const EntrenamientoStage = () => {
 };
 
 export default EntrenamientoStage;
-
