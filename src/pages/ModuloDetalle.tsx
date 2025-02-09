@@ -140,6 +140,8 @@ const ModuloDetalle = () => {
       navigate(`/programa/${id}/modulo/${moduleId}/inicio`);
     } else if (index === 1) {
       navigate(`/programa/${id}/modulo/${moduleId}/trabajo`);
+    } else if (index === 2) {
+      navigate(`/programa/${id}/modulo/${moduleId}/entrenamiento`);
     }
   };
 
