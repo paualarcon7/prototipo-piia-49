@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Index from "./pages/Index";
 import Home from "./pages/Home";
-import Mindfulness from "./pages/Mindfulness";
 import Diario from "./pages/Diario";
 import NuevaEntrada from "./pages/NuevaEntrada";
 import Ejercicio from "./pages/Ejercicio";
@@ -19,6 +17,7 @@ import InicioStage from "./pages/InicioStage";
 import BottomNav from "./components/BottomNav";
 import TrabajoStage from "./pages/TrabajoStage";
 import EntrenamientoStage from "./pages/EntrenamientoStage";
+import Protocolos from "./pages/Protocolos";
 
 const queryClient = new QueryClient();
 
@@ -64,7 +63,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/bienestar" element={<Mindfulness />} />
+          <Route path="/protocolos" element={<Protocolos />} />
           <Route path="/diario" element={<Diario />} />
           <Route path="/diario/nueva" element={<NuevaEntrada />} />
           <Route path="/ejercicio/:id" element={<Ejercicio />} />
