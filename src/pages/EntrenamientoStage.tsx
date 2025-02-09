@@ -67,7 +67,7 @@ const EntrenamientoStage = () => {
   return (
     <>
       {showConfetti && (
-        <div className="fixed inset-0 pointer-events-none z-50">
+        <div className="fixed inset-0 pointer-events-none z-[100]">
           <ReactConfetti
             width={window.innerWidth}
             height={window.innerHeight}
