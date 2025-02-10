@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { 
@@ -133,10 +132,10 @@ const EntrenamientoStage = () => {
         <Button
           variant="ghost"
           className="mb-4"
-          onClick={() => navigate(`/programa/${id}/modulo/${moduleId}`)}
+          onClick={() => navigate("/protocolos")}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Volver al módulo
+          Volver a protocolos
         </Button>
 
         <div className="bg-secondary/50 backdrop-blur-sm rounded-lg p-6 mb-6">

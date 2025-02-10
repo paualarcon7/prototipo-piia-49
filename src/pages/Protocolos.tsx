@@ -49,7 +49,7 @@ const Protocolos = () => {
   });
 
   const handleProtocolClick = (protocolId: number) => {
-    navigate(`/programa/2/modulo/4/entrenamiento`);
+    navigate(`/protocolos/entrenamiento/${protocolId}`);
   };
 
   return (
@@ -68,6 +68,7 @@ const Protocolos = () => {
               key={protocol.id}
               protocol={protocol}
               onClick={handleProtocolClick}
+              isLocked={protocol.id === 3} // Lock the Salud Integral protocol
             />
           ))}
         </div>
@@ -77,3 +78,4 @@ const Protocolos = () => {
 };
 
 export default Protocolos;
+
