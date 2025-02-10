@@ -18,16 +18,18 @@ const ProtocolFilters = ({
   setSelectedTag
 }: ProtocolFiltersProps) => {
   return (
-    <div className="bg-secondary/30 backdrop-blur-sm rounded-lg p-3">
+    <div className="bg-gradient-to-br from-[#9b87f5]/10 to-[#D946EF]/10 backdrop-blur-sm rounded-lg p-3 border border-[#9b87f5]/20">
       <div className="flex flex-col gap-3">
         {/* Dimension Filter */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 overflow-x-auto pb-2">
           <Button
             size="sm"
             variant={selectedDimension === "all" ? "secondary" : "outline"}
             onClick={() => setSelectedDimension("all")}
-            className={`h-8 px-3 ${
-              selectedDimension === "all" ? "bg-white/20" : "bg-white/5"
+            className={`h-8 px-3 whitespace-nowrap ${
+              selectedDimension === "all" 
+                ? "bg-[#9b87f5]/20 hover:bg-[#9b87f5]/30 text-[#D6BCFA]" 
+                : "bg-white/5 hover:bg-white/10 text-gray-300"
             }`}
           >
             Todos
@@ -36,8 +38,10 @@ const ProtocolFilters = ({
             size="sm"
             variant={selectedDimension === "rendimiento" ? "secondary" : "outline"}
             onClick={() => setSelectedDimension("rendimiento")}
-            className={`h-8 px-3 ${
-              selectedDimension === "rendimiento" ? "bg-white/20" : "bg-white/5"
+            className={`h-8 px-3 whitespace-nowrap ${
+              selectedDimension === "rendimiento" 
+                ? "bg-[#0EA5E9]/20 hover:bg-[#0EA5E9]/30 text-[#D6BCFA]" 
+                : "bg-white/5 hover:bg-white/10 text-gray-300"
             }`}
           >
             <Activity className="w-4 h-4 mr-2" />
@@ -47,8 +51,10 @@ const ProtocolFilters = ({
             size="sm"
             variant={selectedDimension === "bienestar" ? "secondary" : "outline"}
             onClick={() => setSelectedDimension("bienestar")}
-            className={`h-8 px-3 ${
-              selectedDimension === "bienestar" ? "bg-white/20" : "bg-white/5"
+            className={`h-8 px-3 whitespace-nowrap ${
+              selectedDimension === "bienestar" 
+                ? "bg-[#D946EF]/20 hover:bg-[#D946EF]/30 text-[#D6BCFA]" 
+                : "bg-white/5 hover:bg-white/10 text-gray-300"
             }`}
           >
             <Heart className="w-4 h-4 mr-2" />
@@ -58,8 +64,10 @@ const ProtocolFilters = ({
             size="sm"
             variant={selectedDimension === "salud" ? "secondary" : "outline"}
             onClick={() => setSelectedDimension("salud")}
-            className={`h-8 px-3 ${
-              selectedDimension === "salud" ? "bg-white/20" : "bg-white/5"
+            className={`h-8 px-3 whitespace-nowrap ${
+              selectedDimension === "salud" 
+                ? "bg-[#6E59A5]/20 hover:bg-[#6E59A5]/30 text-[#D6BCFA]" 
+                : "bg-white/5 hover:bg-white/10 text-gray-300"
             }`}
           >
             <Stethoscope className="w-4 h-4 mr-2" />
@@ -75,8 +83,8 @@ const ProtocolFilters = ({
               variant="secondary"
               className={`cursor-pointer whitespace-nowrap px-2 py-1 text-xs ${
                 selectedTag === tag 
-                  ? "bg-white/30 hover:bg-white/40" 
-                  : "bg-white/10 hover:bg-white/20"
+                  ? "bg-[#9b87f5]/30 hover:bg-[#9b87f5]/40 text-[#D6BCFA]" 
+                  : "bg-white/10 hover:bg-white/20 text-gray-300"
               }`}
               onClick={() => setSelectedTag(tag as Tag)}
             >
