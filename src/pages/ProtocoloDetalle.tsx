@@ -1,15 +1,29 @@
 
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { protocols } from "./Protocolos";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useEffect } from "react";
 
 const ProtocoloDetalle = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const protocol = protocols.find((p) => p.id === Number(id));
+
+  useEffect(() => {
+    if (protocol?.id === 1) {
+      navigate("/programa/2/modulo/4/entrenamiento");
+    }
+  }, [protocol, navigate]);
 
   if (!protocol) {
     return <div className="p-4 text-white">Protocolo no encontrado</div>;
+  }
+
+  // Si es el protocolo de meditación (id: 1), no renderizamos nada ya que useEffect
+  // nos redirigirá a la página de entrenamiento
+  if (protocol.id === 1) {
+    return null;
   }
 
   return (
