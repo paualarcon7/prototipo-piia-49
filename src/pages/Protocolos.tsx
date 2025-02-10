@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Activity, Heart, Stethoscope } from "lucide-react";
+import { Clipboard } from "lucide-react";
 import ProtocolFilters from "@/components/protocols/ProtocolFilters";
 import ProtocolCard from "@/components/protocols/ProtocolCard";
 import { Protocol, ProtocolDimension, Tag } from "@/types/protocols";
@@ -13,7 +13,7 @@ export const protocols: Protocol[] = [
     tags: ["estrés", "ansiedad", "meditación"],
     duration: "21 días",
     description: "Desarrolla una práctica efectiva de meditación para manejar el estrés diario",
-    icon: Heart,
+    icon: Clipboard,
     instructions: "Este protocolo está diseñado para ayudarte a desarrollar una práctica de meditación efectiva que te permitirá manejar mejor el estrés en tu vida diaria."
   },
   {
@@ -23,7 +23,7 @@ export const protocols: Protocol[] = [
     tags: ["concentración", "productividad"],
     duration: "30 días",
     description: "Optimiza tu rendimiento mental y físico",
-    icon: Activity
+    icon: Clipboard
   },
   {
     id: 3,
@@ -32,7 +32,7 @@ export const protocols: Protocol[] = [
     tags: ["bienestar", "equilibrio"],
     duration: "45 días",
     description: "Mejora tu salud física y mental de manera holística",
-    icon: Stethoscope
+    icon: Clipboard
   }
 ];
 
