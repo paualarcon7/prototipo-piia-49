@@ -1,12 +1,11 @@
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Activity, Heart, Stethoscope } from "lucide-react";
 import ProtocolFilters from "@/components/protocols/ProtocolFilters";
 import ProtocolCard from "@/components/protocols/ProtocolCard";
 import { Protocol, ProtocolDimension, Tag } from "@/types/protocols";
 
-const protocols: Protocol[] = [
+export const protocols: Protocol[] = [
   {
     id: 1,
     title: "Protocolo de Meditación para el Manejo del Estrés",
@@ -40,17 +39,12 @@ const protocols: Protocol[] = [
 const Protocolos = () => {
   const [selectedDimension, setSelectedDimension] = useState<ProtocolDimension>("all");
   const [selectedTag, setSelectedTag] = useState<Tag>("all");
-  const navigate = useNavigate();
 
   const filteredProtocols = protocols.filter((protocol) => {
     const dimensionMatch = selectedDimension === "all" || protocol.dimension === selectedDimension;
     const tagMatch = selectedTag === "all" || protocol.tags.includes(selectedTag as Exclude<Tag, "all">);
     return dimensionMatch && tagMatch;
   });
-
-  const handleProtocolClick = (protocolId: number) => {
-    navigate(`/protocolos/entrenamiento/${protocolId}`);
-  };
 
   return (
     <div className="flex flex-col h-screen bg-transparent">
@@ -67,8 +61,7 @@ const Protocolos = () => {
             <ProtocolCard
               key={protocol.id}
               protocol={protocol}
-              onClick={handleProtocolClick}
-              isLocked={protocol.id === 3} // Lock the Salud Integral protocol
+              isLocked={protocol.id === 3}
             />
           ))}
         </div>
@@ -78,4 +71,3 @@ const Protocolos = () => {
 };
 
 export default Protocolos;
-

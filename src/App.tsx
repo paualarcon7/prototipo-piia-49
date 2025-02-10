@@ -18,6 +18,7 @@ import BottomNav from "./components/BottomNav";
 import TrabajoStage from "./pages/TrabajoStage";
 import EntrenamientoStage from "./pages/EntrenamientoStage";
 import Protocolos from "./pages/Protocolos";
+import ProtocoloDetalle from "./pages/ProtocoloDetalle";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +65,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/home" element={<Home />} />
           <Route path="/protocolos" element={<Protocolos />} />
+          <Route path="/protocolos/:id" element={<ProtocoloDetalle />} />
           <Route path="/diario" element={<Diario />} />
           <Route path="/diario/nueva" element={<NuevaEntrada />} />
           <Route path="/ejercicio/:id" element={<Ejercicio />} />

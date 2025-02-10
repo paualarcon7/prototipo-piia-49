@@ -11,21 +11,22 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface ProtocolCardProps {
   protocol: Protocol;
-  onClick: (id: number) => void;
   isLocked?: boolean;
 }
 
-const ProtocolCard = ({ protocol, onClick, isLocked = false }: ProtocolCardProps) => {
+const ProtocolCard = ({ protocol, isLocked = false }: ProtocolCardProps) => {
   const [showLockModal, setShowLockModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleClick = () => {
     if (isLocked) {
       setShowLockModal(true);
     } else {
-      onClick(protocol.id);
+      navigate(`/protocolos/${protocol.id}`);
     }
   };
 
