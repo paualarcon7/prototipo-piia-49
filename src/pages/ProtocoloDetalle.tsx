@@ -1,5 +1,5 @@
 
-import { useParams, useNavigate, Navigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { protocols } from "./Protocolos";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -38,7 +38,7 @@ const ProtocoloDetalle = () => {
         </div>
       </div>
 
-      <Card className="bg-gradient-to-br from-[#9b87f5]/20 to-[#D946EF]/20 backdrop-blur-sm border-secondary/20 p-6">
+      <Card className="bg-gradient-to-br from-[#0EA5E9]/20 to-[#8B5CF6]/20 backdrop-blur-sm border-secondary/20 p-6">
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex gap-2">
