@@ -51,7 +51,7 @@ const ProtocolCard = ({ protocol, onClick, isLocked = false }: ProtocolCardProps
               )}
             </div>
           </div>
-          <PlayCircle className="w-8 h-8 text-white fill-white/10" />
+          {!isLocked && <PlayCircle className="w-8 h-8 text-white fill-white/10" />}
         </div>
         <div className="flex items-center justify-between mt-2">
           <div className="flex flex-wrap gap-2">
@@ -82,4 +82,3 @@ const ProtocolCard = ({ protocol, onClick, isLocked = false }: ProtocolCardProps
 };
 
 export default ProtocolCard;
-
