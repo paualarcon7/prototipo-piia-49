@@ -34,29 +34,28 @@ const ProtocolCard = ({ protocol, isLocked = false }: ProtocolCardProps) => {
     <>
       <Card 
         key={protocol.id} 
-        className={`bg-gradient-to-br from-[#0EA5E9]/20 to-[#8B5CF6]/20 backdrop-blur-sm border-secondary/20 p-4 space-y-2 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 cursor-pointer relative ${
+        className={`bg-gradient-to-br from-[#0EA5E9]/20 to-[#8B5CF6]/20 backdrop-blur-sm border-secondary/20 p-6 space-y-4 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 cursor-pointer relative ${
           isLocked ? 'opacity-75 hover:opacity-85' : ''
         }`}
         onClick={handleClick}
       >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-full bg-white/10">
-              <protocol.icon className="w-6 h-6 text-[#9b87f5]" />
-            </div>
-            <div>
-              <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-                {protocol.title}
-                {isLocked && <Lock className="h-4 w-4 text-[#D946EF]" />}
-              </h2>
-              {protocol.description && (
-                <p className="text-sm text-gray-300">{protocol.description}</p>
-              )}
-            </div>
+        <div className="flex items-center gap-4">
+          <div className="p-3 rounded-full bg-white/10">
+            <protocol.icon className="w-8 h-8 text-[#9b87f5]" />
           </div>
-          {!isLocked && <PlayCircle className="w-8 h-8 text-[#9b87f5] fill-white/10" />}
+          <div className="flex-1">
+            <h2 className="text-xl font-semibold text-white flex items-center gap-2">
+              {protocol.title}
+              {isLocked && <Lock className="h-5 w-5 text-[#D946EF]" />}
+            </h2>
+            {protocol.description && (
+              <p className="text-gray-300 mt-1">{protocol.description}</p>
+            )}
+          </div>
+          {!isLocked && <PlayCircle className="w-10 h-10 text-[#9b87f5] fill-white/10" />}
         </div>
-        <div className="flex items-center justify-between mt-2">
+
+        <div className="flex items-center justify-between pt-2">
           <div className="flex flex-wrap gap-2">
             {protocol.tags.map((tag) => (
               <Badge 
@@ -89,3 +88,4 @@ const ProtocolCard = ({ protocol, isLocked = false }: ProtocolCardProps) => {
 };
 
 export default ProtocolCard;
+
