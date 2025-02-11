@@ -1,19 +1,22 @@
 
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Bell } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { EnergyActivity } from "@/types/energyMap";
 import { ActivityList } from "@/components/energy-map/ActivityList";
 import { AddActivityDialog } from "@/components/energy-map/AddActivityDialog";
 import { EnergyScaleLegend } from "@/components/energy-map/EnergyScaleLegend";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 const EntrenamientoStage = () => {
   const { id, moduleId } = useParams();
   const navigate = useNavigate();
   const [activities, setActivities] = useState<EnergyActivity[]>([]);
   const [showAddActivity, setShowAddActivity] = useState(false);
+  const [dailyReminder, setDailyReminder] = useState(false);
   const [newActivity, setNewActivity] = useState<Partial<EnergyActivity>>({
     startTime: "",
     endTime: "",
@@ -46,6 +49,16 @@ const EntrenamientoStage = () => {
     toast.success("Actividad registrada exitosamente");
   };
 
+  const handleReminderChange = (checked: boolean) => {
+    setDailyReminder(checked);
+    if (checked) {
+      // Aquí se podría integrar con un sistema de notificaciones
+      toast.success("Recordatorio diario activado");
+    } else {
+      toast.info("Recordatorio diario desactivado");
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-6 pb-32">
       <Button
@@ -58,11 +71,29 @@ const EntrenamientoStage = () => {
       </Button>
 
       <div className="bg-secondary/50 backdrop-blur-sm rounded-lg p-6 mb-6">
-        <h1 className="text-2xl font-bold mb-4">Mapa de Energía</h1>
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-2xl font-bold">Mapa de Energía</h1>
+          <div className="flex items-center space-x-2 bg-secondary/70 p-2 rounded-lg">
+            <Bell className="h-4 w-4 text-purple-400" />
+            <span className="text-sm text-gray-300">Día 1 de 7</span>
+          </div>
+        </div>
+
         <p className="text-gray-300 mb-6">
           Registra y califica tus actividades diarias para identificar patrones en tus niveles de energía.
           Esta información te ayudará a optimizar tu día y mejorar tu rendimiento.
         </p>
+
+        <div className="flex items-center space-x-2 bg-secondary/70 p-4 rounded-lg mb-6">
+          <Switch
+            id="daily-reminder"
+            checked={dailyReminder}
+            onCheckedChange={handleReminderChange}
+          />
+          <Label htmlFor="daily-reminder" className="text-sm text-gray-300">
+            Activar recordatorio diario para registrar actividades
+          </Label>
+        </div>
 
         <div className="space-y-6">
           <ActivityList
