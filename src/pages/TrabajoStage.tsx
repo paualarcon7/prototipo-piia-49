@@ -21,7 +21,14 @@ const TrabajoStage = () => {
   const progressInterval = useRef<number>();
   const [messages, setMessages] = useState<Array<{ text: string; isBot: boolean }>>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(-1);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const guidedQuestions = [
+    "¿Recuerdas algún momento en el que hayas perdido la noción del tiempo porque estabas sumergido en algo? ¿Cuéntanos cómo se sintió?",
+    "¿Identificas que habilidades utilizaste durante ese momento?",
+    "¿Qué te pareció la explicación del protocolo?"
+  ];
 
   const simulateAudioProgress = () => {
     setIsPlaying(true);
@@ -33,6 +40,14 @@ const TrabajoStage = () => {
         clearInterval(progressInterval.current);
         setIsPlaying(false);
         setAudioCompleted(true);
+        // Start the guided questions when audio is completed
+        if (currentQuestionIndex === -1) {
+          setCurrentQuestionIndex(0);
+          setMessages([{
+            text: guidedQuestions[0],
+            isBot: true
+          }]);
+        }
       }
     }, 1000);
   };
@@ -50,11 +65,29 @@ const TrabajoStage = () => {
     setMessages(prev => [...prev, { text, isBot: false }]);
     setIsLoading(true);
 
+    // Add delay to simulate processing
     setTimeout(() => {
-      setMessages(prev => [...prev, { 
-        text: "Esta es una respuesta simulada del asistente. En una implementación real, aquí se conectaría con un backend para procesar las preguntas y generar respuestas apropiadas.", 
-        isBot: true 
-      }]);
+      if (currentQuestionIndex < guidedQuestions.length - 1) {
+        // If we're still in guided questions, show the next one
+        setCurrentQuestionIndex(prev => prev + 1);
+        setMessages(prev => [...prev, { 
+          text: guidedQuestions[currentQuestionIndex + 1], 
+          isBot: true 
+        }]);
+      } else if (currentQuestionIndex === guidedQuestions.length - 1) {
+        // If we just finished the last guided question
+        setCurrentQuestionIndex(prev => prev + 1);
+        setMessages(prev => [...prev, { 
+          text: "¡Gracias por compartir tus respuestas! Ahora, ¿tienes alguna duda o pregunta adicional sobre el estado de flujo? Estoy aquí para ayudarte.", 
+          isBot: true 
+        }]);
+      } else {
+        // For any subsequent questions
+        setMessages(prev => [...prev, { 
+          text: "Gracias por tu pregunta. Permíteme ayudarte a profundizar en tu comprensión del estado de flujo. ¿Hay algo más que te gustaría explorar?", 
+          isBot: true 
+        }]);
+      }
       setIsLoading(false);
     }, 1000);
   };
@@ -83,10 +116,10 @@ const TrabajoStage = () => {
       </Button>
 
       <div className="bg-secondary/50 backdrop-blur-sm rounded-lg p-6 mb-6">
-        <h1 className="text-2xl font-bold mb-4">Sesión de Trabajo - Módulo {moduleId}</h1>
+        <h1 className="text-2xl font-bold mb-4">ALMA - PARTE 1: ACTIVA TU ENERGÍA Y DETECTA TU FLUJO</h1>
         <p className="text-gray-300 mb-6">
           Escucha atentamente la explicación del protocolo y luego participa en la
-          sesión de preguntas y respuestas para aclarar cualquier duda.
+          sesión de preguntas y respuestas para profundizar en tu comprensión del estado de flujo.
         </p>
 
         <div className="space-y-6">
@@ -123,7 +156,7 @@ const TrabajoStage = () => {
               <div className="bg-secondary/70 p-6 rounded-lg">
                 <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
                   <MessageSquare className="h-5 w-5" />
-                  Preguntas y Respuestas
+                  Conversación con PIIA
                 </h2>
                 
                 <ScrollArea className="h-[400px] pr-4">
@@ -162,3 +195,4 @@ const TrabajoStage = () => {
 };
 
 export default TrabajoStage;
+
