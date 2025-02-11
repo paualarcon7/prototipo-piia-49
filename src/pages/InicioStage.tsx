@@ -76,16 +76,27 @@ const InicioStage = () => {
       </Button>
 
       <div className="bg-secondary/50 backdrop-blur-sm rounded-lg p-6 mb-6">
-        <h1 className="text-2xl font-bold mb-4">Inicio del Módulo {moduleId}</h1>
+        <h1 className="text-2xl font-bold mb-4">ALMA - PARTE 1: ACTIVA TU ENERGÍA Y DETECTA TU FLUJO</h1>
         <p className="text-gray-300 mb-6">
-          En esta etapa inicial, comenzaremos explorando los conceptos fundamentales
-          a través de un audio guiado. Escucha atentamente y prepárate para
-          reflexionar sobre lo aprendido.
+          En esta primera etapa, exploraremos el concepto del estado de flujo y cómo 
+          identificarlo en tu vida diaria. Comienza observando el siguiente video y 
+          reflexiona sobre cómo este concepto se aplica a tu experiencia personal.
         </p>
 
         <div className="space-y-6">
           <div className="bg-secondary/70 p-6 rounded-lg">
-            <h2 className="text-lg font-semibold mb-4">Audio Introductorio</h2>
+            <h2 className="text-lg font-semibold mb-4">Video Introductorio</h2>
+            <div className="aspect-video w-full mb-4">
+              <iframe
+                className="w-full h-full rounded-lg"
+                src="https://www.instagram.com/p/C8S20NUNJRP/embed"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+
+          <div className="bg-secondary/70 p-6 rounded-lg">
+            <h2 className="text-lg font-semibold mb-4">Audio Complementario</h2>
             <div className="flex flex-col items-center gap-4">
               <div className="w-full bg-gray-700 rounded-full h-2">
                 <div
@@ -134,8 +145,7 @@ const InicioStage = () => {
                   <DialogHeader>
                     <DialogTitle>Grabar Reflexión</DialogTitle>
                     <DialogDescription>
-                      Comparte tu reflexión sobre lo que has aprendido en este módulo.
-                      Presiona el botón para comenzar a grabar.
+                      ¿Cómo le explicarías a tu mejor amigo qué es el estado de FLOW?
                     </DialogDescription>
                   </DialogHeader>
                   <div className="flex flex-col items-center gap-6 p-6">

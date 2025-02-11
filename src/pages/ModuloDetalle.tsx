@@ -60,41 +60,41 @@ const ModuloDetalle = () => {
     {
       title: "Inicio",
       icon: <Lightbulb className="w-6 h-6" />,
-      description: "Escucha el audio introductorio y registra tu reflexión mediante una nota de voz.",
+      description: "Explora el concepto del estado de flujo y observa cómo se manifiesta en tu vida.",
       steps: [
-        "Escuchar audio introductorio",
-        "Opción de audio adicional para profundizar",
-        "Grabar reflexión por voz"
+        "Ver video introductorio sobre el estado de flujo",
+        "Reflexionar sobre el concepto",
+        "Grabar tu explicación personal del estado de flujo"
       ]
     },
     {
       title: "Sesión de trabajo",
       icon: <ClipboardList className="w-6 h-6" />,
-      description: "Aprende sobre el protocolo, realiza un test y participa en una sesión de Q&A.",
+      description: "Identifica y analiza tus momentos de máxima energía y flujo.",
       steps: [
-        "Audio explicativo del protocolo",
-        "Test de 3 preguntas",
-        "Sesión de Q&A (voz o texto)"
+        "Registro de actividades energizantes",
+        "Análisis de patrones de flujo",
+        "Sesión de Q&A sobre el tema"
       ]
     },
     {
       title: "Entrenamiento",
       icon: <Dumbbell className="w-6 h-6" />,
-      description: "Practica los ejercicios y regístralos en tu calendario.",
+      description: "Practica técnicas para entrar en estado de flujo más frecuentemente.",
       steps: [
-        "Acceso al protocolo de ejercicios",
-        "Registro de ejercicios en el calendario",
-        "Seguimiento periódico"
+        "Ejercicios de entrada al estado de flujo",
+        "Registro de experiencias",
+        "Seguimiento de progreso"
       ]
     },
     {
       title: "Feedback",
       icon: <MessageSquare className="w-6 h-6" />,
-      description: "Evalúa tu progreso y comparte tu experiencia con el protocolo.",
+      description: "Evalúa tu comprensión y experiencia con el estado de flujo.",
       steps: [
-        "Test de evaluación",
-        "Registro de feedback",
-        "Revisión de progreso"
+        "Test de comprensión",
+        "Registro de insights",
+        "Plan de acción futuro"
       ]
     }
   ];
@@ -102,7 +102,7 @@ const ModuloDetalle = () => {
   const mockQuestions = [
     {
       id: 1,
-      text: "¿Qué aspecto del protocolo te resultó más útil?",
+      text: "¿Qué aspecto del estado de flujo te resultó más útil?",
       options: [
         { value: "a", label: "Los ejercicios prácticos", color: "green" },
         { value: "b", label: "Las explicaciones teóricas", color: "blue" },
@@ -165,8 +165,19 @@ const ModuloDetalle = () => {
           </Button>
 
           <div className="bg-secondary/50 backdrop-blur-sm rounded-lg p-6 mb-6">
-            <h1 className="text-2xl font-bold mb-4">Módulo {moduleId}</h1>
-            <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-bold mb-4">ALMA - PARTE 1: ACTIVA TU ENERGÍA Y DETECTA TU FLUJO</h1>
+            <p className="text-gray-300 mb-4">
+              El modelo ALMA está diseñado para ayudarte a alinear tu energía, talento, impacto y sostenibilidad, 
+              con el fin de encontrar un camino profesional y personal pleno y significativo. Cada paso te guiará 
+              a través de reflexiones y ejercicios prácticos para conectar con tu esencia y construir una estrategia de acción.
+            </p>
+            <div className="bg-purple-500/20 p-4 rounded-lg">
+              <h2 className="text-lg font-semibold mb-2">Objetivo del Módulo</h2>
+              <p className="text-gray-300">
+                Identificar las actividades y momentos en los que tu energía se expande y experimentas el estado de "flujo".
+              </p>
+            </div>
+            <div className="flex items-center gap-2 mt-4">
               <span className="text-sm bg-purple-500/30 text-purple-300 px-3 py-1.5 rounded-full font-medium flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
                 En progreso
