@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card } from "./ui/card";
 import { format } from "date-fns";
@@ -36,7 +35,7 @@ const DiaryEntryList = ({ entries, onEntryClick }: DiaryEntryListProps) => {
         {entries.map((entry) => (
           <Card
             key={entry.id}
-            className="bg-gradient-to-br from-[#0EA5E9]/20 to-[#8B5CF6]/20 backdrop-blur-sm border-secondary/20 p-4 cursor-pointer hover:bg-secondary/60 transition-colors"
+            className="bg-secondary/50 backdrop-blur-sm border-secondary/20 p-4 cursor-pointer hover:bg-secondary/60 transition-colors"
             onClick={() => onEntryClick(entry)}
           >
             <div className="flex justify-between items-start mb-2">

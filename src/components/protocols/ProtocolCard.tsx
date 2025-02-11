@@ -30,11 +30,24 @@ const ProtocolCard = ({ protocol, isLocked = false }: ProtocolCardProps) => {
     }
   };
 
+  const getCardGradient = (dimension: string) => {
+    switch (dimension) {
+      case 'bienestar':
+        return 'bg-gradient-to-br from-[#9b87f5]/20 to-[#D946EF]/20';
+      case 'rendimiento':
+        return 'bg-gradient-to-br from-[#0EA5E9]/20 to-[#8B5CF6]/20';
+      case 'salud':
+        return 'bg-gradient-to-br from-[#6E59A5]/20 to-[#D6BCFA]/20';
+      default:
+        return 'bg-secondary/50';
+    }
+  };
+
   return (
     <>
       <Card 
         key={protocol.id} 
-        className={`bg-gradient-to-br from-[#0EA5E9]/20 to-[#8B5CF6]/20 backdrop-blur-sm border-secondary/20 p-4 space-y-2 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 cursor-pointer relative ${
+        className={`${getCardGradient(protocol.dimension)} backdrop-blur-sm border-secondary/20 p-4 space-y-2 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300 cursor-pointer relative ${
           isLocked ? 'opacity-75 hover:opacity-85' : ''
         }`}
         onClick={handleClick}
@@ -73,7 +86,7 @@ const ProtocolCard = ({ protocol, isLocked = false }: ProtocolCardProps) => {
       </Card>
 
       <Dialog open={showLockModal} onOpenChange={setShowLockModal}>
-        <DialogContent className="bg-gradient-to-br from-[#0EA5E9]/20 to-[#8B5CF6]/20 border-[#9b87f5]/20">
+        <DialogContent className="bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] border-[#9b87f5]/20">
           <DialogHeader>
             <DialogTitle className="text-[#9b87f5]">Protocolo bloqueado</DialogTitle>
             <DialogDescription className="text-gray-300">

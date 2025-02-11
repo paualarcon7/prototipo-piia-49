@@ -1,4 +1,3 @@
-
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { Pencil, MapPin, Clock } from "lucide-react";
@@ -26,7 +25,7 @@ interface DiaryEntryProps {
 
 const DiaryEntry = ({ entry, isEditable = true, onEdit }: DiaryEntryProps) => {
   return (
-    <Card className="bg-gradient-to-br from-[#0EA5E9]/20 to-[#8B5CF6]/20 backdrop-blur-sm border-0 shadow-xl p-6 hover:bg-[#1A1F2C]/95 transition-colors">
+    <Card className="bg-[#1A1F2C]/90 backdrop-blur-lg border-0 shadow-xl p-6 hover:bg-[#1A1F2C]/95 transition-colors">
       <div className="flex justify-between items-start mb-4">
         <div className="flex flex-col gap-1">
           <h3 className="text-xl font-semibold text-white">
