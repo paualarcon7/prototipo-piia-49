@@ -138,16 +138,16 @@ const EntrenamientoStage = () => {
             </div>
           </div>
 
-          {/* Activity List and Energy Scale */}
+          {/* Energy Scale and Activity List */}
           <div className="space-y-6 mt-8">
+            <div className="bg-secondary/70 p-6 rounded-lg">
+              <EnergyScaleLegend />
+            </div>
+            
             <ActivityList
               activities={activities}
               onAddActivity={() => setShowAddActivity(true)}
             />
-
-            <div className="bg-secondary/70 p-6 rounded-lg">
-              <EnergyScaleLegend />
-            </div>
           </div>
         </div>
       </div>
