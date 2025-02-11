@@ -40,7 +40,8 @@ const EntrenamientoStage = () => {
       startTime: newActivity.startTime,
       endTime: newActivity.endTime,
       description: newActivity.description,
-      energyRating: newActivity.energyRating as number
+      energyRating: newActivity.energyRating as number,
+      date: new Date() // Add current date when creating activity
     };
 
     setActivities([...activities, activity]);

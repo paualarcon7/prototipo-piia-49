@@ -36,10 +36,15 @@ export const ActivityList = ({ activities, onAddActivity }: ActivityListProps) =
             >
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-gray-400">
-                    {format(new Date(`2024-01-01T${activity.startTime}`), 'HH:mm')} - 
-                    {format(new Date(`2024-01-01T${activity.endTime}`), 'HH:mm')}
-                  </span>
+                  <div className="space-y-1">
+                    <span className="text-sm text-gray-400">
+                      {format(activity.date, 'dd/MM/yyyy')}
+                    </span>
+                    <span className="text-sm text-gray-400 block">
+                      {format(new Date(`2024-01-01T${activity.startTime}`), 'HH:mm')} - 
+                      {format(new Date(`2024-01-01T${activity.endTime}`), 'HH:mm')}
+                    </span>
+                  </div>
                   <div className="flex items-center gap-1">
                     <Star className="w-4 h-4 text-purple-500" fill="currentColor" />
                     <span className="text-purple-300">{activity.energyRating}</span>
