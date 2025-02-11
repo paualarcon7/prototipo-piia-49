@@ -49,7 +49,7 @@ const Tests = () => {
       <h1 className="text-2xl font-bold mb-4">Tests Disponibles</h1>
       
       <Card 
-        className="p-4 bg-gradient-to-br from-[#0EA5E9]/20 to-[#8B5CF6]/20 backdrop-blur-sm border-secondary/20 cursor-pointer"
+        className="p-4 bg-secondary/50 backdrop-blur-sm border-secondary/20 cursor-pointer"
         onClick={() => setActiveTest("orlick")}
       >
         <div className="flex items-center justify-between">
@@ -62,7 +62,7 @@ const Tests = () => {
         <p className="text-sm mt-2 text-green-500">Abierto</p>
       </Card>
 
-      <Card className="p-4 bg-gradient-to-br from-[#0EA5E9]/20 to-[#8B5CF6]/20 backdrop-blur-sm border-secondary/20">
+      <Card className="p-4 bg-secondary/50 backdrop-blur-sm border-secondary/20">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold">Test de Burnout</h2>
@@ -73,7 +73,7 @@ const Tests = () => {
         <p className="text-sm mt-2 text-muted-foreground">Bloqueado</p>
       </Card>
 
-      <Card className="p-4 bg-gradient-to-br from-[#0EA5E9]/20 to-[#8B5CF6]/20 backdrop-blur-sm border-secondary/20">
+      <Card className="p-4 bg-secondary/50 backdrop-blur-sm border-secondary/20">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold">Test de Depresión</h2>

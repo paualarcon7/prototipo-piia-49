@@ -1,3 +1,4 @@
+
 import { Trophy, Flame, CheckCircle2, Lock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
@@ -52,7 +53,7 @@ const Home = () => {
       <h1 className="text-xl font-bold mb-4">Bienvenido de vuelta</h1>
       
       {/* Streak Card */}
-      <Card className="bg-gradient-to-br from-[#0EA5E9]/20 to-[#8B5CF6]/20 border-none text-white">
+      <Card className="bg-[#221F26] border-none text-white">
         <CardContent className="pt-4">
           {/* Days of the week */}
           <div className="flex justify-between items-center mb-6 px-2">
@@ -98,7 +99,7 @@ const Home = () => {
               }`}
               onClick={() => program.status !== 'blocked' && navigate(`/programa/${program.id}`)}
             >
-              <div className={`bg-gradient-to-br from-[#0EA5E9]/20 to-[#8B5CF6]/20 p-6 text-white relative`}>
+              <div className={`bg-gradient-to-r ${program.color} p-6 text-white relative`}>
                 <CardTitle className="text-xl mb-2 flex items-center gap-2">
                   {program.name}
                   {program.status === 'completed' && <CheckCircle2 className="h-5 w-5 text-white" />}
@@ -116,7 +117,7 @@ const Home = () => {
                   </div>
                   <div className="w-full bg-secondary rounded-full h-2">
                     <div 
-                      className={`bg-gradient-to-br from-[#0EA5E9]/20 to-[#8B5CF6]/20 h-2 rounded-full transition-all duration-300`}
+                      className={`bg-gradient-to-r ${program.color} h-2 rounded-full transition-all duration-300`}
                       style={{ 
                         width: `${program.progress}%`,
                         opacity: program.status === 'blocked' ? '0.5' : '1'
