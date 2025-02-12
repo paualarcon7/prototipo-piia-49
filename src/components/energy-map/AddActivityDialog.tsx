@@ -1,10 +1,11 @@
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { EnergyRatingSelector } from "./EnergyRatingSelector";
 import { EnergyActivity } from "@/types/energyMap";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useState, useEffect } from "react";
 
 interface AddActivityDialogProps {
   open: boolean;
@@ -21,6 +22,83 @@ export const AddActivityDialog = ({
   onActivityChange,
   onSave
 }: AddActivityDialogProps) => {
+  const [hours, setHours] = useState<string[]>([]);
+  const [minutes, setMinutes] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Generate hours (00-23)
+    const hoursArray = Array.from({ length: 24 }, (_, i) => 
+      i.toString().padStart(2, '0')
+    );
+    setHours(hoursArray);
+
+    // Generate minutes (00-55, step of 5)
+    const minutesArray = Array.from({ length: 12 }, (_, i) => 
+      (i * 5).toString().padStart(2, '0')
+    );
+    setMinutes(minutesArray);
+  }, []);
+
+  const handleTimeChange = (type: 'start' | 'end', timeType: 'hour' | 'minute', value: string) => {
+    const currentTime = type === 'start' ? newActivity.startTime : newActivity.endTime;
+    const [currentHour, currentMinute] = currentTime?.split(':') || ['00', '00'];
+    
+    const newTime = timeType === 'hour' 
+      ? `${value}:${currentMinute}`
+      : `${currentHour}:${value}`;
+
+    onActivityChange({
+      ...newActivity,
+      [type === 'start' ? 'startTime' : 'endTime']: newTime
+    });
+  };
+
+  const TimeSelector = ({ type, value }: { type: 'start' | 'end', value: string }) => {
+    const [hour, minute] = value?.split(':') || ['00', '00'];
+
+    return (
+      <div className="flex gap-2">
+        <div className="space-y-2 flex-1">
+          <label className="text-sm text-gray-400">Hora</label>
+          <Select 
+            value={hour} 
+            onValueChange={(value) => handleTimeChange(type, 'hour', value)}
+          >
+            <SelectTrigger className="bg-black/40">
+              <SelectValue placeholder="Hora" />
+            </SelectTrigger>
+            <SelectContent className="max-h-[200px]">
+              {hours.map((h) => (
+                <SelectItem key={h} value={h}>
+                  {h}:00
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2 flex-1">
+          <label className="text-sm text-gray-400">Minutos</label>
+          <Select 
+            value={minute} 
+            onValueChange={(value) => handleTimeChange(type, 'minute', value)}
+          >
+            <SelectTrigger className="bg-black/40">
+              <SelectValue placeholder="Min" />
+            </SelectTrigger>
+            <SelectContent>
+              {minutes.map((m) => (
+                <SelectItem key={m} value={m}>
+                  {m}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
@@ -31,28 +109,25 @@ export const AddActivityDialog = ({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-6">
+          <div className="grid gap-6">
             <div className="space-y-2">
-              <label htmlFor="startTime" className="text-sm text-gray-400">
+              <label className="text-sm text-gray-400">
                 Hora de inicio
               </label>
-              <Input
-                id="startTime"
-                type="time"
-                value={newActivity.startTime}
-                onChange={(e) => onActivityChange({ ...newActivity, startTime: e.target.value })}
+              <TimeSelector 
+                type="start" 
+                value={newActivity.startTime || '00:00'} 
               />
             </div>
+
             <div className="space-y-2">
-              <label htmlFor="endTime" className="text-sm text-gray-400">
+              <label className="text-sm text-gray-400">
                 Hora de fin
               </label>
-              <Input
-                id="endTime"
-                type="time"
-                value={newActivity.endTime}
-                onChange={(e) => onActivityChange({ ...newActivity, endTime: e.target.value })}
+              <TimeSelector 
+                type="end" 
+                value={newActivity.endTime || '00:00'} 
               />
             </div>
           </div>
