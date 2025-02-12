@@ -8,13 +8,13 @@ import { Protocol, ProtocolDimension, Tag } from "@/types/protocols";
 export const protocols: Protocol[] = [
   {
     id: 1,
-    title: "Protocolo de Meditación para el Manejo del Estrés",
+    title: "ALMA - PARTE 1: ACTIVA TU ENERGÍA Y DETECTA TU FLUJO",
     dimension: "bienestar",
-    tags: ["estrés", "ansiedad", "meditación"],
-    duration: "21 días",
-    description: "Desarrolla una práctica efectiva de meditación para manejar el estrés diario",
+    tags: ["energía", "flujo", "rendimiento"],
+    duration: "7 días",
+    description: "Descubre y potencia tu estado de flujo personal para alcanzar tu máximo rendimiento y bienestar",
     icon: Clipboard,
-    instructions: "Este protocolo está diseñado para ayudarte a desarrollar una práctica de meditación efectiva que te permitirá manejar mejor el estrés en tu vida diaria."
+    instructions: "Este protocolo está diseñado para ayudarte a identificar y maximizar tus momentos de máxima energía y flujo, mejorando tu rendimiento y satisfacción en tus actividades diarias."
   },
   {
     id: 2,
