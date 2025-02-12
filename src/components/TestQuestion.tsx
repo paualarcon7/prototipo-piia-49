@@ -2,10 +2,10 @@
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
 import { Textarea } from "./ui/textarea";
+import { StarRating } from "./StarRating";
 
 interface Option {
   value: string;
@@ -18,6 +18,7 @@ interface Question {
   text: string;
   options: Option[];
   isTextInput?: boolean;
+  isStarRating?: boolean;
 }
 
 interface TestQuestionProps {
@@ -61,7 +62,14 @@ const TestQuestion = ({ questions, onComplete, onBack }: TestQuestionProps) => {
 
       <h2 className="text-2xl font-semibold mb-8">{question.text}</h2>
 
-      {question.isTextInput ? (
+      {question.isStarRating ? (
+        <StarRating
+          value={parseInt(answers[question.id] || "0")}
+          onChange={(rating) => {
+            setAnswers(prev => ({ ...prev, [question.id]: rating.toString() }));
+          }}
+        />
+      ) : question.isTextInput ? (
         <Textarea
           value={answers[question.id] || ""}
           onChange={(e) => {

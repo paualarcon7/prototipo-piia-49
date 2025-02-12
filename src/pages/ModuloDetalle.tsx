@@ -7,9 +7,6 @@ import {
   ClipboardList,
   Dumbbell,
   MessageSquare,
-  Mic,
-  CheckCircle,
-  Calendar,
   PenTool,
 } from "lucide-react";
 import { useState } from "react";
@@ -58,6 +55,7 @@ const ModuloDetalle = () => {
   const navigate = useNavigate();
   const [activeStage, setActiveStage] = useState(0);
   const [showTest, setShowTest] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
   const { toast } = useToast();
 
   const stages = [
@@ -153,6 +151,33 @@ const ModuloDetalle = () => {
     }
   ];
 
+  const feedbackQuestions = [
+    {
+      id: 1,
+      text: "¿Qué actividades harías aunque no te pagaran?",
+      options: [
+        { value: "text", label: "", color: "green" }
+      ],
+      isTextInput: true
+    },
+    {
+      id: 2,
+      text: "¿Qué aprendiste de ti después de hacer esta actividad?",
+      options: [
+        { value: "text", label: "", color: "green" }
+      ],
+      isTextInput: true
+    },
+    {
+      id: 3,
+      text: "¿Te gustó la actividad?",
+      options: [
+        { value: "stars", label: "", color: "yellow" }
+      ],
+      isStarRating: true
+    }
+  ];
+
   const handleTestComplete = (results: Record<number, string>) => {
     console.log("Test results:", results);
     toast({
@@ -162,10 +187,21 @@ const ModuloDetalle = () => {
     setShowTest(false);
   };
 
+  const handleFeedbackComplete = (results: Record<number, string>) => {
+    console.log("Feedback results:", results);
+    toast({
+      title: "Feedback enviado",
+      description: "¡Gracias por compartir tu experiencia!",
+    });
+    setShowFeedback(false);
+  };
+
   const handleStageClick = (index: number) => {
     setActiveStage(index);
     if (index === 3) {
       setShowTest(true);
+    } else if (index === 4) {
+      setShowFeedback(true);
     } else if (index === 0) {
       navigate(`/programa/${id}/modulo/${moduleId}/inicio`);
     } else if (index === 1) {
@@ -182,6 +218,12 @@ const ModuloDetalle = () => {
           questions={mockQuestions}
           onComplete={handleTestComplete}
           onBack={() => setShowTest(false)}
+        />
+      ) : showFeedback ? (
+        <TestQuestion
+          questions={feedbackQuestions}
+          onComplete={handleFeedbackComplete}
+          onBack={() => setShowFeedback(false)}
         />
       ) : (
         <>
