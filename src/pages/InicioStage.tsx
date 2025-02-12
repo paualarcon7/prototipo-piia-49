@@ -6,7 +6,7 @@ import {
   Play, 
   Pause, 
   Mic,
-  Forward,
+  Lock,
   CheckCircle
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
@@ -24,11 +24,14 @@ const InicioStage = () => {
   const navigate = useNavigate();
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [videoWatched, setVideoWatched] = useState(false);
   const [audioCompleted, setAudioCompleted] = useState(false);
-  const progressInterval = useRef<number>();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const progressInterval = useRef<number>();
 
   const simulateAudioProgress = () => {
+    if (!videoWatched) return;
+    
     setIsPlaying(true);
     let currentProgress = 0;
     progressInterval.current = window.setInterval(() => {
@@ -43,12 +46,21 @@ const InicioStage = () => {
   };
 
   const handlePlayPause = () => {
+    if (!videoWatched) return;
+
     if (isPlaying) {
       clearInterval(progressInterval.current);
       setIsPlaying(false);
     } else {
       simulateAudioProgress();
     }
+  };
+
+  const handleVideoLoad = () => {
+    // Simular que el video ha sido visto
+    setTimeout(() => {
+      setVideoWatched(true);
+    }, 2000);
   };
 
   const handleFinishRecording = () => {
@@ -91,12 +103,21 @@ const InicioStage = () => {
                 className="w-full h-full rounded-lg"
                 src="https://www.instagram.com/p/C8S20NUNJRP/embed"
                 allowFullScreen
+                onLoad={handleVideoLoad}
               ></iframe>
             </div>
           </div>
 
-          <div className="bg-secondary/70 p-6 rounded-lg">
+          <div className={`bg-secondary/70 p-6 rounded-lg relative ${!videoWatched ? 'opacity-50' : ''}`}>
             <h2 className="text-lg font-semibold mb-4">Audio Complementario</h2>
+            {!videoWatched && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <Lock className="h-5 w-5" />
+                  <span>Completa el video para desbloquear</span>
+                </div>
+              </div>
+            )}
             <div className="flex flex-col items-center gap-4">
               <div className="w-full bg-gray-700 rounded-full h-2">
                 <div
@@ -109,6 +130,7 @@ const InicioStage = () => {
                   variant="outline"
                   size="icon"
                   onClick={handlePlayPause}
+                  disabled={!videoWatched}
                 >
                   {isPlaying ? (
                     <Pause className="h-4 w-4" />
@@ -123,50 +145,39 @@ const InicioStage = () => {
             </div>
           </div>
 
-          {audioCompleted && (
-            <div className="flex flex-col gap-4">
-              <Button
-                variant="outline"
-                className="w-full"
-                onClick={simulateAudioProgress}
-              >
-                <Forward className="mr-2 h-4 w-4" />
-                Profundizar con audio adicional
-              </Button>
-
-              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button className="w-full">
-                    <Mic className="mr-2 h-4 w-4" />
-                    Grabar mi reflexión
+          {videoWatched && (
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button className="w-full">
+                  <Mic className="mr-2 h-4 w-4" />
+                  Grabar mi reflexión
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Grabar Reflexión</DialogTitle>
+                  <DialogDescription>
+                    ¿Cómo le explicarías a tu mejor amigo qué es el estado de FLOW?
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="flex flex-col items-center gap-6 p-6">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="rounded-full w-16 h-16"
+                  >
+                    <Mic className="h-8 w-8" />
                   </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Grabar Reflexión</DialogTitle>
-                    <DialogDescription>
-                      ¿Cómo le explicarías a tu mejor amigo qué es el estado de FLOW?
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="flex flex-col items-center gap-6 p-6">
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="rounded-full w-16 h-16"
-                    >
-                      <Mic className="h-8 w-8" />
-                    </Button>
-                    <Button 
-                      className="w-full" 
-                      onClick={handleFinishRecording}
-                    >
-                      <CheckCircle className="mr-2 h-4 w-4" />
-                      Finalizar
-                    </Button>
-                  </div>
-                </DialogContent>
-              </Dialog>
-            </div>
+                  <Button 
+                    className="w-full" 
+                    onClick={handleFinishRecording}
+                  >
+                    <CheckCircle className="mr-2 h-4 w-4" />
+                    Finalizar
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
           )}
         </div>
       </div>
