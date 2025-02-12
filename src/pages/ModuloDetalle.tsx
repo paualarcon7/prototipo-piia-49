@@ -1,3 +1,4 @@
+
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { 
@@ -9,9 +10,11 @@ import {
   Mic,
   CheckCircle,
   Calendar,
+  PenTool,
 } from "lucide-react";
 import { useState } from "react";
 import TestQuestion from "@/components/TestQuestion";
+import { useToast } from "@/hooks/use-toast";
 
 interface StageProps {
   title: string;
@@ -55,6 +58,7 @@ const ModuloDetalle = () => {
   const navigate = useNavigate();
   const [activeStage, setActiveStage] = useState(0);
   const [showTest, setShowTest] = useState(false);
+  const { toast } = useToast();
 
   const stages = [
     {
@@ -88,6 +92,16 @@ const ModuloDetalle = () => {
       ]
     },
     {
+      title: "Evaluación",
+      icon: <PenTool className="w-6 h-6" />,
+      description: "Evalúa tu comprensión del estado de flujo y cómo se manifiesta en tu vida.",
+      steps: [
+        "Test de comprensión",
+        "Registro de actividades energizantes",
+        "Identificación de patrones de flujo"
+      ]
+    },
+    {
       title: "Feedback",
       icon: <MessageSquare className="w-6 h-6" />,
       description: "Evalúa tu comprensión y experiencia con el estado de flujo.",
@@ -102,41 +116,57 @@ const ModuloDetalle = () => {
   const mockQuestions = [
     {
       id: 1,
-      text: "¿Qué aspecto del estado de flujo te resultó más útil?",
+      text: "¿Qué es el estado de flow?",
       options: [
-        { value: "a", label: "Los ejercicios prácticos", color: "green" },
-        { value: "b", label: "Las explicaciones teóricas", color: "blue" },
-        { value: "c", label: "Las sesiones de reflexión", color: "purple" }
+        { 
+          value: "a", 
+          label: "Un estado de máxima concentración y disfrute donde el tiempo parece desaparecer", 
+          color: "green" 
+        },
+        { 
+          value: "b", 
+          label: "Un estado de relajación profunda similar a la meditación", 
+          color: "blue" 
+        },
+        { 
+          value: "c", 
+          label: "Un estado de alta productividad pero con mucho estrés", 
+          color: "purple" 
+        }
       ]
     },
     {
       id: 2,
-      text: "¿Con qué frecuencia practicaste los ejercicios?",
+      text: "¿Qué actividades diarias identificas donde tu energía se multiplica?",
       options: [
-        { value: "a", label: "Diariamente", color: "green" },
-        { value: "b", label: "2-3 veces por semana", color: "blue" },
-        { value: "c", label: "Una vez por semana", color: "purple" }
-      ]
+        { value: "text", label: "", color: "green" }
+      ],
+      isTextInput: true
     },
     {
       id: 3,
-      text: "¿Cómo calificarías tu progreso hasta ahora?",
+      text: "Menciona de 1 a 3 actividades que hoy identificas que te ayudan a conectar con tu estado de FLOW",
       options: [
-        { value: "a", label: "Excelente", color: "green" },
-        { value: "b", label: "Bueno", color: "blue" },
-        { value: "c", label: "Regular", color: "purple" }
-      ]
+        { value: "text", label: "", color: "green" }
+      ],
+      isTextInput: true
     }
   ];
 
   const handleTestComplete = (results: Record<number, string>) => {
     console.log("Test results:", results);
+    toast({
+      title: "Evaluación completada",
+      description: "Tus respuestas han sido guardadas exitosamente.",
+    });
     setShowTest(false);
   };
 
   const handleStageClick = (index: number) => {
     setActiveStage(index);
-    if (index === 0) {
+    if (index === 3) {
+      setShowTest(true);
+    } else if (index === 0) {
       navigate(`/programa/${id}/modulo/${moduleId}/inicio`);
     } else if (index === 1) {
       navigate(`/programa/${id}/modulo/${moduleId}/trabajo`);
@@ -197,20 +227,6 @@ const ModuloDetalle = () => {
           </div>
         </>
       )}
-
-      <div className="fixed bottom-16 left-0 right-0 p-4 bg-background/80 backdrop-blur-sm border-t">
-        <div className="container mx-auto flex justify-between items-center">
-          {activeStage === 1 && (
-            <Button
-              variant="secondary"
-              onClick={() => setShowTest(true)}
-              className="w-full"
-            >
-              Realizar Test
-            </Button>
-          )}
-        </div>
-      </div>
     </div>
   );
 };
