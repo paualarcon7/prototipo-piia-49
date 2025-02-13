@@ -1,7 +1,9 @@
 
-import { Trophy, Flame, CheckCircle2, Lock } from "lucide-react";
+import { Trophy, Flame, CheckCircle2, Lock, ArrowRight } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { workDays } from "@/constants/workDays";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -48,9 +50,34 @@ const Home = () => {
     { name: "Hoy", completed: false }
   ];
 
+  // Encontrar el día actual de trabajo
+  const currentDay = workDays.find(day => day.status === 'current');
+
   return (
     <div className="container mx-auto px-4 py-4 space-y-4 pb-20">
       <h1 className="text-xl font-bold mb-4">Bienvenido de vuelta</h1>
+      
+      {/* Current Work Day Card */}
+      {currentDay && (
+        <Card className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-none text-white mb-6">
+          <CardContent className="pt-6">
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <h3 className="text-lg font-semibold mb-1">Tu trabajo de hoy</h3>
+                <p className="text-sm text-gray-300 mb-2">Día {currentDay.day}: {currentDay.title}</p>
+                <p className="text-sm text-gray-400">{currentDay.description}</p>
+              </div>
+            </div>
+            <Button 
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white"
+              onClick={() => navigate(`/programa/2/modulo/1`)}
+            >
+              Comenzar actividades del día
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </CardContent>
+        </Card>
+      )}
       
       {/* Streak Card */}
       <Card className="bg-[#221F26] border-none text-white">
