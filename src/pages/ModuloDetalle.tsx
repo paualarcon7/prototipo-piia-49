@@ -3,45 +3,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import TestQuestion from "@/components/TestQuestion";
 import { useToast } from "@/hooks/use-toast";
-import { ModuleStage } from "@/components/module/ModuleStage";
 import { ModuleHeader } from "@/components/module/ModuleHeader";
-import { WorkDayCard } from "@/components/module/WorkDayCard";
+import { WorkDayList } from "@/components/module/WorkDayList";
+import { DayStages } from "@/components/module/DayStages";
 import { stages } from "@/constants/moduleStages";
+import { workDays } from "@/constants/workDays";
 import { evaluationQuestions, feedbackQuestions } from "@/constants/moduleQuestions";
-import { WorkDay } from "@/types/module";
-
-const workDays: WorkDay[] = [
-  {
-    day: 1,
-    title: "Introducción al Estado de Flow",
-    description: "Descubre qué es el estado de flow y cómo identificarlo en tu vida diaria.",
-    color: "purple"
-  },
-  {
-    day: 2,
-    title: "Identificación de Patrones",
-    description: "Aprende a reconocer tus momentos de máxima energía y concentración.",
-    color: "blue"
-  },
-  {
-    day: 3,
-    title: "Prácticas de Flow",
-    description: "Realiza ejercicios prácticos para entrar en estado de flow más frecuentemente.",
-    color: "green"
-  },
-  {
-    day: 4,
-    title: "Integración",
-    description: "Conecta tus experiencias de flow con tus objetivos personales y profesionales.",
-    color: "orange"
-  },
-  {
-    day: 5,
-    title: "Reflexión y Cierre",
-    description: "Evalúa tu progreso y establece un plan para mantener el estado de flow.",
-    color: "pink"
-  }
-];
 
 const ModuloDetalle = () => {
   const { id, moduleId } = useParams();
@@ -121,44 +88,18 @@ const ModuloDetalle = () => {
           />
           
           {selectedDay === null ? (
-            <div className="space-y-4 mb-24">
-              <div className="bg-secondary/50 backdrop-blur-sm rounded-lg p-6 mb-6">
-                <h2 className="text-xl font-semibold mb-4">Plan de Trabajo</h2>
-                <p className="text-gray-400 mb-6">
-                  Tu viaje está estructurado en 5 días de trabajo. Cada día está diseñado 
-                  para ayudarte a profundizar en diferentes aspectos del estado de flow.
-                </p>
-              </div>
-              
-              {workDays.map((day) => (
-                <WorkDayCard
-                  key={day.day}
-                  {...day}
-                  isActive={false}
-                  onSelect={() => handleDaySelect(day.day)}
-                />
-              ))}
-            </div>
+            <WorkDayList 
+              workDays={workDays} 
+              onDaySelect={handleDaySelect} 
+            />
           ) : (
-            <div className="space-y-4 mb-24">
-              <div className="mb-6">
-                <h2 className="text-xl font-semibold mb-2">
-                  Día {selectedDay}: {workDays[selectedDay - 1].title}
-                </h2>
-                <p className="text-gray-400">
-                  {workDays[selectedDay - 1].description}
-                </p>
-              </div>
-              
-              {stages.map((stage, index) => (
-                <ModuleStage
-                  key={index}
-                  {...stage}
-                  isActive={activeStage === index}
-                  onSelect={() => handleStageClick(index)}
-                />
-              ))}
-            </div>
+            <DayStages
+              selectedDay={selectedDay}
+              workDay={workDays[selectedDay - 1]}
+              stages={stages}
+              activeStage={activeStage}
+              onStageClick={handleStageClick}
+            />
           )}
         </>
       )}
