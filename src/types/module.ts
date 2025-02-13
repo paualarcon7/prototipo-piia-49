@@ -21,3 +21,10 @@ export interface Question {
   isTextInput?: boolean;
   isStarRating?: boolean;
 }
+
+export interface WorkDay {
+  day: number;
+  title: string;
+  description: string;
+  color: string;
+}
