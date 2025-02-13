@@ -27,4 +27,5 @@ export interface WorkDay {
   title: string;
   description: string;
   color: string;
+  status?: 'completed' | 'current' | 'locked';
 }
