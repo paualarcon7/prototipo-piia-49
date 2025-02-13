@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import ChatMessage from "@/components/ChatMessage";
 import ChatInput from "@/components/ChatInput";
@@ -70,8 +71,12 @@ const Index = () => {
       {/* Chat header */}
       <div className="bg-secondary/50 backdrop-blur-sm border-b border-secondary/20 p-4">
         <div className="flex items-center gap-3 mb-4">
-          <div className="bg-gradient-to-r from-purple-600 to-purple-800 p-2 rounded-full shadow-lg">
-            <Bot className="w-6 h-6 text-white" />
+          <div className="w-12 h-12 rounded-full overflow-hidden">
+            <img 
+              src="/lovable-uploads/70da5878-9104-43f4-a80c-d917eeb7f844.png" 
+              alt="PIIA Avatar" 
+              className="w-full h-full object-cover"
+            />
           </div>
           <h1 className="text-xl font-bold text-white">PIIA</h1>
         </div>
