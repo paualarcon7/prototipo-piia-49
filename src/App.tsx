@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -42,41 +43,42 @@ const MenuContent = () => {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
-      <TooltipProvider>
-        <div className="relative">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button 
-                variant="ghost" 
-                size="icon"
-                className="fixed top-4 right-4 z-50 bg-secondary/50 backdrop-blur-sm hover:bg-secondary/60"
-              >
-                <Menu className="h-6 w-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px]">
-              <MenuContent />
-            </SheetContent>
-          </Sheet>
-        </div>
-        <Toaster />
-        <Sonner />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/protocolos" element={<Protocolos />} />
-          <Route path="/protocolos/:id" element={<ProtocoloDetalle />} />
-          <Route path="/diario" element={<Diario />} />
-          <Route path="/diario/nueva" element={<NuevaEntrada />} />
-          <Route path="/ejercicio/:id" element={<Ejercicio />} />
-          <Route path="/programa/:id" element={<ProgramaDetalle />} />
-          <Route path="/programa/:id/modulo/:moduleId" element={<ModuloDetalle />} />
-          <Route path="/programa/:id/modulo/:moduleId/inicio" element={<InicioStage />} />
-          <Route path="/programa/:id/modulo/:moduleId/trabajo" element={<TrabajoStage />} />
-          <Route path="/programa/:id/modulo/:moduleId/entrenamiento" element={<EntrenamientoStage />} />
-        </Routes>
-        <BottomNav />
-      </TooltipProvider>
+      <div className="relative">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button 
+              variant="ghost" 
+              size="icon"
+              className="fixed top-4 right-4 z-50 bg-secondary/50 backdrop-blur-sm hover:bg-secondary/60"
+            >
+              <Menu className="h-6 w-6" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="w-[300px]">
+            <MenuContent />
+          </SheetContent>
+        </Sheet>
+
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/protocolos" element={<Protocolos />} />
+            <Route path="/protocolos/:id" element={<ProtocoloDetalle />} />
+            <Route path="/diario" element={<Diario />} />
+            <Route path="/diario/nueva" element={<NuevaEntrada />} />
+            <Route path="/ejercicio/:id" element={<Ejercicio />} />
+            <Route path="/programa/:id" element={<ProgramaDetalle />} />
+            <Route path="/programa/:id/modulo/:moduleId" element={<ModuloDetalle />} />
+            <Route path="/programa/:id/modulo/:moduleId/inicio" element={<InicioStage />} />
+            <Route path="/programa/:id/modulo/:moduleId/trabajo" element={<TrabajoStage />} />
+            <Route path="/programa/:id/modulo/:moduleId/entrenamiento" element={<EntrenamientoStage />} />
+          </Routes>
+          <BottomNav />
+        </TooltipProvider>
+      </div>
     </BrowserRouter>
   </QueryClientProvider>
 );
