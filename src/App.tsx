@@ -4,7 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-import { Menu } from "lucide-react";
+import { Menu, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Index from "./pages/Index";
@@ -20,6 +20,7 @@ import TrabajoStage from "./pages/TrabajoStage";
 import EntrenamientoStage from "./pages/EntrenamientoStage";
 import Protocolos from "./pages/Protocolos";
 import ProtocoloDetalle from "./pages/ProtocoloDetalle";
+import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,14 @@ const MenuContent = () => {
         onClick={() => navigate('/home')}
       >
         Home
+      </Button>
+      <Button 
+        variant="ghost" 
+        className="justify-start"
+        onClick={() => navigate('/login')}
+      >
+        <LogIn className="mr-2 h-4 w-4" />
+        Iniciar sesión
       </Button>
     </div>
   );
@@ -65,6 +74,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/protocolos" element={<Protocolos />} />
             <Route path="/protocolos/:id" element={<ProtocoloDetalle />} />
             <Route path="/diario" element={<Diario />} />
