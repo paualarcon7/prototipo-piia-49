@@ -36,16 +36,12 @@ const DiaryEntry = ({ entry, isEditable = true, onEdit }: DiaryEntryProps) => {
   const formatEntryText = (text: string) => {
     const lines = text.split('\n');
     const transformedLines = lines.map(line => {
-      if (line.startsWith('⚡')) {
-        return line.replace('⚡', '');
-      }
-      // Eliminar el emoji de satisfacción si la línea lo contiene
-      if (line.match(/^[😠🙁😕😞😐🙂😊😄😁🥰]/)) {
-        return line.slice(2);
+      if (line.toLowerCase().startsWith('me siento')) {
+        return null; // Eliminamos las líneas que comienzan con "me siento"
       }
       return line;
     });
-    return transformedLines;
+    return transformedLines.filter(line => line !== null); // Filtramos las líneas nulas
   };
 
   return (
