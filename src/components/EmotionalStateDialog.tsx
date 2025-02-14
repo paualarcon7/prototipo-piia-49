@@ -64,6 +64,12 @@ export const EmotionalStateDialog = ({ open, onClose }: EmotionalStateDialogProp
     );
   };
 
+  // Calcular el color del rayo basado en el nivel de energía
+  const getEnergyColor = (level: number) => {
+    const opacity = (level / 10).toFixed(2); // Convertir nivel a decimal entre 0 y 1
+    return `rgba(250, 204, 21, ${opacity})`; // yellow-400 con opacidad variable
+  };
+
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-md mx-auto">
@@ -80,23 +86,26 @@ export const EmotionalStateDialog = ({ open, onClose }: EmotionalStateDialogProp
             <div className="flex items-center gap-4">
               <div className="w-24 h-24 flex items-center justify-center">
                 <Zap 
-                  className={`w-16 h-16 transition-colors ${
-                    energyLevel > 7 ? "text-yellow-400" :
-                    energyLevel > 5 ? "text-yellow-300" :
-                    "text-gray-400"
-                  }`}
-                  fill={energyLevel > 5 ? "currentColor" : "none"}
-                  strokeWidth={1}
+                  className="w-16 h-16 transition-colors"
+                  style={{ 
+                    fill: getEnergyColor(energyLevel),
+                    stroke: energyLevel > 5 ? getEnergyColor(energyLevel) : "currentColor"
+                  }}
+                  strokeWidth={1.5}
                 />
               </div>
               <div className="flex-1">
+                <div className="flex justify-between text-xs text-gray-500 mb-1">
+                  {[...Array(11)].map((_, i) => (
+                    <span key={i}>{i}</span>
+                  ))}
+                </div>
                 <Slider
                   value={[energyLevel]}
                   min={1}
                   max={10}
                   step={1}
                   onValueChange={([value]) => setEnergyLevel(value)}
-                  className="mt-2"
                 />
               </div>
             </div>
@@ -110,13 +119,17 @@ export const EmotionalStateDialog = ({ open, onClose }: EmotionalStateDialogProp
                 {satisfactionEmojis[satisfaction - 1].emoji}
               </div>
               <div className="flex-1">
+                <div className="flex justify-between text-xs text-gray-500 mb-1">
+                  {[...Array(11)].map((_, i) => (
+                    <span key={i}>{i}</span>
+                  ))}
+                </div>
                 <Slider
                   value={[satisfaction]}
                   min={1}
                   max={10}
                   step={1}
                   onValueChange={([value]) => setSatisfaction(value)}
-                  className="mt-2"
                 />
               </div>
             </div>
