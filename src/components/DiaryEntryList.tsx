@@ -17,6 +17,7 @@ type DiaryEntryItem = {
   location?: string;
   imageUrl?: string;
   createdAt: Date;
+  words?: string[];  // Agregamos la propiedad words como opcional
 };
 
 interface DiaryEntryListProps {
