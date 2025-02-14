@@ -26,22 +26,22 @@ interface DiaryEntryProps {
 
 const DiaryEntry = ({ entry, isEditable = true, onEdit }: DiaryEntryProps) => {
   const getEmotionColor = (id: number) => {
-    if (id <= 2) return "from-red-500/20 to-red-600/20";
-    if (id <= 4) return "from-orange-500/20 to-orange-600/20";
-    if (id === 5) return "from-yellow-500/20 to-yellow-600/20";
-    if (id <= 7) return "from-green-500/20 to-green-600/20";
-    return "from-purple-500/20 to-purple-600/20";
+    if (id <= 2) return "bg-[#F97316]"; // Naranja intenso para emociones muy bajas
+    if (id <= 4) return "bg-[#FEC6A1]"; // Naranja suave para emociones bajas
+    if (id === 5) return "bg-[#8E9196]"; // Gris neutral
+    if (id <= 7) return "bg-[#F2FCE2]"; // Verde suave para emociones positivas
+    return "bg-[#8B5CF6]"; // Púrpura para emociones muy positivas
   };
 
   const formatEntryText = (text: string) => {
     const lines = text.split('\n');
     const transformedLines = lines.map(line => {
       if (line.toLowerCase().startsWith('me siento')) {
-        return null; // Eliminamos las líneas que comienzan con "me siento"
+        return null;
       }
       return line;
     });
-    return transformedLines.filter(line => line !== null); // Filtramos las líneas nulas
+    return transformedLines.filter(line => line !== null);
   };
 
   return (
@@ -49,9 +49,7 @@ const DiaryEntry = ({ entry, isEditable = true, onEdit }: DiaryEntryProps) => {
       <div className="flex justify-between items-start gap-4">
         {entry.emotion && (
           <div className="flex-shrink-0">
-            <div className="w-14 h-14 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center text-3xl">
-              {entry.emotion.icon}
-            </div>
+            <div className={`w-14 h-14 rounded-full ${getEmotionColor(entry.emotion.id)} shadow-lg`} />
           </div>
         )}
         <div className="flex-1 min-w-0">
