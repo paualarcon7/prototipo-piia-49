@@ -1,15 +1,16 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import DiaryCalendar from "@/components/DiaryCalendar";
-import EmotionSelector from "@/components/EmotionSelector";
-import EmotionWords from "@/components/EmotionWords";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import DiaryEntryList from "@/components/DiaryEntryList";
+import { DiaryOptionsDialog } from "@/components/DiaryOptionsDialog";
+import { EmotionalStateDialog } from "@/components/EmotionalStateDialog";
+import EmotionSelector from "@/components/EmotionSelector";
+import EmotionWords from "@/components/EmotionWords";
 
 type Emotion = {
   id: number;
@@ -34,6 +35,8 @@ const Diario = () => {
   const location = useLocation();
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [entries, setEntries] = useState<{[key: string]: DiaryEntry[]}>({});
+  const [showOptionsDialog, setShowOptionsDialog] = useState(false);
+  const [showEmotionalDialog, setShowEmotionalDialog] = useState(false);
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const { toast } = useToast();
@@ -96,6 +99,15 @@ const Diario = () => {
     });
   };
 
+  const handleOptionSelect = (option: "entry" | "emotional") => {
+    setShowOptionsDialog(false);
+    if (option === "entry") {
+      navigate('/diario/nueva');
+    } else {
+      setShowEmotionalDialog(true);
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen pb-20 p-4 pt-16 space-y-4">
       <Tabs defaultValue="today" className="w-full">
@@ -105,27 +117,6 @@ const Diario = () => {
         </TabsList>
 
         <TabsContent value="today" className="space-y-4 mt-4">
-          <Card className="p-6 bg-white/10 backdrop-blur-lg border-0 shadow-xl">
-            <EmotionSelector 
-              onSelect={setSelectedEmotion} 
-              selectedEmotion={selectedEmotion}
-            />
-
-            {selectedEmotion && (
-              <EmotionWords
-                emotionName={selectedEmotion.name}
-                onSelectWord={(word) => {
-                  setSelectedWords(prev =>
-                    prev.includes(word)
-                      ? prev.filter(w => w !== word)
-                      : [...prev, word]
-                  );
-                }}
-                selectedWords={selectedWords}
-              />
-            )}
-          </Card>
-
           {currentEntries.length > 0 && (
             <DiaryEntryList 
               entries={currentEntries}
@@ -134,7 +125,7 @@ const Diario = () => {
           )}
           
           <Button
-            onClick={handleNewEntry}
+            onClick={() => setShowOptionsDialog(true)}
             className="fixed bottom-24 right-4 h-14 w-14 rounded-full shadow-lg bg-purple-500 hover:bg-purple-600"
           >
             <Plus className="h-6 w-6" />
@@ -154,9 +145,19 @@ const Diario = () => {
           />
         </TabsContent>
       </Tabs>
+
+      <DiaryOptionsDialog 
+        open={showOptionsDialog}
+        onClose={() => setShowOptionsDialog(false)}
+        onSelectOption={handleOptionSelect}
+      />
+
+      <EmotionalStateDialog 
+        open={showEmotionalDialog}
+        onClose={() => setShowEmotionalDialog(false)}
+      />
     </div>
   );
 };
 
 export default Diario;
-
