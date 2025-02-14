@@ -1,7 +1,7 @@
 
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
-import { Pencil, MapPin, Clock } from "lucide-react";
+import { Pencil, MapPin } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 
@@ -25,14 +25,6 @@ interface DiaryEntryProps {
 }
 
 const DiaryEntry = ({ entry, isEditable = true, onEdit }: DiaryEntryProps) => {
-  const getEmotionColor = (id: number) => {
-    if (id <= 2) return "bg-[#BE0712]"; // Rojo intenso - alta energía, baja satisfacción
-    if (id <= 4) return "bg-[#FF6B35]"; // Naranja - energía media-alta, satisfacción media-baja
-    if (id === 5) return "bg-[#B7C7C7]"; // Gris azulado - energía y satisfacción neutras
-    if (id <= 7) return "bg-[#7DB249]"; // Verde medio - energía media, satisfacción media-alta
-    return "bg-[#FFB563]"; // Amarillo cálido - alta energía, alta satisfacción
-  };
-
   const formatEntryText = (text: string) => {
     const lines = text.split('\n');
     const transformedLines = lines.map(line => {
@@ -47,11 +39,6 @@ const DiaryEntry = ({ entry, isEditable = true, onEdit }: DiaryEntryProps) => {
   return (
     <Card className="bg-[#1A1F2C]/90 backdrop-blur-lg border-0 shadow-xl p-6">
       <div className="flex justify-between items-start gap-4">
-        {entry.emotion && (
-          <div className="flex-shrink-0">
-            <div className={`w-14 h-14 rounded-full ${getEmotionColor(entry.emotion.id)} shadow-lg`} />
-          </div>
-        )}
         <div className="flex-1 min-w-0">
           <div className="space-y-2">
             {formatEntryText(entry.text).map((line, index) => (
@@ -74,7 +61,6 @@ const DiaryEntry = ({ entry, isEditable = true, onEdit }: DiaryEntryProps) => {
 
           <div className="flex items-center gap-4 text-sm text-white/60 mt-4">
             <span className="flex items-center gap-1">
-              <Clock className="w-4 h-4" />
               {format(new Date(), "h:mm a", { locale: es })}
             </span>
             {entry.location && (

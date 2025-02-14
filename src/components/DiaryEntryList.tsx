@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Card } from "./ui/card";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { MapPin, Clock } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 type DiaryEntryItem = {
   id: string;
@@ -30,14 +30,6 @@ const DiaryEntryList = ({ entries, onEntryClick }: DiaryEntryListProps) => {
 
   const formattedDate = format(selectedDate, "MMMM 'de' yyyy", { locale: es });
 
-  const getEmotionColor = (id: number) => {
-    if (id <= 2) return "bg-[#BE0712]"; // Rojo intenso - alta energía, baja satisfacción
-    if (id <= 4) return "bg-[#FF6B35]"; // Naranja - energía media-alta, satisfacción media-baja
-    if (id === 5) return "bg-[#B7C7C7]"; // Gris azulado - energía y satisfacción neutras
-    if (id <= 7) return "bg-[#7DB249]"; // Verde medio - energía media, satisfacción media-alta
-    return "bg-[#FFB563]"; // Amarillo cálido - alta energía, alta satisfacción
-  };
-
   const formatEntryText = (text: string) => {
     const lines = text.split('\n');
     return lines
@@ -60,11 +52,6 @@ const DiaryEntryList = ({ entries, onEntryClick }: DiaryEntryListProps) => {
             onClick={() => onEntryClick(entry)}
           >
             <div className="flex justify-between items-start gap-4">
-              {entry.emotion && (
-                <div className="flex-shrink-0">
-                  <div className={`w-12 h-12 rounded-full ${getEmotionColor(entry.emotion.id)} shadow-lg`} />
-                </div>
-              )}
               <div className="flex-1 min-w-0">
                 <div className="space-y-2">
                   {formatEntryText(entry.text).map((line, index) => (
@@ -83,7 +70,6 @@ const DiaryEntryList = ({ entries, onEntryClick }: DiaryEntryListProps) => {
                 </div>
                 <div className="flex items-center gap-4 text-sm text-white/60 mt-4">
                   <span className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" />
                     {format(entry.createdAt, "h:mm a")}
                   </span>
                   {entry.location && (
