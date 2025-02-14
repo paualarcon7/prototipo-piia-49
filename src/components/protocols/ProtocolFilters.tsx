@@ -18,7 +18,7 @@ const ProtocolFilters = ({
   setSelectedTag
 }: ProtocolFiltersProps) => {
   return (
-    <div className="bg-gradient-to-br from-[#9b87f5]/10 to-[#D946EF]/10 backdrop-blur-sm rounded-lg p-3 border border-[#9b87f5]/20">
+    <div className="bg-gradient-to-br from-[#FF4081]/10 to-[#FF4081]/10 backdrop-blur-sm rounded-lg p-3 border border-[#FF4081]/20">
       <div className="flex flex-col gap-3">
         {/* Dimension Filter */}
         <div className="flex items-center gap-2 overflow-x-auto pb-2">
@@ -28,7 +28,7 @@ const ProtocolFilters = ({
             onClick={() => setSelectedDimension("all")}
             className={`h-8 px-3 whitespace-nowrap ${
               selectedDimension === "all" 
-                ? "bg-[#9b87f5]/20 hover:bg-[#9b87f5]/30 text-[#D6BCFA]" 
+                ? "bg-[#FF4081]/20 hover:bg-[#FF4081]/30 text-pink-200" 
                 : "bg-white/5 hover:bg-white/10 text-gray-300"
             }`}
           >
@@ -40,7 +40,7 @@ const ProtocolFilters = ({
             onClick={() => setSelectedDimension("rendimiento")}
             className={`h-8 px-3 whitespace-nowrap ${
               selectedDimension === "rendimiento" 
-                ? "bg-[#0EA5E9]/20 hover:bg-[#0EA5E9]/30 text-[#D6BCFA]" 
+                ? "bg-[#0EA5E9]/20 hover:bg-[#0EA5E9]/30 text-pink-200" 
                 : "bg-white/5 hover:bg-white/10 text-gray-300"
             }`}
           >
@@ -53,7 +53,7 @@ const ProtocolFilters = ({
             onClick={() => setSelectedDimension("bienestar")}
             className={`h-8 px-3 whitespace-nowrap ${
               selectedDimension === "bienestar" 
-                ? "bg-[#D946EF]/20 hover:bg-[#D946EF]/30 text-[#D6BCFA]" 
+                ? "bg-[#FF4081]/20 hover:bg-[#FF4081]/30 text-pink-200" 
                 : "bg-white/5 hover:bg-white/10 text-gray-300"
             }`}
           >
@@ -66,7 +66,7 @@ const ProtocolFilters = ({
             onClick={() => setSelectedDimension("salud")}
             className={`h-8 px-3 whitespace-nowrap ${
               selectedDimension === "salud" 
-                ? "bg-[#6E59A5]/20 hover:bg-[#6E59A5]/30 text-[#D6BCFA]" 
+                ? "bg-[#FF4081]/20 hover:bg-[#FF4081]/30 text-pink-200" 
                 : "bg-white/5 hover:bg-white/10 text-gray-300"
             }`}
           >
@@ -83,7 +83,7 @@ const ProtocolFilters = ({
               variant="secondary"
               className={`cursor-pointer whitespace-nowrap px-2 py-1 text-xs ${
                 selectedTag === tag 
-                  ? "bg-[#9b87f5]/30 hover:bg-[#9b87f5]/40 text-[#D6BCFA]" 
+                  ? "bg-[#FF4081]/30 hover:bg-[#FF4081]/40 text-pink-200" 
                   : "bg-white/10 hover:bg-white/20 text-gray-300"
               }`}
               onClick={() => setSelectedTag(tag as Tag)}
