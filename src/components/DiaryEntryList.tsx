@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card } from "./ui/card";
 import { format } from "date-fns";
@@ -45,11 +46,13 @@ const DiaryEntryList = ({ entries, onEntryClick }: DiaryEntryListProps) => {
                     {entry.emotion.icon}
                   </span>
                 )}
-                <div>
-                  <h3 className="text-lg font-semibold text-white line-clamp-1">
-                    {entry.text.split('\n')[0]}
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-white">
+                    {entry.text.split('\n').map((line, index) => (
+                      <div key={index} className="whitespace-pre-wrap">{line}</div>
+                    ))}
                   </h3>
-                  <div className="flex items-center gap-4 text-sm text-gray-400">
+                  <div className="flex items-center gap-4 text-sm text-gray-400 mt-2">
                     <span className="flex items-center gap-1">
                       <Clock className="w-4 h-4" />
                       {format(entry.createdAt, "h:mm a")}

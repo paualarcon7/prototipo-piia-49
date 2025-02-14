@@ -1,3 +1,4 @@
+
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { Pencil, MapPin, Clock } from "lucide-react";
@@ -28,9 +29,9 @@ const DiaryEntry = ({ entry, isEditable = true, onEdit }: DiaryEntryProps) => {
     <Card className="bg-[#1A1F2C]/90 backdrop-blur-lg border-0 shadow-xl p-6 hover:bg-[#1A1F2C]/95 transition-colors">
       <div className="flex justify-between items-start mb-4">
         <div className="flex flex-col gap-1">
-          <h3 className="text-xl font-semibold text-white">
-            {entry.text.split('\n')[0]}
-          </h3>
+          <div className="text-xl font-semibold text-white whitespace-pre-wrap">
+            {entry.text}
+          </div>
           <div className="flex items-center gap-4 text-sm text-gray-400">
             <span className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
@@ -56,15 +57,6 @@ const DiaryEntry = ({ entry, isEditable = true, onEdit }: DiaryEntryProps) => {
         )}
       </div>
 
-      {entry.emotion && (
-        <p className="text-gray-200 mb-4 flex items-center gap-2">
-          <span className={`${entry.emotion.color} w-8 h-8 rounded-xl flex items-center justify-center`}>
-            {entry.emotion.icon}
-          </span>
-          <span>{entry.emotion.name}</span>
-        </p>
-      )}
-
       {entry.words && entry.words.length > 0 && (
         <div className="mb-4">
           <div className="flex flex-wrap gap-2">
@@ -89,10 +81,6 @@ const DiaryEntry = ({ entry, isEditable = true, onEdit }: DiaryEntryProps) => {
           />
         </div>
       )}
-
-      <p className="text-gray-300 whitespace-pre-wrap mt-4">
-        {entry.text}
-      </p>
     </Card>
   );
 };
