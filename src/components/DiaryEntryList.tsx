@@ -42,7 +42,7 @@ const DiaryEntryList = ({ entries, onEntryClick }: DiaryEntryListProps) => {
     const lines = text.split('\n');
     const transformedLines = lines.map(line => {
       if (line.startsWith('⚡')) {
-        return line.replace('⚡', '');
+        return `⚡ ${line.replace('⚡', '')}`;  // Mantenemos el rayo al principio
       }
       // Eliminar el emoji de satisfacción si la línea lo contiene
       if (line.match(/^[😠🙁😕😞😐🙂😊😄😁🥰]/)) {
@@ -60,7 +60,7 @@ const DiaryEntryList = ({ entries, onEntryClick }: DiaryEntryListProps) => {
         {entries.map((entry) => (
           <Card
             key={entry.id}
-            className={`bg-gradient-to-br ${entry.emotion ? getEmotionColor(entry.emotion.id) : 'from-gray-500/20 to-gray-600/20'} backdrop-blur-sm border-0 p-4 cursor-pointer hover:bg-opacity-70 transition-all duration-200 shadow-lg`}
+            className="bg-[#1A1F2C]/90 backdrop-blur-sm border-0 p-4 cursor-pointer hover:bg-[#1A1F2C]/95 transition-all duration-200 shadow-lg"
             onClick={() => onEntryClick(entry)}
           >
             <div className="flex justify-between items-start gap-4">
