@@ -1,7 +1,7 @@
 
 import { Dialog, DialogContent } from "./ui/dialog";
 import { Button } from "./ui/button";
-import { BookText, Smile, Upload, Camera, FolderPlus } from "lucide-react";
+import { BookText, Smile } from "lucide-react";
 
 interface DiaryOptionsDialogProps {
   open: boolean;
@@ -23,24 +23,6 @@ export const DiaryOptionsDialog = ({
             className="flex items-center gap-4 h-auto py-4 px-6 rounded-none hover:bg-white/5 text-white"
             onClick={() => onSelectOption("entry")}
           >
-            <Upload className="w-5 h-5 shrink-0 text-gray-300" />
-            <span className="text-base font-normal">Subir archivo</span>
-          </Button>
-
-          <Button
-            variant="ghost"
-            className="flex items-center gap-4 h-auto py-4 px-6 rounded-none hover:bg-white/5 text-white"
-            onClick={() => onSelectOption("entry")}
-          >
-            <Camera className="w-5 h-5 shrink-0 text-gray-300" />
-            <span className="text-base font-normal">Tomar una foto</span>
-          </Button>
-
-          <Button
-            variant="ghost"
-            className="flex items-center gap-4 h-auto py-4 px-6 rounded-none hover:bg-white/5 text-white"
-            onClick={() => onSelectOption("entry")}
-          >
             <BookText className="w-5 h-5 shrink-0 text-gray-300" />
             <span className="text-base font-normal">Nueva entrada</span>
           </Button>
@@ -52,15 +34,6 @@ export const DiaryOptionsDialog = ({
           >
             <Smile className="w-5 h-5 shrink-0 text-gray-300" />
             <span className="text-base font-normal">Estado emocional</span>
-          </Button>
-
-          <Button
-            variant="ghost"
-            className="flex items-center gap-4 h-auto py-4 px-6 rounded-none hover:bg-white/5 text-white"
-            onClick={() => onSelectOption("entry")}
-          >
-            <FolderPlus className="w-5 h-5 shrink-0 text-gray-300" />
-            <span className="text-base font-normal">Crear carpeta</span>
           </Button>
         </div>
       </DialogContent>
