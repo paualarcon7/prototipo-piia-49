@@ -3,6 +3,9 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Zap } from "lucide-react";
+import { Slider } from "./ui/slider";
+import { Textarea } from "./ui/textarea";
+import EmotionWords from "./EmotionWords";
 
 interface EmotionalStateDialogProps {
   open: boolean;
@@ -23,23 +26,42 @@ const satisfactionEmojis = [
 ];
 
 export const EmotionalStateDialog = ({ open, onClose }: EmotionalStateDialogProps) => {
-  const [step, setStep] = useState<1 | 2>(1);
-  const [energyLevel, setEnergyLevel] = useState<number | null>(null);
-  const [satisfaction, setSatisfaction] = useState<number | null>(null);
+  const [energyLevel, setEnergyLevel] = useState<number>(5);
+  const [satisfaction, setSatisfaction] = useState<number>(5);
+  const [selectedWords, setSelectedWords] = useState<string[]>([]);
+  const [notes, setNotes] = useState("");
 
   const handleSave = () => {
     // Aquí iría la lógica para guardar el estado emocional
     onClose();
-    setStep(1);
-    setEnergyLevel(null);
-    setSatisfaction(null);
+    setEnergyLevel(5);
+    setSatisfaction(5);
+    setSelectedWords([]);
+    setNotes("");
   };
 
   const handleClose = () => {
     onClose();
-    setStep(1);
-    setEnergyLevel(null);
-    setSatisfaction(null);
+    setEnergyLevel(5);
+    setSatisfaction(5);
+    setSelectedWords([]);
+    setNotes("");
+  };
+
+  const getEmotionName = (satisfaction: number) => {
+    if (satisfaction <= 2) return "Muy mal";
+    if (satisfaction <= 4) return "Mal";
+    if (satisfaction === 5) return "Normal";
+    if (satisfaction <= 7) return "Bien";
+    return "Muy bien";
+  };
+
+  const handleWordSelect = (word: string) => {
+    setSelectedWords(prev => 
+      prev.includes(word) 
+        ? prev.filter(w => w !== word)
+        : [...prev, word]
+    );
   };
 
   return (
@@ -47,75 +69,87 @@ export const EmotionalStateDialog = ({ open, onClose }: EmotionalStateDialogProp
       <DialogContent className="max-w-md mx-auto">
         <DialogHeader>
           <DialogTitle className="text-center text-lg font-semibold mb-4">
-            {step === 1
-              ? "En este momento, ¿cómo describirías tu nivel de energía?"
-              : "En este momento ¿qué tan satisfecho estás?"}
+            ¿Cómo te sientes?
           </DialogTitle>
         </DialogHeader>
 
-        {step === 1 ? (
-          <div className="flex overflow-x-auto gap-2 py-4 px-2 min-w-0">
-            {[...Array(10)].map((_, i) => (
-              <Button
-                key={i}
-                variant="outline"
-                className={`flex-shrink-0 aspect-square p-0 w-12 h-12 transition-all hover:scale-110 ${
-                  energyLevel === i + 1 
-                    ? "ring-2 ring-purple-500 bg-purple-50 dark:bg-purple-900/20" 
-                    : ""
-                }`}
-                onClick={() => {
-                  setEnergyLevel(i + 1);
-                  setStep(2);
-                }}
-              >
-                <Zap
-                  className={`w-7 h-7 transition-colors ${
-                    i < 5 ? "text-gray-400" : "text-yellow-400"
+        <div className="space-y-8">
+          {/* Energy Level Section */}
+          <div>
+            <h3 className="font-medium mb-4">Nivel de energía</h3>
+            <div className="flex items-center gap-4">
+              <div className="w-24 h-24 flex items-center justify-center">
+                <Zap 
+                  className="w-16 h-16 transition-colors"
+                  fill={energyLevel > 5 ? "currentColor" : "none"}
+                  strokeWidth={1}
+                  className={`${
+                    energyLevel > 7 ? "text-yellow-400" :
+                    energyLevel > 5 ? "text-yellow-300" :
+                    "text-gray-400"
                   }`}
-                  fill={i < 5 ? "none" : "currentColor"}
                 />
-              </Button>
-            ))}
+              </div>
+              <div className="flex-1">
+                <Slider
+                  value={[energyLevel]}
+                  min={1}
+                  max={10}
+                  step={1}
+                  onValueChange={([value]) => setEnergyLevel(value)}
+                  className="mt-2"
+                />
+              </div>
+            </div>
           </div>
-        ) : (
-          <div className="flex overflow-x-auto gap-2 py-4 px-2 min-w-0">
-            {satisfactionEmojis.map((emoji, i) => (
-              <Button
-                key={i}
-                variant="outline"
-                className={`flex-shrink-0 aspect-square p-0 w-12 h-12 text-2xl transition-all hover:scale-110 ${
-                  satisfaction === i + 1 
-                    ? "ring-2 ring-purple-500 bg-purple-50 dark:bg-purple-900/20" 
-                    : ""
-                }`}
-                onClick={() => setSatisfaction(i + 1)}
-                title={emoji.label}
-              >
-                {emoji.emoji}
-              </Button>
-            ))}
-          </div>
-        )}
 
-        {step === 2 && (
-          <div className="flex justify-end gap-2 mt-4">
+          {/* Satisfaction Level Section */}
+          <div>
+            <h3 className="font-medium mb-4">Nivel de satisfacción</h3>
+            <div className="flex items-center gap-4">
+              <div className="w-24 h-24 flex items-center justify-center text-5xl">
+                {satisfactionEmojis[satisfaction - 1].emoji}
+              </div>
+              <div className="flex-1">
+                <Slider
+                  value={[satisfaction]}
+                  min={1}
+                  max={10}
+                  step={1}
+                  onValueChange={([value]) => setSatisfaction(value)}
+                  className="mt-2"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Emotion Words */}
+          <EmotionWords
+            emotionName={getEmotionName(satisfaction)}
+            selectedWords={selectedWords}
+            onSelectWord={handleWordSelect}
+          />
+
+          {/* Notes Section */}
+          <div>
+            <Textarea
+              placeholder="¿Quieres agregar alguna nota sobre cómo te sientes?"
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              className="min-h-[100px] resize-none"
+            />
+          </div>
+
+          {/* Actions */}
+          <div className="flex justify-end gap-2">
             <Button 
-              variant="outline" 
-              onClick={() => setStep(1)}
-              className="px-6"
-            >
-              Anterior
-            </Button>
-            <Button 
-              onClick={handleSave} 
-              disabled={!satisfaction}
+              onClick={handleSave}
               className="px-6 bg-purple-500 hover:bg-purple-600"
             >
               Guardar
             </Button>
           </div>
-        )}
+        </div>
       </DialogContent>
     </Dialog>
   );
