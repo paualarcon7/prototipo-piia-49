@@ -64,10 +64,9 @@ export const EmotionalStateDialog = ({ open, onClose }: EmotionalStateDialogProp
     );
   };
 
-  // Calcular el color del rayo basado en el nivel de energía
   const getEnergyColor = (level: number) => {
-    const opacity = (level / 10).toFixed(2); // Convertir nivel a decimal entre 0 y 1
-    return `rgba(250, 204, 21, ${opacity})`; // yellow-400 con opacidad variable
+    const opacity = (level / 10).toFixed(2);
+    return `rgba(250, 204, 21, ${opacity})`;
   };
 
   return (
@@ -82,11 +81,11 @@ export const EmotionalStateDialog = ({ open, onClose }: EmotionalStateDialogProp
         <div className="space-y-8">
           {/* Energy Level Section */}
           <div>
-            <h3 className="font-medium mb-4">Nivel de energía</h3>
-            <div className="flex items-center gap-4">
-              <div className="w-24 h-24 flex items-center justify-center">
+            <div className="flex items-center gap-4 mb-6">
+              <h3 className="font-medium flex-1">Nivel de energía</h3>
+              <div className="w-16 h-16 flex items-center justify-center">
                 <Zap 
-                  className="w-16 h-16 transition-colors"
+                  className="w-12 h-12 transition-colors"
                   style={{ 
                     fill: getEnergyColor(energyLevel),
                     stroke: energyLevel > 5 ? getEnergyColor(energyLevel) : "currentColor"
@@ -94,45 +93,35 @@ export const EmotionalStateDialog = ({ open, onClose }: EmotionalStateDialogProp
                   strokeWidth={1.5}
                 />
               </div>
-              <div className="flex-1">
-                <div className="flex justify-between text-xs text-gray-500 mb-1">
-                  {[...Array(11)].map((_, i) => (
-                    <span key={i}>{i}</span>
-                  ))}
-                </div>
-                <Slider
-                  value={[energyLevel]}
-                  min={1}
-                  max={10}
-                  step={1}
-                  onValueChange={([value]) => setEnergyLevel(value)}
-                />
-              </div>
             </div>
+            <Slider
+              value={[energyLevel]}
+              min={1}
+              max={10}
+              step={1}
+              onValueChange={([value]) => setEnergyLevel(value)}
+              className="py-4"
+            />
           </div>
 
           {/* Satisfaction Level Section */}
           <div>
-            <h3 className="font-medium mb-4">Nivel de satisfacción</h3>
-            <div className="flex items-center gap-4">
-              <div className="w-24 h-24 flex items-center justify-center text-5xl">
-                {satisfactionEmojis[satisfaction - 1].emoji}
-              </div>
-              <div className="flex-1">
-                <div className="flex justify-between text-xs text-gray-500 mb-1">
-                  {[...Array(11)].map((_, i) => (
-                    <span key={i}>{i}</span>
-                  ))}
-                </div>
-                <Slider
-                  value={[satisfaction]}
-                  min={1}
-                  max={10}
-                  step={1}
-                  onValueChange={([value]) => setSatisfaction(value)}
-                />
+            <div className="flex items-center gap-4 mb-6">
+              <h3 className="font-medium flex-1">Nivel de satisfacción</h3>
+              <div className="w-16 h-16 flex items-center justify-center">
+                <span className="text-4xl">
+                  {satisfactionEmojis[satisfaction - 1].emoji}
+                </span>
               </div>
             </div>
+            <Slider
+              value={[satisfaction]}
+              min={1}
+              max={10}
+              step={1}
+              onValueChange={([value]) => setSatisfaction(value)}
+              className="py-4"
+            />
           </div>
 
           {/* Emotion Words */}
