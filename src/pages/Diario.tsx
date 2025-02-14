@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
@@ -5,7 +6,6 @@ import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import DiaryCalendar from "@/components/DiaryCalendar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card } from "@/components/ui/card";
 import DiaryEntryList from "@/components/DiaryEntryList";
 import { DiaryOptionsDialog } from "@/components/DiaryOptionsDialog";
 import { EmotionalStateDialog } from "@/components/EmotionalStateDialog";
@@ -126,7 +126,7 @@ const Diario = () => {
           
           <Button
             onClick={() => setShowOptionsDialog(true)}
-            className="fixed bottom-24 right-4 h-14 w-14 rounded-full shadow-lg bg-purple-500 hover:bg-purple-600"
+            className="fixed bottom-24 right-4 h-14 w-14 rounded-full shadow-lg bg-purple-500 hover:bg-purple-600 z-10 sm:bottom-8"
           >
             <Plus className="h-6 w-6" />
           </Button>
