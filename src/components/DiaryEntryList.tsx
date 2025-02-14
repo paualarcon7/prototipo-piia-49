@@ -17,7 +17,7 @@ type DiaryEntryItem = {
   location?: string;
   imageUrl?: string;
   createdAt: Date;
-  words?: string[];  // Agregamos la propiedad words como opcional
+  words?: string[];
 };
 
 interface DiaryEntryListProps {
@@ -40,7 +40,13 @@ const DiaryEntryList = ({ entries, onEntryClick }: DiaryEntryListProps) => {
 
   const formatEntryText = (text: string) => {
     const lines = text.split('\n');
-    return lines.filter(line => line.trim() !== '');  // Eliminar líneas vacías
+    return lines
+      .filter(line => {
+        const normalizedLine = line.toLowerCase().trim();
+        return !normalizedLine.startsWith('me siento:') && 
+               !normalizedLine.startsWith('me siento ') && 
+               line.trim() !== '';
+      });
   };
 
   return (
