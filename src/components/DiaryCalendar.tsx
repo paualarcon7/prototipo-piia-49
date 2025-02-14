@@ -95,7 +95,7 @@ const DiaryCalendar = ({ date, onSelectDate, entries }: DiaryCalendarProps) => {
         modifiersStyles={{
           booked: {
             color: "white",
-            backgroundColor: "rgba(255, 64, 129, 0.4)",
+            backgroundColor: "rgba(168, 85, 247, 0.4)",
           }
         }}
         components={{
@@ -105,7 +105,7 @@ const DiaryCalendar = ({ date, onSelectDate, entries }: DiaryCalendarProps) => {
             return (
               <div className="relative w-full h-full flex items-center justify-center">
                 {entry?.emotion ? (
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center relative" style={{ backgroundColor: entry.emotion.color || 'rgba(255, 64, 129, 0.4)' }}>
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center relative" style={{ backgroundColor: entry.emotion.color || 'rgba(168, 85, 247, 0.4)' }}>
                     <span className="absolute text-white text-sm">{date.getDate()}</span>
                   </div>
                 ) : (
