@@ -6,6 +6,7 @@ import { Zap } from "lucide-react";
 import { Slider } from "./ui/slider";
 import { Textarea } from "./ui/textarea";
 import EmotionWords from "./EmotionWords";
+import { useNavigate } from "react-router-dom";
 
 interface EmotionalStateDialogProps {
   open: boolean;
@@ -26,18 +27,36 @@ const satisfactionEmojis = [
 ];
 
 export const EmotionalStateDialog = ({ open, onClose }: EmotionalStateDialogProps) => {
+  const navigate = useNavigate();
   const [energyLevel, setEnergyLevel] = useState<number>(5);
   const [satisfaction, setSatisfaction] = useState<number>(5);
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const [notes, setNotes] = useState("");
 
   const handleSave = () => {
-    // Aquí iría la lógica para guardar el estado emocional
-    onClose();
-    setEnergyLevel(5);
-    setSatisfaction(5);
-    setSelectedWords([]);
-    setNotes("");
+    const emotionEntry = {
+      id: Date.now().toString(),
+      text: notes || `Nivel de energía: ${energyLevel}/10\nNivel de satisfacción: ${satisfaction}/10`,
+      createdAt: new Date(),
+      date: new Date().toISOString().split('T')[0],
+      emotion: {
+        id: satisfaction,
+        name: getEmotionName(satisfaction),
+        color: "text-purple-500",
+        icon: satisfactionEmojis[satisfaction - 1].emoji
+      },
+      words: selectedWords,
+    };
+
+    navigate('/diario', { 
+      state: { 
+        newEntry: emotionEntry,
+        selectedEmotion: emotionEntry.emotion,
+        selectedWords: selectedWords
+      } 
+    });
+    
+    handleClose();
   };
 
   const handleClose = () => {
