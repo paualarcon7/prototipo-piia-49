@@ -16,31 +16,31 @@ export const DiaryOptionsDialog = ({
 }: DiaryOptionsDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="w-[90vw] max-w-sm mx-auto p-4 sm:p-6">
-        <div className="flex flex-col gap-3">
+      <DialogContent className="w-[90vw] sm:w-[420px] max-w-lg mx-auto p-0 gap-0 bg-[#1A1F2C] border-[#1A1F2C]">
+        <div className="flex flex-col">
           <Button
-            variant="outline"
-            className="flex items-start gap-3 h-auto p-3 sm:p-4 hover:bg-purple-500/10"
+            variant="ghost"
+            className="flex items-center gap-3 h-auto px-6 py-8 rounded-none hover:bg-white/5 border-b border-white/10 text-white"
             onClick={() => onSelectOption("entry")}
           >
-            <BookText className="w-5 h-5 mt-0.5 shrink-0" />
+            <BookText className="w-6 h-6 shrink-0" />
             <div className="text-left">
-              <div className="font-semibold mb-0.5">Nueva entrada</div>
-              <div className="text-sm text-muted-foreground">
+              <div className="font-semibold text-lg">Nueva entrada</div>
+              <div className="text-base text-gray-400">
                 Registra tus pensamientos y experiencias
               </div>
             </div>
           </Button>
 
           <Button
-            variant="outline"
-            className="flex items-start gap-3 h-auto p-3 sm:p-4 hover:bg-purple-500/10"
+            variant="ghost"
+            className="flex items-center gap-3 h-auto px-6 py-8 rounded-none hover:bg-white/5 text-white"
             onClick={() => onSelectOption("emotional")}
           >
-            <Smile className="w-5 h-5 mt-0.5 shrink-0" />
+            <Smile className="w-6 h-6 shrink-0" />
             <div className="text-left">
-              <div className="font-semibold mb-0.5">Estado emocional</div>
-              <div className="text-sm text-muted-foreground">
+              <div className="font-semibold text-lg">Estado emocional</div>
+              <div className="text-base text-gray-400">
                 Registra tu nivel de energía y satisfacción
               </div>
             </div>
