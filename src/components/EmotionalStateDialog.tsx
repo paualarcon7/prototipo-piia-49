@@ -54,12 +54,12 @@ export const EmotionalStateDialog = ({ open, onClose }: EmotionalStateDialogProp
         </DialogHeader>
 
         {step === 1 ? (
-          <div className="grid grid-cols-5 gap-4 py-4">
+          <div className="flex overflow-x-auto gap-2 py-4 px-2 min-w-0">
             {[...Array(10)].map((_, i) => (
               <Button
                 key={i}
                 variant="outline"
-                className={`aspect-square p-0 ${
+                className={`flex-shrink-0 aspect-square p-0 w-10 ${
                   energyLevel === i + 1 ? "ring-2 ring-purple-500" : ""
                 }`}
                 onClick={() => {
@@ -77,12 +77,12 @@ export const EmotionalStateDialog = ({ open, onClose }: EmotionalStateDialogProp
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-5 gap-4 py-4">
+          <div className="flex overflow-x-auto gap-2 py-4 px-2 min-w-0">
             {satisfactionEmojis.map((emoji, i) => (
               <Button
                 key={i}
                 variant="outline"
-                className={`aspect-square p-0 text-2xl ${
+                className={`flex-shrink-0 aspect-square p-0 w-10 text-2xl ${
                   satisfaction === i + 1 ? "ring-2 ring-purple-500" : ""
                 }`}
                 onClick={() => setSatisfaction(i + 1)}
