@@ -40,17 +40,7 @@ const DiaryEntryList = ({ entries, onEntryClick }: DiaryEntryListProps) => {
 
   const formatEntryText = (text: string) => {
     const lines = text.split('\n');
-    const transformedLines = lines.map(line => {
-      if (line.startsWith('⚡')) {
-        return `⚡ ${line.replace('⚡', '')}`;  // Mantenemos el rayo al principio
-      }
-      // Eliminar el emoji de satisfacción si la línea lo contiene
-      if (line.match(/^[😠🙁😕😞😐🙂😊😄😁🥰]/)) {
-        return line.slice(2);
-      }
-      return line;
-    });
-    return transformedLines;
+    return lines.filter(line => line.trim() !== '');  // Eliminar líneas vacías
   };
 
   return (
