@@ -16,7 +16,7 @@ export const DiaryOptionsDialog = ({
 }: DiaryOptionsDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="w-[90vw] max-w-sm mx-auto p-4 sm:p-6">
+      <DialogContent className="w-[85vw] max-w-[280px] p-3 mx-auto sm:w-[90vw] sm:max-w-sm sm:p-6">
         <div className="flex flex-col gap-3">
           <Button
             variant="outline"
