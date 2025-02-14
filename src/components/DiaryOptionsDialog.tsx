@@ -16,16 +16,16 @@ export const DiaryOptionsDialog = ({
 }: DiaryOptionsDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-xs mx-auto">
-        <div className="flex flex-col gap-4 py-4">
+      <DialogContent className="w-[90vw] max-w-sm mx-auto p-4 sm:p-6">
+        <div className="flex flex-col gap-3">
           <Button
             variant="outline"
-            className="flex items-center gap-2 h-auto py-4"
+            className="flex items-start gap-3 h-auto p-3 sm:p-4 hover:bg-purple-500/10"
             onClick={() => onSelectOption("entry")}
           >
-            <BookText className="w-5 h-5" />
+            <BookText className="w-5 h-5 mt-0.5 shrink-0" />
             <div className="text-left">
-              <div className="font-semibold">Nueva entrada</div>
+              <div className="font-semibold mb-0.5">Nueva entrada</div>
               <div className="text-sm text-muted-foreground">
                 Registra tus pensamientos y experiencias
               </div>
@@ -34,12 +34,12 @@ export const DiaryOptionsDialog = ({
 
           <Button
             variant="outline"
-            className="flex items-center gap-2 h-auto py-4"
+            className="flex items-start gap-3 h-auto p-3 sm:p-4 hover:bg-purple-500/10"
             onClick={() => onSelectOption("emotional")}
           >
-            <Smile className="w-5 h-5" />
+            <Smile className="w-5 h-5 mt-0.5 shrink-0" />
             <div className="text-left">
-              <div className="font-semibold">Estado emocional</div>
+              <div className="font-semibold mb-0.5">Estado emocional</div>
               <div className="text-sm text-muted-foreground">
                 Registra tu nivel de energía y satisfacción
               </div>
