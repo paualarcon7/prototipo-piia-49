@@ -34,9 +34,16 @@ export const EmotionalStateDialog = ({ open, onClose }: EmotionalStateDialogProp
   const [notes, setNotes] = useState("");
 
   const handleSave = () => {
+    const entryText = [
+      `⚡ Nivel de energía: ${energyLevel}/10`,
+      `${satisfactionEmojis[satisfaction - 1].emoji} Nivel de satisfacción: ${satisfaction}/10`,
+      selectedWords.length > 0 ? `\nMe siento: ${selectedWords.join(", ")}` : "",
+      notes ? `\n\n${notes}` : ""
+    ].join("\n");
+
     const emotionEntry = {
       id: Date.now().toString(),
-      text: notes || `Nivel de energía: ${energyLevel}/10\nNivel de satisfacción: ${satisfaction}/10`,
+      text: entryText,
       createdAt: new Date(),
       date: new Date().toISOString().split('T')[0],
       emotion: {
