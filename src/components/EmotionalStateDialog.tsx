@@ -80,14 +80,13 @@ export const EmotionalStateDialog = ({ open, onClose }: EmotionalStateDialogProp
             <div className="flex items-center gap-4">
               <div className="w-24 h-24 flex items-center justify-center">
                 <Zap 
-                  className="w-16 h-16 transition-colors"
-                  fill={energyLevel > 5 ? "currentColor" : "none"}
-                  strokeWidth={1}
-                  className={`${
+                  className={`w-16 h-16 transition-colors ${
                     energyLevel > 7 ? "text-yellow-400" :
                     energyLevel > 5 ? "text-yellow-300" :
                     "text-gray-400"
                   }`}
+                  fill={energyLevel > 5 ? "currentColor" : "none"}
+                  strokeWidth={1}
                 />
               </div>
               <div className="flex-1">
