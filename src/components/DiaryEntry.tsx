@@ -26,11 +26,11 @@ interface DiaryEntryProps {
 
 const DiaryEntry = ({ entry, isEditable = true, onEdit }: DiaryEntryProps) => {
   const getEmotionColor = (id: number) => {
-    if (id <= 2) return "bg-[#F97316]"; // Naranja intenso para emociones muy bajas
-    if (id <= 4) return "bg-[#FEC6A1]"; // Naranja suave para emociones bajas
-    if (id === 5) return "bg-[#8E9196]"; // Gris neutral
-    if (id <= 7) return "bg-[#F2FCE2]"; // Verde suave para emociones positivas
-    return "bg-[#8B5CF6]"; // Púrpura para emociones muy positivas
+    if (id <= 2) return "bg-[#BE0712]"; // Rojo intenso - alta energía, baja satisfacción
+    if (id <= 4) return "bg-[#FF6B35]"; // Naranja - energía media-alta, satisfacción media-baja
+    if (id === 5) return "bg-[#B7C7C7]"; // Gris azulado - energía y satisfacción neutras
+    if (id <= 7) return "bg-[#7DB249]"; // Verde medio - energía media, satisfacción media-alta
+    return "bg-[#FFB563]"; // Amarillo cálido - alta energía, alta satisfacción
   };
 
   const formatEntryText = (text: string) => {
@@ -45,7 +45,7 @@ const DiaryEntry = ({ entry, isEditable = true, onEdit }: DiaryEntryProps) => {
   };
 
   return (
-    <Card className={`bg-gradient-to-br ${entry.emotion ? getEmotionColor(entry.emotion.id) : 'from-gray-500/20 to-gray-600/20'} backdrop-blur-lg border-0 shadow-xl p-6`}>
+    <Card className="bg-[#1A1F2C]/90 backdrop-blur-lg border-0 shadow-xl p-6">
       <div className="flex justify-between items-start gap-4">
         {entry.emotion && (
           <div className="flex-shrink-0">

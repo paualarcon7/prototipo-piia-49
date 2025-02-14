@@ -2,11 +2,30 @@
 import { Button } from "./ui/button";
 
 const emotionWords = {
-  "Muy bien": ["A gusto", "Emocionado", "Feliz", "Inspirado", "Alegre", "En paz", "Satisfecho", "Sereno"],
-  "Bien": ["Tranquilo", "Optimista", "Agradecido", "Motivado", "Esperanzado"],
-  "Normal": ["Neutral", "Calmado", "Estable"],
-  "Mal": ["Preocupado", "Ansioso", "Cansado", "Frustrado"],
-  "Muy mal": ["Triste", "Estresado", "Abrumado", "Angustiado"]
+  "Muy bien": [
+    "Extático", "Eufórico", "Emocionado", 
+    "Inspirado", "Optimista", "Orgulloso",
+    "Feliz", "Contento", "Satisfecho"
+  ],
+  "Bien": [
+    "Animado", "Energético", "Entusiasta",
+    "Alegre", "Motivado", "Esperanzado",
+    "A gusto", "Tranquilo", "Agradecido"
+  ],
+  "Normal": [
+    "Calmado", "Relajado", "Sereno",
+    "Neutral", "Pensativo", "En paz"
+  ],
+  "Mal": [
+    "Preocupado", "Ansioso", "Nervioso",
+    "Tenso", "Frustrado", "Irritado",
+    "Triste", "Cansado", "Desanimado"
+  ],
+  "Muy mal": [
+    "Estresado", "Furioso", "Enfadado",
+    "Angustiado", "Deprimido", "Desesperado",
+    "Agotado", "Miserable", "Desesperanzado"
+  ]
 };
 
 interface EmotionWordsProps {
