@@ -1,7 +1,7 @@
 
 import { Dialog, DialogContent } from "./ui/dialog";
 import { Button } from "./ui/button";
-import { BookText, Smile } from "lucide-react";
+import { BookText, Smile, Upload, Camera, FolderPlus } from "lucide-react";
 
 interface DiaryOptionsDialogProps {
   open: boolean;
@@ -16,34 +16,51 @@ export const DiaryOptionsDialog = ({
 }: DiaryOptionsDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="w-[85vw] max-w-[280px] p-3 mx-auto sm:w-[90vw] sm:max-w-sm sm:p-6">
-        <div className="flex flex-col gap-3">
+      <DialogContent className="w-[85vw] max-w-[280px] p-0 mx-auto sm:w-[90vw] sm:max-w-sm bg-[#1A1F2C]">
+        <div className="flex flex-col divide-y divide-white/10">
           <Button
-            variant="outline"
-            className="flex items-start gap-3 h-auto p-3 sm:p-4 hover:bg-purple-500/10"
+            variant="ghost"
+            className="flex items-center gap-4 h-auto py-4 px-6 rounded-none hover:bg-white/5 text-white"
             onClick={() => onSelectOption("entry")}
           >
-            <BookText className="w-5 h-5 mt-0.5 shrink-0" />
-            <div className="text-left">
-              <div className="font-semibold mb-0.5">Nueva entrada</div>
-              <div className="text-sm text-muted-foreground">
-                Registra tus pensamientos y experiencias
-              </div>
-            </div>
+            <Upload className="w-5 h-5 shrink-0 text-gray-300" />
+            <span className="text-base font-normal">Subir archivo</span>
           </Button>
 
           <Button
-            variant="outline"
-            className="flex items-start gap-3 h-auto p-3 sm:p-4 hover:bg-purple-500/10"
+            variant="ghost"
+            className="flex items-center gap-4 h-auto py-4 px-6 rounded-none hover:bg-white/5 text-white"
+            onClick={() => onSelectOption("entry")}
+          >
+            <Camera className="w-5 h-5 shrink-0 text-gray-300" />
+            <span className="text-base font-normal">Tomar una foto</span>
+          </Button>
+
+          <Button
+            variant="ghost"
+            className="flex items-center gap-4 h-auto py-4 px-6 rounded-none hover:bg-white/5 text-white"
+            onClick={() => onSelectOption("entry")}
+          >
+            <BookText className="w-5 h-5 shrink-0 text-gray-300" />
+            <span className="text-base font-normal">Nueva entrada</span>
+          </Button>
+
+          <Button
+            variant="ghost"
+            className="flex items-center gap-4 h-auto py-4 px-6 rounded-none hover:bg-white/5 text-white"
             onClick={() => onSelectOption("emotional")}
           >
-            <Smile className="w-5 h-5 mt-0.5 shrink-0" />
-            <div className="text-left">
-              <div className="font-semibold mb-0.5">Estado emocional</div>
-              <div className="text-sm text-muted-foreground">
-                Registra tu nivel de energía y satisfacción
-              </div>
-            </div>
+            <Smile className="w-5 h-5 shrink-0 text-gray-300" />
+            <span className="text-base font-normal">Estado emocional</span>
+          </Button>
+
+          <Button
+            variant="ghost"
+            className="flex items-center gap-4 h-auto py-4 px-6 rounded-none hover:bg-white/5 text-white"
+            onClick={() => onSelectOption("entry")}
+          >
+            <FolderPlus className="w-5 h-5 shrink-0 text-gray-300" />
+            <span className="text-base font-normal">Crear carpeta</span>
           </Button>
         </div>
       </DialogContent>
