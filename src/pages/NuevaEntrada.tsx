@@ -109,7 +109,7 @@ const NuevaEntrada = () => {
 
       <Button 
         onClick={handleSave}
-        className="w-full bg-purple-500 hover:bg-purple-600"
+        className="w-full bg-[#FF4081] hover:bg-[#FF4081]/90"
         disabled={!text.trim()}
       >
         Guardar entrada
@@ -119,4 +119,3 @@ const NuevaEntrada = () => {
 };
 
 export default NuevaEntrada;
-
