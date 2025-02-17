@@ -69,7 +69,7 @@ const Home = () => {
                 <p className="text-sm text-gray-400">{currentDay.description}</p>
               </div>
             </div>
-            <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white" onClick={() => navigate(`/programa/2/modulo/1`)}>
+            <Button onClick={() => navigate(`/programa/2/modulo/1`)} className="w-full text-white bg-[#ff4081]">
               Comenzar actividades del día
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
