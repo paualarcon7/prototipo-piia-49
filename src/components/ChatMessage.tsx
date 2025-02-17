@@ -14,7 +14,7 @@ const ChatMessage = ({ text, isBot, isLoading }: ChatMessageProps) => {
         className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${
           isBot
             ? "bg-secondary/50 backdrop-blur-sm border border-secondary/20 text-white"
-            : "bg-[#FF4081]/80 text-white"
+            : "bg-gradient-to-r from-[#FF4081] to-[#FF4081]/80 text-white"
         } shadow-lg`}
       >
         {isLoading ? <LoadingDots /> : text}
