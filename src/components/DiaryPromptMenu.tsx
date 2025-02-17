@@ -42,8 +42,10 @@ const DiaryPromptMenu = ({ onSelectPrompt }: DiaryPromptMenuProps) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <button className="absolute left-3 top-3 text-gray-400 hover:text-[#FF4081] transition-colors">
-          <Plus className="h-6 w-6" />
+        <button 
+          className="absolute left-3 top-3 w-10 h-10 flex items-center justify-center rounded-full bg-gray-400/10 hover:bg-[#FF4081]/20 group transition-all duration-200"
+        >
+          <Plus className="h-8 w-8 text-gray-400 group-hover:text-[#FF4081] transition-colors" />
         </button>
       </PopoverTrigger>
       <PopoverContent className="w-80 p-0" align="start">
