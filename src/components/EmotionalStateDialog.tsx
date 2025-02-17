@@ -171,7 +171,7 @@ export const EmotionalStateDialog = ({ open, onClose }: EmotionalStateDialogProp
           <div className="flex justify-end gap-2">
             <Button 
               onClick={handleSave}
-              className="px-6 bg-purple-500 hover:bg-purple-600"
+              className="px-6 bg-[#FF4081] hover:bg-[#FF4081]/90"
             >
               Guardar
             </Button>
