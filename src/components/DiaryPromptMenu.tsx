@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Plus } from "lucide-react";
 import {
@@ -41,8 +42,8 @@ const DiaryPromptMenu = ({ onSelectPrompt }: DiaryPromptMenuProps) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <button className="absolute left-3 top-3 text-gray-400 hover:text-purple-500 transition-colors">
-          <Plus className="h-4 w-4" />
+        <button className="absolute left-3 top-3 text-gray-400 hover:text-[#FF4081] transition-colors">
+          <Plus className="h-6 w-6" />
         </button>
       </PopoverTrigger>
       <PopoverContent className="w-80 p-0" align="start">
@@ -64,7 +65,7 @@ const DiaryPromptMenu = ({ onSelectPrompt }: DiaryPromptMenuProps) => {
                   {category.items.map((prompt) => (
                     <button
                       key={prompt}
-                      className="w-full text-left px-2 py-1.5 text-sm rounded hover:bg-purple-500/20 transition-colors"
+                      className="w-full text-left px-2 py-1.5 text-sm rounded hover:bg-[#FF4081]/20 transition-colors"
                       onClick={() => onSelectPrompt(prompt)}
                     >
                       {prompt}
