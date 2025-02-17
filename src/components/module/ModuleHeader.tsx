@@ -24,15 +24,15 @@ export const ModuleHeader = ({ onBack }: ModuleHeaderProps) => (
         con el fin de encontrar un camino profesional y personal pleno y significativo. Cada paso te guiará 
         a través de reflexiones y ejercicios prácticos para conectar con tu esencia y construir una estrategia de acción.
       </p>
-      <div className="bg-purple-500/20 p-4 rounded-lg">
+      <div className="bg-[#FF4081]/20 p-4 rounded-lg">
         <h2 className="text-lg font-semibold mb-2">Objetivo del Módulo</h2>
         <p className="text-gray-300">
           Identificar las actividades y momentos en los que tu energía se expande y experimentas el estado de "flujo".
         </p>
       </div>
       <div className="flex items-center gap-2 mt-4">
-        <span className="text-sm bg-purple-500/30 text-purple-300 px-3 py-1.5 rounded-full font-medium flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+        <span className="text-sm bg-[#FF4081]/30 text-[#FF4081] px-3 py-1.5 rounded-full font-medium flex items-center gap-1.5">
+          <div className="w-2 h-2 rounded-full bg-[#FF4081] animate-pulse" />
           En progreso
         </span>
       </div>

@@ -23,7 +23,7 @@ export const WorkDayCard = ({
         ? 'bg-secondary/30 cursor-not-allowed opacity-75'
         : status === 'completed'
         ? `bg-${color}-500/20 border border-${color}-500/50 cursor-pointer`
-        : `bg-secondary/50 hover:bg-${color}-500/10 cursor-pointer`
+        : `bg-secondary/50 hover:bg-secondary/70 cursor-pointer`
     }`}
   >
     <div className="flex items-center justify-between mb-2">
