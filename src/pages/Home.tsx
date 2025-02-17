@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { workDays } from "@/constants/workDays";
+
 const Home = () => {
   const navigate = useNavigate();
   const streak = {
@@ -54,7 +55,6 @@ const Home = () => {
     completed: false
   }];
 
-  // Encontrar el día actual de trabajo
   const currentDay = workDays.find(day => day.status === 'current');
   return <div className="container mx-auto px-4 py-4 space-y-4 pb-20">
       <h1 className="text-xl font-bold mb-4">Bienvenido de vuelta</h1>
@@ -69,7 +69,7 @@ const Home = () => {
                 <p className="text-sm text-gray-400">{currentDay.description}</p>
               </div>
             </div>
-            <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white" onClick={() => navigate(`/programa/2/modulo/1`)}>
+            <Button className="w-full bg-[#FF4081] hover:bg-[#FF4081]/90 text-white" onClick={() => navigate(`/programa/2/modulo/1`)}>
               Comenzar actividades del día
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
@@ -82,7 +82,7 @@ const Home = () => {
           {/* Days of the week */}
           <div className="flex justify-between items-center mb-6 px-2">
             {days.map((day, index) => <div key={index} className="flex flex-col items-center gap-1.5">
-                <div className={`w-6 h-6 md:w-8 md:h-8 rounded-full border-2 ${day.completed ? 'bg-[#0EA5E9] border-[#0EA5E9]' : 'border-gray-600 border-dashed'} flex items-center justify-center`}>
+                <div className={`w-6 h-6 md:w-8 md:h-8 rounded-full border-2 ${day.completed ? 'bg-[#FF4081] border-[#FF4081]' : 'border-gray-600 border-dashed'} flex items-center justify-center`}>
                   {day.completed && <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-white" />}
                 </div>
                 <span className="text-xs md:text-sm">{day.name}</span>
