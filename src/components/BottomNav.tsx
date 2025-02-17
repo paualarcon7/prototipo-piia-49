@@ -11,7 +11,7 @@ const BottomNav = () => {
         <Link
           to="/home"
           className={`flex flex-col items-center py-3 px-5 ${
-            location.pathname === "/home" ? "text-[#9b87f5]" : "text-gray-400"
+            location.pathname === "/home" ? "text-[#FF4081]" : "text-gray-400"
           } transition-colors`}
         >
           <Home className="w-6 h-6" />
@@ -20,7 +20,7 @@ const BottomNav = () => {
         <Link
           to="/"
           className={`flex flex-col items-center py-3 px-5 ${
-            location.pathname === "/" ? "text-[#9b87f5]" : "text-gray-400"
+            location.pathname === "/" ? "text-[#FF4081]" : "text-gray-400"
           } transition-colors`}
         >
           <MessageSquare className="w-6 h-6" />
@@ -29,7 +29,7 @@ const BottomNav = () => {
         <Link
           to="/protocolos"
           className={`flex flex-col items-center py-3 px-5 ${
-            location.pathname === "/protocolos" ? "text-[#9b87f5]" : "text-gray-400"
+            location.pathname === "/protocolos" ? "text-[#FF4081]" : "text-gray-400"
           } transition-colors`}
         >
           <ListFilter className="w-6 h-6" />
@@ -38,7 +38,7 @@ const BottomNav = () => {
         <Link
           to="/diario"
           className={`flex flex-col items-center py-3 px-5 ${
-            location.pathname === "/diario" ? "text-[#9b87f5]" : "text-gray-400"
+            location.pathname === "/diario" ? "text-[#FF4081]" : "text-gray-400"
           } transition-colors`}
         >
           <BookOpen className="w-6 h-6" />
