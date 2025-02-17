@@ -4,12 +4,14 @@ import { ArrowLeft, CheckCircle2, PlayCircle, ClipboardList, Dumbbell, MessageSq
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "sonner";
+
 interface Module {
   title: string;
   description: string;
   completed: boolean;
   current?: boolean;
 }
+
 const ModuleStages = ({
   isOpen,
   onClose
@@ -62,14 +64,12 @@ const ModuleStages = ({
       </DialogContent>
     </Dialog>;
 };
+
 const ProgramaDetalle = () => {
-  const {
-    id
-  } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const [selectedModule, setSelectedModule] = useState<null | number>(null);
 
-  // Mock data - esto debería venir de una API en una implementación real
   const programas = {
     "1": {
       id: 1,
@@ -172,18 +172,18 @@ const ProgramaDetalle = () => {
       color: "from-[#8E9196] to-[#333333]"
     }
   };
+
   const programa = programas[id as keyof typeof programas];
+
   const handleModuleClick = (moduleIndex: number, module: Module) => {
-    // Si el módulo está bloqueado (no completado y no es el actual), mostrar mensaje
     if (!module.completed && !module.current) {
       toast.error("Este módulo aún no está disponible");
       return;
     }
-
-    // Si el módulo está disponible, navegar a la ruta del módulo
     navigate(`/programa/${id}/modulo/${moduleIndex + 1}`);
     setSelectedModule(moduleIndex);
   };
+
   return <div className="container mx-auto px-4 py-6 space-y-6 pb-20">
       <Button variant="ghost" className="mb-4" onClick={() => navigate(-1)}>
         <ArrowLeft className="mr-2 h-4 w-4" />
@@ -218,7 +218,7 @@ const ProgramaDetalle = () => {
                     </h3>
                     <p className="text-gray-300 text-sm mt-1">{module.description}</p>
                   </div>
-                  {module.current && <span className="text-xs bg-purple-500/20 px-2 py-1 rounded-full text-[#ff4081]">
+                  {module.current && <span className="text-xs bg-[#FF4081]/20 px-2 py-1 rounded-full text-[#ff4081]">
                       En progreso
                     </span>}
                 </div>
@@ -230,4 +230,5 @@ const ProgramaDetalle = () => {
       <ModuleStages isOpen={selectedModule !== null} onClose={() => setSelectedModule(null)} />
     </div>;
 };
+
 export default ProgramaDetalle;
