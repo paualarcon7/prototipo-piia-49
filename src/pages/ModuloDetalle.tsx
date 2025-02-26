@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ModuleHeader } from "@/components/module/ModuleHeader";
 import { WorkDayList } from "@/components/module/WorkDayList";
 import { DayStages } from "@/components/module/DayStages";
+import { ModuleVideoCarousel } from "@/components/module/ModuleVideoCarousel";
 import { stages } from "@/constants/moduleStages";
 import { workDays } from "@/constants/workDays";
 import { evaluationQuestions, feedbackQuestions } from "@/constants/moduleQuestions";
@@ -18,6 +19,25 @@ const ModuloDetalle = () => {
   const [showTest, setShowTest] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
   const { toast } = useToast();
+
+  // Example video slides - replace with actual video content
+  const videoSlides = [
+    {
+      src: "/placeholder-video-1.mp4", // Replace with actual video URLs
+      thumbnail: "/placeholder-thumbnail-1.jpg",
+      title: "Objetivos del Módulo",
+    },
+    {
+      src: "/placeholder-video-2.mp4",
+      thumbnail: "/placeholder-thumbnail-2.jpg",
+      title: "Estructura del Módulo",
+    },
+    {
+      src: "/placeholder-video-3.mp4",
+      thumbnail: "/placeholder-thumbnail-3.jpg",
+      title: "Resultados Esperados",
+    },
+  ];
 
   const handleTestComplete = (results: Record<number, string>) => {
     console.log("Test results:", results);
@@ -88,10 +108,15 @@ const ModuloDetalle = () => {
           />
           
           {selectedDay === null ? (
-            <WorkDayList 
-              workDays={workDays} 
-              onDaySelect={handleDaySelect} 
-            />
+            <>
+              <div className="mb-8">
+                <ModuleVideoCarousel slides={videoSlides} />
+              </div>
+              <WorkDayList 
+                workDays={workDays} 
+                onDaySelect={handleDaySelect} 
+              />
+            </>
           ) : (
             <DayStages
               selectedDay={selectedDay}
