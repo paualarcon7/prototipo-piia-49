@@ -1,3 +1,4 @@
+
 import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import TestQuestion from "@/components/TestQuestion";
@@ -35,7 +36,7 @@ const ModuloDetalle = () => {
     {
       src: "/placeholder-video-3.mp4",
       thumbnail: "/placeholder-thumbnail-3.jpg",
-      title: "Resultados Esperados",
+      title: "Conoce más",
       likes: 1800000,
     },
   ];
