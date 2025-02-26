@@ -99,16 +99,12 @@ const ModuloDetalle = () => {
         />
       ) : (
         <>
-          <ModuleHeader 
-            onBack={() => {
-              if (selectedDay !== null) {
-                handleBackFromStages();
-              } else {
-                navigate(`/programa/${id}`);
-              }
-            }}
-            videoSlides={videoSlides}
-          />
+          {selectedDay === null && (
+            <ModuleHeader 
+              onBack={() => navigate(`/programa/${id}`)}
+              videoSlides={videoSlides}
+            />
+          )}
           
           {selectedDay === null ? (
             <WorkDayList 
