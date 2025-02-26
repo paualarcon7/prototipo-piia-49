@@ -19,11 +19,6 @@ export const ModuleHeader = ({ onBack }: ModuleHeaderProps) => (
 
     <div className="bg-secondary/50 backdrop-blur-sm rounded-lg p-6 mb-6">
       <h1 className="text-2xl font-bold mb-4">ALMA - PARTE 1: ACTIVA TU ENERGÍA Y DETECTA TU FLUJO</h1>
-      <p className="text-gray-300 mb-4">
-        El modelo ALMA está diseñado para ayudarte a alinear tu energía, talento, impacto y sostenibilidad, 
-        con el fin de encontrar un camino profesional y personal pleno y significativo. Cada paso te guiará 
-        a través de reflexiones y ejercicios prácticos para conectar con tu esencia y construir una estrategia de acción.
-      </p>
       <div className="bg-[#FF4081]/20 p-4 rounded-lg">
         <h2 className="text-lg font-semibold mb-2">Objetivo del Módulo</h2>
         <p className="text-gray-300">
