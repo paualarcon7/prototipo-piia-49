@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import TestQuestion from "@/components/TestQuestion";
@@ -6,7 +5,6 @@ import { useToast } from "@/hooks/use-toast";
 import { ModuleHeader } from "@/components/module/ModuleHeader";
 import { WorkDayList } from "@/components/module/WorkDayList";
 import { DayStages } from "@/components/module/DayStages";
-import { ModuleVideoCarousel } from "@/components/module/ModuleVideoCarousel";
 import { stages } from "@/constants/moduleStages";
 import { workDays } from "@/constants/workDays";
 import { evaluationQuestions, feedbackQuestions } from "@/constants/moduleQuestions";
@@ -23,19 +21,22 @@ const ModuloDetalle = () => {
   // Example video slides - replace with actual video content
   const videoSlides = [
     {
-      src: "/placeholder-video-1.mp4", // Replace with actual video URLs
+      src: "/placeholder-video-1.mp4",
       thumbnail: "/placeholder-thumbnail-1.jpg",
       title: "Objetivos del Módulo",
+      likes: 1500000,
     },
     {
       src: "/placeholder-video-2.mp4",
       thumbnail: "/placeholder-thumbnail-2.jpg",
       title: "Estructura del Módulo",
+      likes: 2300000,
     },
     {
       src: "/placeholder-video-3.mp4",
       thumbnail: "/placeholder-thumbnail-3.jpg",
       title: "Resultados Esperados",
+      likes: 1800000,
     },
   ];
 
@@ -104,19 +105,15 @@ const ModuloDetalle = () => {
               } else {
                 navigate(`/programa/${id}`);
               }
-            }} 
+            }}
+            videoSlides={videoSlides}
           />
           
           {selectedDay === null ? (
-            <>
-              <div className="mb-8">
-                <ModuleVideoCarousel slides={videoSlides} />
-              </div>
-              <WorkDayList 
-                workDays={workDays} 
-                onDaySelect={handleDaySelect} 
-              />
-            </>
+            <WorkDayList 
+              workDays={workDays} 
+              onDaySelect={handleDaySelect} 
+            />
           ) : (
             <DayStages
               selectedDay={selectedDay}
