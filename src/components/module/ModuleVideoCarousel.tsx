@@ -64,10 +64,7 @@ export function ModuleVideoCarousel({ slides }: ModuleVideoCarouselProps) {
           loop: true,
         }}
         className="w-full"
-        onSelect={(api) => {
-          const selectedIndex = api.selectedScrollSnap();
-          handleSlideChange(selectedIndex);
-        }}
+        onSelect={handleSlideChange}
       >
         <CarouselContent>
           {slides.map((slide, index) => (
