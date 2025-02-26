@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { type CarouselApi } from "@/components/ui/carousel";
 
 interface VideoSlide {
   src: string;
@@ -26,6 +27,7 @@ export function ModuleVideoCarousel({ slides }: ModuleVideoCarouselProps) {
   const [isMuted, setIsMuted] = React.useState(true);
   const [progress, setProgress] = React.useState(0);
   const videoRefs = React.useRef<(HTMLVideoElement | null)[]>([]);
+  const [api, setApi] = React.useState<CarouselApi>();
 
   const handleVideoTimeUpdate = (e: React.SyntheticEvent<HTMLVideoElement>) => {
     const video = e.target as HTMLVideoElement;
@@ -42,7 +44,7 @@ export function ModuleVideoCarousel({ slides }: ModuleVideoCarouselProps) {
     });
   };
 
-  const handleSlideChange = (index: number) => {
+  const handleSlideChange = React.useCallback((index: number) => {
     setCurrentVideoIndex(index);
     videoRefs.current.forEach((video, idx) => {
       if (video) {
@@ -54,7 +56,17 @@ export function ModuleVideoCarousel({ slides }: ModuleVideoCarouselProps) {
         }
       }
     });
-  };
+  }, []);
+
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    api.on("select", () => {
+      handleSlideChange(api.selectedScrollSnap());
+    });
+  }, [api, handleSlideChange]);
 
   return (
     <div className="relative w-full max-w-3xl mx-auto">
@@ -64,7 +76,7 @@ export function ModuleVideoCarousel({ slides }: ModuleVideoCarouselProps) {
           loop: true,
         }}
         className="w-full"
-        onSelect={handleSlideChange}
+        setApi={setApi}
       >
         <CarouselContent>
           {slides.map((slide, index) => (
