@@ -23,7 +23,7 @@ const ModuloDetalle = () => {
   // Example video slides - replace with actual video content
   const videoSlides = [
     {
-      src: "/placeholder-video-1.mp4",
+      src: "/placeholder-video-1.mp4", // Replace with actual video URLs
       thumbnail: "/placeholder-thumbnail-1.jpg",
       title: "Objetivos del Módulo",
     },
@@ -108,9 +108,15 @@ const ModuloDetalle = () => {
           />
           
           {selectedDay === null ? (
-            <div className="h-[calc(100vh-8rem)]">
-              <ModuleVideoCarousel slides={videoSlides} />
-            </div>
+            <>
+              <div className="mb-8">
+                <ModuleVideoCarousel slides={videoSlides} />
+              </div>
+              <WorkDayList 
+                workDays={workDays} 
+                onDaySelect={handleDaySelect} 
+              />
+            </>
           ) : (
             <DayStages
               selectedDay={selectedDay}

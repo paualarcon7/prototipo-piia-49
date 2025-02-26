@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { type CarouselApi } from "@/components/ui/carousel";
 
 interface VideoSlide {
   src: string;
@@ -27,7 +26,6 @@ export function ModuleVideoCarousel({ slides }: ModuleVideoCarouselProps) {
   const [isMuted, setIsMuted] = React.useState(true);
   const [progress, setProgress] = React.useState(0);
   const videoRefs = React.useRef<(HTMLVideoElement | null)[]>([]);
-  const [api, setApi] = React.useState<CarouselApi>();
 
   const handleVideoTimeUpdate = (e: React.SyntheticEvent<HTMLVideoElement>) => {
     const video = e.target as HTMLVideoElement;
@@ -58,30 +56,23 @@ export function ModuleVideoCarousel({ slides }: ModuleVideoCarouselProps) {
     });
   };
 
-  React.useEffect(() => {
-    if (!api) {
-      return;
-    }
-
-    api.on("select", () => {
-      handleSlideChange(api.selectedScrollSnap());
-    });
-  }, [api]);
-
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full max-w-3xl mx-auto">
       <Carousel
         opts={{
           align: "start",
           loop: true,
         }}
-        className="w-full h-full"
-        setApi={setApi}
+        className="w-full"
+        onSelect={(api) => {
+          const selectedIndex = api.selectedScrollSnap();
+          handleSlideChange(selectedIndex);
+        }}
       >
-        <CarouselContent className="h-full">
+        <CarouselContent>
           {slides.map((slide, index) => (
-            <CarouselItem key={index} className="md:basis-full h-full">
-              <div className="relative h-full w-full overflow-hidden rounded-none">
+            <CarouselItem key={index} className="md:basis-full">
+              <div className="relative aspect-video w-full overflow-hidden rounded-xl">
                 <video
                   ref={(el) => (videoRefs.current[index] = el)}
                   className="w-full h-full object-cover"
@@ -96,20 +87,20 @@ export function ModuleVideoCarousel({ slides }: ModuleVideoCarouselProps) {
                   <source src={slide.src} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 via-black/30 to-transparent">
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
                   <h3 className="text-white text-lg font-medium mb-2">{slide.title}</h3>
-                  <Progress value={progress} className="h-1 bg-white/20" />
+                  <Progress value={progress} className="h-1" />
                 </div>
               </div>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 border-none text-white" />
-        <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 border-none text-white" />
+        <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2" />
+        <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2" />
         <Button
           variant="outline"
           size="icon"
-          className="absolute top-4 right-4 bg-black/20 hover:bg-black/40 border-none"
+          className="absolute top-4 right-4 bg-black/50 hover:bg-black/70"
           onClick={handleMuteToggle}
         >
           {isMuted ? (
