@@ -19,13 +19,7 @@ export const ModuleHeader = ({ onBack }: ModuleHeaderProps) => (
 
     <div className="bg-secondary/50 backdrop-blur-sm rounded-lg p-6 mb-6">
       <h1 className="text-2xl font-bold mb-4">ALMA - PARTE 1: ACTIVA TU ENERGÍA Y DETECTA TU FLUJO</h1>
-      <div className="bg-[#FF4081]/20 p-4 rounded-lg">
-        <h2 className="text-lg font-semibold mb-2">Objetivo del Módulo</h2>
-        <p className="text-gray-300">
-          Identificar las actividades y momentos en los que tu energía se expande y experimentas el estado de "flujo".
-        </p>
-      </div>
-      <div className="flex items-center gap-2 mt-4">
+      <div className="flex items-center gap-2">
         <span className="text-sm bg-[#FF4081]/30 text-[#FF4081] px-3 py-1.5 rounded-full font-medium flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-[#FF4081] animate-pulse" />
           En progreso
@@ -34,3 +28,4 @@ export const ModuleHeader = ({ onBack }: ModuleHeaderProps) => (
     </div>
   </>
 );
+
