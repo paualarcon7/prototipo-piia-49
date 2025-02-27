@@ -1,6 +1,6 @@
 
 import * as React from "react";
-import { Volume2, VolumeX, Heart } from "lucide-react";
+import { Volume2, VolumeX, Heart, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
@@ -16,9 +16,10 @@ interface VideoSlide {
 
 interface ModuleVideoCarouselProps {
   slides: VideoSlide[];
+  onClose: () => void;
 }
 
-export function ModuleVideoCarousel({ slides }: ModuleVideoCarouselProps) {
+export function ModuleVideoCarousel({ slides, onClose }: ModuleVideoCarouselProps) {
   const [currentVideoIndex, setCurrentVideoIndex] = React.useState(0);
   const [isMuted, setIsMuted] = React.useState(true);
   const [progress, setProgress] = React.useState(0);
@@ -71,6 +72,7 @@ export function ModuleVideoCarousel({ slides }: ModuleVideoCarouselProps) {
   const handlePurposeSubmit = () => {
     console.log("User purpose:", purpose);
     setShowPurposeModal(false);
+    onClose();
   };
 
   const handleWheel = (e: React.WheelEvent) => {
@@ -86,6 +88,15 @@ export function ModuleVideoCarousel({ slides }: ModuleVideoCarouselProps) {
   const handleVideoError = (index: number) => {
     console.error(`Error loading video at index ${index}, URL: ${slides[index].src}`);
     setVideoError(true);
+  };
+
+  const handleCloseClick = () => {
+    // Show the purpose modal if the user tries to close without watching all videos
+    if (currentVideoIndex < slides.length - 1) {
+      setCurrentVideoIndex(slides.length - 1);
+    } else {
+      onClose();
+    }
   };
 
   React.useEffect(() => {
@@ -141,11 +152,24 @@ export function ModuleVideoCarousel({ slides }: ModuleVideoCarouselProps) {
     <>
       <div 
         ref={containerRef}
-        className="relative w-full aspect-video rounded-xl overflow-hidden bg-black"
+        className="relative w-full h-full bg-black overflow-hidden"
         onMouseMove={handleVideoContainerHover}
         onMouseLeave={() => setShowControls(false)}
         onWheel={handleWheel}
       >
+        {/* Close button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className={cn(
+            "absolute top-4 left-4 z-50 h-10 w-10 rounded-full bg-black/50 hover:bg-black/70 transition-opacity duration-300",
+            showControls ? "opacity-100" : "opacity-0"
+          )}
+          onClick={handleCloseClick}
+        >
+          <X className="h-6 w-6 text-white" />
+        </Button>
+
         {slides.map((slide, index) => (
           <div
             key={index}

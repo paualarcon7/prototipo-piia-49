@@ -9,6 +9,7 @@ import { DayStages } from "@/components/module/DayStages";
 import { stages } from "@/constants/moduleStages";
 import { workDays } from "@/constants/workDays";
 import { evaluationQuestions, feedbackQuestions } from "@/constants/moduleQuestions";
+import { ModuleVideoPreview } from "@/components/module/ModuleVideoPreview";
 
 const ModuloDetalle = () => {
   const { id, moduleId } = useParams();
@@ -17,6 +18,7 @@ const ModuloDetalle = () => {
   const [activeStage, setActiveStage] = useState(0);
   const [showTest, setShowTest] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [showFullScreenVideo, setShowFullScreenVideo] = useState(false);
   const { toast } = useToast();
 
   // Video slides with public CDN videos
@@ -40,8 +42,6 @@ const ModuloDetalle = () => {
       likes: 1800000,
     },
   ];
-
-  console.log("Video URLs:", videoSlides.map(slide => slide.src));
 
   const handleTestComplete = (results: Record<number, string>) => {
     console.log("Test results:", results);
@@ -85,6 +85,14 @@ const ModuloDetalle = () => {
     setActiveStage(0);
   };
 
+  const handleOpenFullScreenVideo = () => {
+    setShowFullScreenVideo(true);
+  };
+
+  const handleCloseFullScreenVideo = () => {
+    setShowFullScreenVideo(false);
+  };
+
   return (
     <div className="container mx-auto px-4 py-6 pb-32">
       {showTest ? (
@@ -102,10 +110,29 @@ const ModuloDetalle = () => {
       ) : (
         <>
           {selectedDay === null && (
-            <ModuleHeader 
-              onBack={() => navigate(`/programa/${id}`)}
-              videoSlides={videoSlides}
-            />
+            <>
+              <ModuleHeader 
+                onBack={() => navigate(`/programa/${id}`)}
+              />
+              {!showFullScreenVideo && (
+                <ModuleVideoPreview 
+                  videoSlides={videoSlides} 
+                  onPlayClick={handleOpenFullScreenVideo}
+                />
+              )}
+              {showFullScreenVideo && (
+                <div className="fixed inset-0 z-50 bg-black">
+                  <div className="h-full w-full flex items-center justify-center">
+                    <div className="relative w-full max-w-md h-full">
+                      <ModuleVideoCarousel 
+                        slides={videoSlides} 
+                        onClose={handleCloseFullScreenVideo}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
           )}
           
           {selectedDay === null ? (
