@@ -74,7 +74,6 @@ export function ModuleVideoPreview({ videoSlides, onPlayClick }: ModuleVideoPrev
           playsInline
           onError={handleVideoError}
           onLoadedData={handleVideoLoaded}
-          loading="lazy"
         >
           <source src={firstSlide.src} type="video/mp4" />
           Your browser does not support the video tag.
