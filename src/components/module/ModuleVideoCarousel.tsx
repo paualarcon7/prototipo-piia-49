@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import { Volume2, VolumeX, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -28,6 +29,7 @@ export function ModuleVideoCarousel({ slides }: ModuleVideoCarouselProps) {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [showPurposeModal, setShowPurposeModal] = React.useState(false);
   const [purpose, setPurpose] = React.useState("");
+  const [videoError, setVideoError] = React.useState(false);
 
   const handleVideoTimeUpdate = (e: React.SyntheticEvent<HTMLVideoElement>) => {
     const video = e.target as HTMLVideoElement;
@@ -81,6 +83,11 @@ export function ModuleVideoCarousel({ slides }: ModuleVideoCarouselProps) {
     }
   };
 
+  const handleVideoError = (index: number) => {
+    console.error(`Error loading video at index ${index}, URL: ${slides[index].src}`);
+    setVideoError(true);
+  };
+
   React.useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -90,8 +97,8 @@ export function ModuleVideoCarousel({ slides }: ModuleVideoCarouselProps) {
             setCurrentVideoIndex(index);
             const video = videoRefs.current[index];
             if (video) {
-              video.play().catch(() => {
-                console.log("Video autoplay prevented");
+              video.play().catch((err) => {
+                console.log("Video autoplay prevented", err);
               });
             }
           } else {
@@ -119,8 +126,8 @@ export function ModuleVideoCarousel({ slides }: ModuleVideoCarouselProps) {
     videoRefs.current.forEach((video, index) => {
       if (video) {
         if (index === currentVideoIndex) {
-          video.play().catch(() => {
-            console.log("Video autoplay prevented");
+          video.play().catch((err) => {
+            console.log("Video autoplay prevented", err);
           });
         } else {
           video.pause();
@@ -151,17 +158,25 @@ export function ModuleVideoCarousel({ slides }: ModuleVideoCarouselProps) {
             <video
               ref={(el) => (videoRefs.current[index] = el)}
               className="w-full h-full object-contain"
-              src={slide.src}
-              poster={slide.thumbnail}
-              loop={false}
               playsInline
               muted={isMuted}
+              controls={false}
               onTimeUpdate={handleVideoTimeUpdate}
               onEnded={handleVideoEnded}
+              onError={() => handleVideoError(index)}
             >
               <source src={slide.src} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
+
+            {videoError && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/75 text-white text-center p-4">
+                <div>
+                  <p className="mb-2">Error al cargar el video.</p>
+                  <p className="text-sm opacity-75">Intenta recargar la página o revisar tu conexión a internet.</p>
+                </div>
+              </div>
+            )}
 
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 

@@ -14,7 +14,7 @@ import { evaluationQuestions, feedbackQuestions } from "@/constants/moduleQuesti
 const getDirectGoogleDriveLink = (url: string): string => {
   const fileId = url.match(/[-\w]{25,}/);
   if (fileId) {
-    return `https://drive.google.com/uc?export=download&id=${fileId[0]}`;
+    return `https://drive.google.com/uc?export=view&id=${fileId[0]}`;
   }
   return url;
 };
@@ -49,6 +49,8 @@ const ModuloDetalle = () => {
       likes: 1800000,
     },
   ];
+
+  console.log("Video URLs:", videoSlides.map(slide => slide.src));
 
   const handleTestComplete = (results: Record<number, string>) => {
     console.log("Test results:", results);
