@@ -82,7 +82,7 @@ const mockRoutines: Routine[] = [
           id: 3,
           title: "Meditación para dormir",
           dimension: "bienestar",
-          tags: ["relajación", "sueño"],
+          tags: ["meditación", "bienestar"],
           duration: "20 min",
           description: "Meditación guiada para conciliar el sueño",
           icon: Calendar
@@ -114,7 +114,7 @@ const mockRoutines: Routine[] = [
           id: 4,
           title: "Yoga matutino",
           dimension: "bienestar",
-          tags: ["yoga", "energía"],
+          tags: ["meditación", "energía"],
           duration: "45 min",
           description: "Sesión de yoga para comenzar el día con energía",
           icon: Calendar
@@ -125,8 +125,8 @@ const mockRoutines: Routine[] = [
         protocol: {
           id: 5,
           title: "Planificación semanal",
-          dimension: "productividad",
-          tags: ["planificación", "organización"],
+          dimension: "rendimiento",
+          tags: ["concentración", "productividad"],
           duration: "30 min",
           description: "Organiza tus metas y tareas de la semana",
           icon: Calendar
