@@ -1,9 +1,10 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { 
   ChevronLeft, Edit, Clock, Calendar, Trash2, Share2, 
-  Bell, CheckCircle2, XCircle, PlayCircle 
+  Bell, CheckCircle2, XCircle, PlayCircle, Save, Plus,
+  X, ArrowUp, ArrowDown, RotateCcw
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -19,7 +20,15 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Switch } from "@/components/ui/switch";
-import { Routine, WeekDay } from "@/types/rutina";
+import { Routine, WeekDay, RoutineProtocol } from "@/types/rutina";
+import { protocols } from "@/pages/Protocolos"; // Importing mock protocols
+import { Protocol } from "@/types/protocols";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { ProtocolSelector } from "@/components/routines/ProtocolSelector";
+import { useToast } from "@/hooks/use-toast";
+import { DaySelector } from "@/components/routines/DaySelector";
+import { RoutineTimeSelector } from "@/components/routines/RoutineTimeSelector";
 
 // Mock data for demonstration
 const mockRoutine: Routine = {
@@ -71,8 +80,13 @@ const mockRoutine: Routine = {
 const RutinaDetalle = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [routine, setRoutine] = useState<Routine>(mockRoutine);
+  const [originalRoutine, setOriginalRoutine] = useState<Routine>(mockRoutine);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedTab, setSelectedTab] = useState("protocolos");
+  const [showProtocolSelector, setShowProtocolSelector] = useState(false);
   
   // Format days for display
   const formatDays = (days: WeekDay[]) => {
@@ -123,8 +137,160 @@ const RutinaDetalle = () => {
 
   const handleDelete = () => {
     console.log("Deleting routine:", id);
+    toast({
+      title: "Rutina eliminada",
+      description: "La rutina ha sido eliminada exitosamente",
+    });
     setIsDeleteDialogOpen(false);
     navigate("/rutinas");
+  };
+
+  const toggleEditMode = () => {
+    if (isEditing) {
+      // If we're cancelling edit mode, restore original routine
+      setRoutine(originalRoutine);
+      setIsEditing(false);
+    } else {
+      // Enter edit mode, save original routine for potential cancellation
+      setOriginalRoutine({...routine});
+      setIsEditing(true);
+    }
+  };
+
+  const saveChanges = () => {
+    // Here we would normally save to an API
+    setOriginalRoutine({...routine});
+    setIsEditing(false);
+    toast({
+      title: "Cambios guardados",
+      description: "Los cambios en la rutina se han guardado exitosamente",
+    });
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRoutine(prev => ({
+      ...prev,
+      name: e.target.value
+    }));
+  };
+
+  const handleDayToggle = (day: WeekDay) => {
+    setRoutine(prev => ({
+      ...prev,
+      days: prev.days.includes(day) 
+        ? prev.days.filter(d => d !== day)
+        : [...prev.days, day]
+    }));
+  };
+
+  const handleStartTimeChange = (time: string) => {
+    setRoutine(prev => ({
+      ...prev,
+      time: {
+        ...prev.time,
+        start: time
+      }
+    }));
+  };
+
+  const handleEndTimeChange = (time: string) => {
+    setRoutine(prev => ({
+      ...prev,
+      time: {
+        ...prev.time,
+        end: time
+      }
+    }));
+  };
+
+  const handleMinutesBeforeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setRoutine(prev => ({
+      ...prev,
+      notification: {
+        ...prev.notification,
+        minutesBefore: Number(e.target.value)
+      }
+    }));
+  };
+
+  const handleAddProtocol = (protocol: Protocol) => {
+    setRoutine(prev => ({
+      ...prev,
+      protocols: [
+        ...prev.protocols,
+        { protocol, order: prev.protocols.length }
+      ]
+    }));
+    setShowProtocolSelector(false);
+    toast({
+      title: "Protocolo añadido",
+      description: `${protocol.title} ha sido añadido a la rutina`,
+    });
+  };
+
+  const handleRemoveProtocol = (index: number) => {
+    setRoutine(prev => ({
+      ...prev,
+      protocols: prev.protocols
+        .filter((_, i) => i !== index)
+        .map((p, i) => ({ ...p, order: i }))
+    }));
+    toast({
+      title: "Protocolo eliminado",
+      description: "El protocolo ha sido eliminado de la rutina",
+    });
+  };
+
+  const moveProtocol = (index: number, direction: 'up' | 'down') => {
+    if ((direction === 'up' && index === 0) || 
+        (direction === 'down' && index === routine.protocols.length - 1)) {
+      return;
+    }
+
+    const newProtocols = [...routine.protocols];
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    
+    // Swap positions
+    [newProtocols[index], newProtocols[targetIndex]] = 
+    [newProtocols[targetIndex], newProtocols[index]];
+    
+    // Update order values
+    const updatedProtocols = newProtocols.map((p, i) => ({
+      ...p,
+      order: i
+    }));
+
+    setRoutine(prev => ({
+      ...prev,
+      protocols: updatedProtocols
+    }));
+  };
+
+  const handleReorderProtocols = (newOrder: RoutineProtocol[]) => {
+    setRoutine(prev => ({
+      ...prev,
+      protocols: newOrder.map((p, i) => ({ ...p, order: i }))
+    }));
+  };
+
+  // Calculate total duration of all protocols
+  const calculateTotalDuration = () => {
+    let totalMinutes = 0;
+    
+    routine.protocols.forEach(({ protocol }) => {
+      const durationMatch = protocol.duration.match(/(\d+)/);
+      if (durationMatch) {
+        totalMinutes += parseInt(durationMatch[0], 10);
+      }
+    });
+    
+    if (totalMinutes >= 60) {
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+      return `${hours}h ${minutes > 0 ? `${minutes}m` : ""}`;
+    }
+    
+    return `${totalMinutes}m`;
   };
 
   return (
@@ -141,51 +307,119 @@ const RutinaDetalle = () => {
               <ChevronLeft className="h-5 w-5" />
             </Button>
             <h1 className="text-xl font-semibold font-oswald text-white">
-              Detalle de rutina
+              {isEditing ? "Editar rutina" : "Detalle de rutina"}
             </h1>
           </div>
-          <Button 
-            variant="ghost" 
-            size="icon"
-            onClick={() => navigate(`/rutinas/${id}/editar`)}
-            className="text-white"
-          >
-            <Edit className="h-5 w-5" />
-          </Button>
+          <div className="flex items-center">
+            {isEditing ? (
+              <>
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  onClick={toggleEditMode}
+                  className="text-white mr-1"
+                  title="Cancelar"
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  onClick={saveChanges}
+                  className="text-[#FF4081]"
+                  title="Guardar cambios"
+                >
+                  <Save className="h-5 w-5" />
+                </Button>
+              </>
+            ) : (
+              <Button 
+                variant="ghost" 
+                size="icon"
+                onClick={toggleEditMode}
+                className="text-white"
+              >
+                <Edit className="h-5 w-5" />
+              </Button>
+            )}
+          </div>
         </div>
       </div>
 
       <div className="flex-1 px-4 py-6 overflow-auto">
-        <div className="bg-gradient-to-br from-secondary/50 to-secondary/30 backdrop-blur-sm border border-secondary/20 rounded-lg p-5 mb-6">
-          <h2 className="text-xl font-semibold text-white mb-3">{routine.name}</h2>
-          
-          <div className="space-y-3">
-            <div className="flex items-center text-gray-300">
-              <Clock className="h-4 w-4 mr-2 text-[#FF4081]" />
-              <span>{routine.time.start} - {routine.time.end}</span>
+        {isEditing ? (
+          // Edit mode UI
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <label className="text-sm text-gray-400">Nombre de la rutina</label>
+              <Input 
+                value={routine.name}
+                onChange={handleNameChange}
+                className="bg-secondary/50 border-secondary/30 text-white text-lg font-semibold"
+              />
             </div>
             
-            <div className="flex items-center text-gray-300">
-              <Calendar className="h-4 w-4 mr-2 text-[#FF4081]" />
-              <span>{formatDays(routine.days)}</span>
+            <div className="space-y-3">
+              <h3 className="text-sm text-gray-400">Horario</h3>
+              <RoutineTimeSelector 
+                startTime={routine.time.start}
+                endTime={routine.time.end}
+                onStartTimeChange={handleStartTimeChange}
+                onEndTimeChange={handleEndTimeChange}
+              />
             </div>
             
-            <div className="flex items-center text-gray-300">
-              <Bell className="h-4 w-4 mr-2 text-[#FF4081]" />
-              <span>
-                {routine.notification.enabled 
-                  ? `${routine.notification.minutesBefore} minutos antes` 
-                  : "Notificaciones desactivadas"}
-              </span>
-            </div>
-            
-            <div className="flex items-center mt-4">
-              <SyncStatusBadge status={routine.syncStatus} />
+            <div className="space-y-3">
+              <h3 className="text-sm text-gray-400">Días de la semana</h3>
+              <DaySelector 
+                selectedDays={routine.days}
+                onToggle={handleDayToggle}
+              />
             </div>
           </div>
-        </div>
+        ) : (
+          // View mode UI
+          <div className="bg-gradient-to-br from-secondary/50 to-secondary/30 backdrop-blur-sm border border-secondary/20 rounded-lg p-5 mb-6">
+            <h2 className="text-xl font-semibold text-white mb-3">{routine.name}</h2>
+            
+            <div className="space-y-3">
+              <div className="flex items-center text-gray-300">
+                <Clock className="h-4 w-4 mr-2 text-[#FF4081]" />
+                <span>{routine.time.start} - {routine.time.end}</span>
+              </div>
+              
+              <div className="flex items-center text-gray-300">
+                <Calendar className="h-4 w-4 mr-2 text-[#FF4081]" />
+                <span>{formatDays(routine.days)}</span>
+              </div>
+              
+              <div className="flex items-center text-gray-300">
+                <Bell className="h-4 w-4 mr-2 text-[#FF4081]" />
+                <span>
+                  {routine.notification.enabled 
+                    ? `${routine.notification.minutesBefore} minutos antes` 
+                    : "Notificaciones desactivadas"}
+                </span>
+              </div>
+              
+              <div className="flex items-center mt-4">
+                <SyncStatusBadge status={routine.syncStatus} />
+                {routine.protocols.length > 0 && (
+                  <Badge className="ml-2 bg-secondary/70 text-white">
+                    Duración total: {calculateTotalDuration()}
+                  </Badge>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
         
-        <Tabs defaultValue="protocolos" className="mb-10">
+        <Tabs 
+          defaultValue="protocolos" 
+          className="mb-10"
+          value={selectedTab}
+          onValueChange={setSelectedTab}
+        >
           <TabsList className="w-full bg-secondary/50">
             <TabsTrigger value="protocolos" className="flex-1">
               Protocolos
@@ -196,50 +430,119 @@ const RutinaDetalle = () => {
           </TabsList>
           
           <TabsContent value="protocolos" className="mt-4 space-y-4">
-            <div className="space-y-3">
-              {routine.protocols.map((item, index) => (
-                <div
-                  key={`${item.protocol.id}-${index}`}
-                  className="p-4 rounded-md bg-secondary/40 border border-secondary/20 flex items-center"
-                >
-                  <div 
-                    className="w-10 h-10 rounded-full flex items-center justify-center mr-3"
-                    style={{ backgroundColor: `${routine.color}30` }}
-                  >
-                    <span className="text-sm font-medium text-[#FF4081]">{index + 1}</span>
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="text-white text-sm font-medium line-clamp-1">
-                      {item.protocol.title}
-                    </h4>
-                    <div className="flex items-center mt-1">
-                      <span className="text-xs text-gray-400 bg-secondary/70 px-2 py-0.5 rounded-full mr-2">
-                        {item.protocol.dimension}
-                      </span>
-                      <span className="text-xs text-gray-400">
-                        {item.protocol.duration}
-                      </span>
-                    </div>
-                  </div>
+            {showProtocolSelector ? (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-medium text-white">Añadir protocolos</h3>
                   <Button 
                     variant="ghost" 
-                    size="icon" 
-                    className="text-white"
-                    onClick={() => navigate(`/protocolos/${item.protocol.id}`)}
+                    size="sm" 
+                    onClick={() => setShowProtocolSelector(false)}
+                    className="text-gray-400"
                   >
-                    <PlayCircle className="h-5 w-5" />
+                    <X className="h-4 w-4 mr-1" />
+                    Cerrar
                   </Button>
                 </div>
-              ))}
-            </div>
-            
-            <Button 
-              variant="outline" 
-              className="w-full mt-4 border-dashed border-gray-500 text-gray-400"
-              onClick={() => navigate(`/rutinas/${id}/editar`)}
-            >
-              Añadir protocolo
-            </Button>
+                <ProtocolSelector
+                  availableProtocols={protocols}
+                  selectedProtocols={routine.protocols}
+                  onAddProtocol={handleAddProtocol}
+                  onRemoveProtocol={handleRemoveProtocol}
+                  onReorderProtocols={handleReorderProtocols}
+                />
+              </div>
+            ) : (
+              <>
+                <div className="space-y-3">
+                  {routine.protocols.length > 0 ? (
+                    routine.protocols.map((item, index) => (
+                      <div
+                        key={`${item.protocol.id}-${index}`}
+                        className="p-4 rounded-md bg-secondary/40 border border-secondary/20 flex items-center"
+                      >
+                        <div 
+                          className="w-10 h-10 rounded-full flex items-center justify-center mr-3"
+                          style={{ backgroundColor: `${routine.color}30` }}
+                        >
+                          <span className="text-sm font-medium text-[#FF4081]">{index + 1}</span>
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="text-white text-sm font-medium line-clamp-1">
+                            {item.protocol.title}
+                          </h4>
+                          <div className="flex items-center mt-1">
+                            <span className="text-xs text-gray-400 bg-secondary/70 px-2 py-0.5 rounded-full mr-2">
+                              {item.protocol.dimension}
+                            </span>
+                            <span className="text-xs text-gray-400">
+                              {item.protocol.duration}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        {isEditing ? (
+                          <div className="flex items-center space-x-1">
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              className="text-gray-400 h-8 w-8"
+                              onClick={() => moveProtocol(index, 'up')}
+                              disabled={index === 0}
+                            >
+                              <ArrowUp className="h-4 w-4" />
+                            </Button>
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              className="text-gray-400 h-8 w-8"
+                              onClick={() => moveProtocol(index, 'down')}
+                              disabled={index === routine.protocols.length - 1}
+                            >
+                              <ArrowDown className="h-4 w-4" />
+                            </Button>
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              className="text-red-400 h-8 w-8"
+                              onClick={() => handleRemoveProtocol(index)}
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        ) : (
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="text-white"
+                            onClick={() => navigate(`/protocolos/${item.protocol.id}`)}
+                          >
+                            <PlayCircle className="h-5 w-5" />
+                          </Button>
+                        )}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-8 bg-secondary/30 rounded-lg border border-secondary/20 backdrop-blur-sm">
+                      <Calendar className="h-12 w-12 mx-auto text-gray-500 mb-3" />
+                      <h3 className="text-white font-medium mb-2">No hay protocolos</h3>
+                      <p className="text-gray-400 text-sm mb-4 max-w-xs mx-auto">
+                        Esta rutina no tiene protocolos. Añade protocolos para comenzar a organizar tu tiempo.
+                      </p>
+                    </div>
+                  )}
+                </div>
+                
+                <Button 
+                  variant="outline" 
+                  className="w-full mt-4 border-dashed border-gray-500 text-gray-400"
+                  onClick={() => setShowProtocolSelector(true)}
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Añadir protocolo
+                </Button>
+              </>
+            )}
           </TabsContent>
           
           <TabsContent value="ajustes" className="mt-4 space-y-6">
@@ -269,6 +572,26 @@ const RutinaDetalle = () => {
                   onCheckedChange={handleNotificationToggle}
                 />
               </div>
+              
+              {routine.notification.enabled && (
+                <div className="pl-6 mt-2">
+                  <label className="text-sm text-gray-400 block mb-2">
+                    Avisar antes
+                  </label>
+                  <select 
+                    value={routine.notification.minutesBefore}
+                    onChange={handleMinutesBeforeChange}
+                    className="w-full bg-secondary/50 border border-secondary/30 rounded-md p-2 text-white"
+                    disabled={!isEditing}
+                  >
+                    <option value={5}>5 minutos</option>
+                    <option value={10}>10 minutos</option>
+                    <option value={15}>15 minutos</option>
+                    <option value={30}>30 minutos</option>
+                    <option value={60}>1 hora</option>
+                  </select>
+                </div>
+              )}
               
               <div className="flex items-center justify-between">
                 <div>

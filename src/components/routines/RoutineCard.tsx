@@ -1,7 +1,8 @@
 
-import { Clock, Calendar, ChevronRight } from "lucide-react";
+import { Clock, Calendar, ChevronRight, Bell, X } from "lucide-react";
 import { Routine } from "@/types/rutina";
 import { SyncStatusBadge } from "./SyncStatusBadge";
+import { Badge } from "@/components/ui/badge";
 
 interface RoutineCardProps {
   routine: Routine;
@@ -29,9 +30,34 @@ export const RoutineCard = ({ routine, onClick }: RoutineCardProps) => {
     return days.join(", ");
   };
 
+  // Calculate total duration
+  const calculateTotalDuration = () => {
+    let totalMinutes = 0;
+    
+    routine.protocols.forEach(({ protocol }) => {
+      const durationMatch = protocol.duration.match(/(\d+)/);
+      if (durationMatch) {
+        totalMinutes += parseInt(durationMatch[0], 10);
+      }
+    });
+    
+    if (totalMinutes >= 60) {
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+      return `${hours}h ${minutes > 0 ? `${minutes}m` : ""}`;
+    }
+    
+    return `${totalMinutes}m`;
+  };
+
   return (
     <div 
-      className="p-4 rounded-lg bg-gradient-to-br from-secondary/50 to-secondary/30 backdrop-blur-sm border border-secondary/20 flex items-center cursor-pointer hover:shadow-lg transition-shadow duration-200"
+      className={`
+        p-4 rounded-lg bg-gradient-to-br from-secondary/50 to-secondary/30 backdrop-blur-sm 
+        border border-secondary/20 flex items-center cursor-pointer hover:shadow-lg 
+        transition-shadow duration-200 
+        ${!routine.isActive ? 'opacity-70' : ''}
+      `}
       onClick={onClick}
     >
       <div 
@@ -42,20 +68,43 @@ export const RoutineCard = ({ routine, onClick }: RoutineCardProps) => {
       </div>
       
       <div className="flex-1">
-        <h3 className="text-white font-medium">{routine.name}</h3>
-        
-        <div className="flex items-center text-gray-400 text-sm mt-1">
-          <Clock className="h-3.5 w-3.5 mr-1" />
-          <span className="mr-2">{routine.time.start} - {routine.time.end}</span>
-          <Calendar className="h-3.5 w-3.5 mr-1" />
-          <span>{formatDays(routine.days)}</span>
+        <div className="flex items-center justify-between">
+          <h3 className="text-white font-medium">{routine.name}</h3>
+          {!routine.isActive && (
+            <Badge variant="outline" className="text-xs bg-gray-700/50 text-gray-400 border-gray-600">
+              Inactiva
+            </Badge>
+          )}
         </div>
         
-        <div className="flex items-center gap-2 mt-2">
+        <div className="flex items-center flex-wrap text-gray-400 text-sm mt-1 gap-x-2">
+          <div className="flex items-center">
+            <Clock className="h-3.5 w-3.5 mr-1" />
+            <span>{routine.time.start} - {routine.time.end}</span>
+          </div>
+          <div className="flex items-center">
+            <Calendar className="h-3.5 w-3.5 mr-1" />
+            <span>{formatDays(routine.days)}</span>
+          </div>
+          {routine.notification.enabled && (
+            <div className="flex items-center">
+              <Bell className="h-3.5 w-3.5 mr-1" />
+              <span>{routine.notification.minutesBefore}m</span>
+            </div>
+          )}
+        </div>
+        
+        <div className="flex items-center gap-2 mt-2 flex-wrap">
           <SyncStatusBadge status={routine.syncStatus} />
-          <span className="text-xs text-gray-400 bg-gray-800/50 px-2 py-0.5 rounded-full">
-            {routine.protocols.length} {routine.protocols.length === 1 ? 'protocolo' : 'protocolos'}
-          </span>
+          {routine.protocols.length > 0 ? (
+            <Badge className="text-xs bg-secondary/70 text-white">
+              {routine.protocols.length} {routine.protocols.length === 1 ? 'protocolo' : 'protocolos'} ({calculateTotalDuration()})
+            </Badge>
+          ) : (
+            <Badge variant="outline" className="text-xs border-gray-600 text-gray-400">
+              Sin protocolos
+            </Badge>
+          )}
         </div>
       </div>
       
