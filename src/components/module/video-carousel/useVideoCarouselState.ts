@@ -30,6 +30,7 @@ export interface VideoCarouselState {
 }
 
 export function useVideoCarouselState(slides: VideoSlide[], onClose: () => void): VideoCarouselState {
+  // Cambiamos el índice inicial a 0 para que empiece con el primer video
   const [currentVideoIndex, setCurrentVideoIndex] = React.useState(0);
   const [isMuted, setIsMuted] = React.useState(true);
   const [progress, setProgress] = React.useState(0);
