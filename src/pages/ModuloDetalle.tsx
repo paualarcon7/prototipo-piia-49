@@ -10,6 +10,15 @@ import { stages } from "@/constants/moduleStages";
 import { workDays } from "@/constants/workDays";
 import { evaluationQuestions, feedbackQuestions } from "@/constants/moduleQuestions";
 
+// Utility function to convert Google Drive links to direct download links
+const getDirectGoogleDriveLink = (url: string): string => {
+  const fileId = url.match(/[-\w]{25,}/);
+  if (fileId) {
+    return `https://drive.google.com/uc?export=download&id=${fileId[0]}`;
+  }
+  return url;
+};
+
 const ModuloDetalle = () => {
   const { id, moduleId } = useParams();
   const navigate = useNavigate();
@@ -19,22 +28,22 @@ const ModuloDetalle = () => {
   const [showFeedback, setShowFeedback] = useState(false);
   const { toast } = useToast();
 
-  // Example video slides - replace with actual video content
+  // Example video slides with Google Drive videos
   const videoSlides = [
     {
-      src: "/placeholder-video-1.mp4",
+      src: getDirectGoogleDriveLink("https://drive.google.com/file/d/1M9xxsH3P672Ubf7mHx44_urx8_cBCZMO/view?usp=sharing"),
       thumbnail: "/placeholder-thumbnail-1.jpg",
       title: "Objetivos del Módulo",
       likes: 1500000,
     },
     {
-      src: "/placeholder-video-2.mp4",
+      src: getDirectGoogleDriveLink("https://drive.google.com/file/d/1LRg4vkIuPJufjnNSJKtjjYTH6MK84dJK/view?usp=sharing"),
       thumbnail: "/placeholder-thumbnail-2.jpg",
       title: "Estructura del Módulo",
       likes: 2300000,
     },
     {
-      src: "/placeholder-video-3.mp4",
+      src: getDirectGoogleDriveLink("https://drive.google.com/file/d/1M7zuDHXDW2XBIn2dSkUcx8wVtMPF3k-x/view?usp=sharing"),
       thumbnail: "/placeholder-thumbnail-3.jpg",
       title: "Conoce más",
       likes: 1800000,
