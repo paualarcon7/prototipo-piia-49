@@ -1,5 +1,5 @@
 
-import { Home, MessageSquare, BookOpen, ListFilter } from "lucide-react";
+import { Home, MessageSquare, BookOpen, ListFilter, Calendar } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const BottomNav = () => {
@@ -25,6 +25,15 @@ const BottomNav = () => {
         >
           <MessageSquare className="w-6 h-6" />
           <span className="text-xs mt-1">Chat</span>
+        </Link>
+        <Link
+          to="/rutinas"
+          className={`flex flex-col items-center py-3 px-5 ${
+            location.pathname === "/rutinas" ? "text-[#FF4081]" : "text-gray-400"
+          } transition-colors`}
+        >
+          <Calendar className="w-6 h-6" />
+          <span className="text-xs mt-1">Rutinas</span>
         </Link>
         <Link
           to="/protocolos"

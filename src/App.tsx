@@ -21,6 +21,9 @@ import EntrenamientoStage from "./pages/EntrenamientoStage";
 import Protocolos from "./pages/Protocolos";
 import ProtocoloDetalle from "./pages/ProtocoloDetalle";
 import Login from "./pages/Login";
+import Rutinas from "./pages/Rutinas";
+import NuevaRutina from "./pages/NuevaRutina";
+import RutinaDetalle from "./pages/RutinaDetalle";
 
 const queryClient = new QueryClient();
 
@@ -77,6 +80,9 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/protocolos" element={<Protocolos />} />
             <Route path="/protocolos/:id" element={<ProtocoloDetalle />} />
+            <Route path="/rutinas" element={<Rutinas />} />
+            <Route path="/rutinas/nueva" element={<NuevaRutina />} />
+            <Route path="/rutinas/:id" element={<RutinaDetalle />} />
             <Route path="/diario" element={<Diario />} />
             <Route path="/diario/nueva" element={<NuevaEntrada />} />
             <Route path="/ejercicio/:id" element={<Ejercicio />} />
