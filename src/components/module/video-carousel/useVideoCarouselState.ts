@@ -30,8 +30,8 @@ export interface VideoCarouselState {
 }
 
 export function useVideoCarouselState(slides: VideoSlide[], onClose: () => void): VideoCarouselState {
-  // Cambiamos el índice inicial a 0 para que empiece con el primer video
-  const [currentVideoIndex, setCurrentVideoIndex] = React.useState(0);
+  // Establecemos explícitamente el índice inicial a 0
+  const [currentVideoIndex, setCurrentVideoIndex] = React.useState<number>(0);
   const [isMuted, setIsMuted] = React.useState(true);
   const [progress, setProgress] = React.useState(0);
   const [isLiked, setIsLiked] = React.useState(false);
@@ -74,6 +74,7 @@ export function useVideoCarouselState(slides: VideoSlide[], onClose: () => void)
 
   // Efecto para manejar la reproducción de videos al cambiar el índice actual
   React.useEffect(() => {
+    console.log("Índice de video actual:", currentVideoIndex);
     videoRefs.current.forEach((video, index) => {
       if (video) {
         if (index === currentVideoIndex) {
@@ -89,6 +90,12 @@ export function useVideoCarouselState(slides: VideoSlide[], onClose: () => void)
       }
     });
   }, [currentVideoIndex, slides]);
+
+  // Este efecto se ejecuta solo una vez al montar el componente
+  React.useEffect(() => {
+    console.log("Inicializando carrusel de videos con índice 0");
+    // No es necesario hacer nada más aquí, ya que el estado inicial ya es 0
+  }, []);
 
   return {
     slides,

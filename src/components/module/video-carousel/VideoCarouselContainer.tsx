@@ -19,6 +19,16 @@ export function VideoCarouselContainer() {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const controlsTimeoutRef = React.useRef<NodeJS.Timeout>();
   const [showPurposeModal, setShowPurposeModal] = React.useState(false);
+  const [hasInitialized, setHasInitialized] = React.useState(false);
+
+  // Asegurar que siempre comience con el primer video
+  React.useEffect(() => {
+    if (!hasInitialized) {
+      console.log("Inicializando el carrusel con el primer video (índice 0)");
+      setCurrentVideoIndex(0);
+      setHasInitialized(true);
+    }
+  }, [setCurrentVideoIndex, hasInitialized]);
 
   const handleVideoContainerHover = () => {
     setShowControls(true);
@@ -84,26 +94,8 @@ export function VideoCarouselContainer() {
     }
   };
 
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = Number(entry.target.getAttribute("data-index"));
-            setCurrentVideoIndex(index);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    const videos = document.querySelectorAll(".video-item");
-    videos.forEach((video) => observer.observe(video));
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [setCurrentVideoIndex]);
+  // No usamos IntersectionObserver ya que puede interferir con el orden de los videos
+  // En su lugar, nos aseguramos de que currentVideoIndex sea siempre el estado controlador
 
   return (
     <>
