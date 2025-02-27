@@ -323,6 +323,14 @@ const Rutinas = () => {
             )}
           </div>
           
+          {/* Botón flotante para añadir nueva rutina */}
+          <Button
+            onClick={() => navigate('/rutinas/nueva')}
+            className="fixed right-4 bottom-24 bg-[#FF4081] hover:bg-[#FF4081]/90 rounded-full h-14 w-14 shadow-lg flex items-center justify-center"
+          >
+            <Plus className="h-7 w-7" />
+          </Button>
+          
           <Sheet open={showFilters} onOpenChange={setShowFilters}>
             <SheetContent side="right" className="bg-secondary/95 border-secondary/30 w-[280px] sm:w-[350px]">
               <SheetHeader>
@@ -478,6 +486,14 @@ const Rutinas = () => {
               )}
             </div>
           </div>
+          
+          {/* Botón flotante para añadir nueva rutina */}
+          <Button
+            onClick={() => navigate('/rutinas/nueva')}
+            className="fixed right-4 bottom-24 bg-[#FF4081] hover:bg-[#FF4081]/90 rounded-full h-14 w-14 shadow-lg flex items-center justify-center"
+          >
+            <Plus className="h-7 w-7" />
+          </Button>
         </>
       )}
     </div>
