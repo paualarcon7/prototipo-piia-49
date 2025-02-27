@@ -40,6 +40,24 @@ export function VideoCarouselContainer() {
     }
   };
 
+  // Handle when the last video ends to show purpose modal
+  React.useEffect(() => {
+    if (currentVideoIndex === slides.length - 1) {
+      const video = document.querySelector(`[data-index="${currentVideoIndex}"] video`) as HTMLVideoElement;
+      if (video) {
+        const checkIfEnded = () => {
+          if (video.ended) {
+            setShowPurposeModal(true);
+          }
+        };
+        video.addEventListener('ended', checkIfEnded);
+        return () => {
+          video.removeEventListener('ended', checkIfEnded);
+        };
+      }
+    }
+  }, [currentVideoIndex, slides.length]);
+
   const handlePurposeSubmit = () => {
     setShowPurposeModal(false);
     onClose();
