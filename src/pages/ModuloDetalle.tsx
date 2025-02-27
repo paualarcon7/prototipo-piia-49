@@ -22,25 +22,26 @@ const ModuloDetalle = () => {
   const [showFullScreenVideo, setShowFullScreenVideo] = useState(false);
   const { toast } = useToast();
 
-  // Video slides with public CDN videos
+  // Video slides con el mismo video repetido 3 veces (el tercer video)
+  const demoVideo = "https://assets.mixkit.co/videos/preview/mixkit-tree-with-yellow-flowers-1173-large.mp4";
   const videoSlides = [
     {
-      src: "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-      thumbnail: "/placeholder-thumbnail-1.jpg",
-      title: "Objetivos del Módulo",
-      likes: 1500000,
-    },
-    {
-      src: "https://assets.mixkit.co/videos/preview/mixkit-young-woman-doing-a-yoga-pose-43790-large.mp4",
-      thumbnail: "/placeholder-thumbnail-2.jpg",
-      title: "Estructura del Módulo",
-      likes: 2300000,
-    },
-    {
-      src: "https://assets.mixkit.co/videos/preview/mixkit-tree-with-yellow-flowers-1173-large.mp4",
+      src: demoVideo,
       thumbnail: "/placeholder-thumbnail-3.jpg",
-      title: "Conoce más",
+      title: "Demo Video 1",
       likes: 1800000,
+    },
+    {
+      src: demoVideo,
+      thumbnail: "/placeholder-thumbnail-3.jpg",
+      title: "Demo Video 2",
+      likes: 1900000,
+    },
+    {
+      src: demoVideo,
+      thumbnail: "/placeholder-thumbnail-3.jpg",
+      title: "Demo Video 3",
+      likes: 2000000,
     },
   ];
 

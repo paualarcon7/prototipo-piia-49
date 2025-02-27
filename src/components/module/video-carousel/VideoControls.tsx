@@ -1,6 +1,6 @@
 
 import * as React from "react";
-import { Volume2, VolumeX, Heart, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Volume2, VolumeX, Heart, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useVideoCarousel } from "./VideoCarouselContext";
@@ -53,43 +53,6 @@ export function VideoControls({ goToNextVideo, goToPrevVideo, totalVideos, curre
         )}
       >
         {currentIndex + 1} / {totalVideos}
-      </div>
-
-      {/* Navigation buttons */}
-      <div 
-        className={cn(
-          "absolute inset-y-0 left-0 flex items-center transition-opacity duration-300",
-          showControls ? "opacity-100" : "opacity-0",
-          currentIndex === 0 ? "pointer-events-none opacity-30" : ""
-        )}
-      >
-        <Button
-          variant="ghost"
-          size="icon"
-          className="ml-4 h-12 w-12 rounded-full bg-black/50 hover:bg-black/70"
-          onClick={goToPrevVideo}
-          disabled={currentIndex === 0}
-        >
-          <ChevronLeft className="h-8 w-8 text-white" />
-        </Button>
-      </div>
-
-      <div 
-        className={cn(
-          "absolute inset-y-0 right-0 flex items-center transition-opacity duration-300",
-          showControls ? "opacity-100" : "opacity-0",
-          currentIndex === totalVideos - 1 ? "pointer-events-none opacity-30" : ""
-        )}
-      >
-        <Button
-          variant="ghost"
-          size="icon"
-          className="mr-4 h-12 w-12 rounded-full bg-black/50 hover:bg-black/70"
-          onClick={goToNextVideo}
-          disabled={currentIndex === totalVideos - 1}
-        >
-          <ChevronRight className="h-8 w-8 text-white" />
-        </Button>
       </div>
 
       {/* Side controls */}
