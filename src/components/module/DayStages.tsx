@@ -1,6 +1,8 @@
 
 import { Stage, WorkDay } from "@/types/module";
 import { ModuleStage } from "./ModuleStage";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 interface DayStagesProps {
   selectedDay: number;
@@ -8,6 +10,7 @@ interface DayStagesProps {
   stages: Stage[];
   activeStage: number;
   onStageClick: (index: number) => void;
+  onBack?: () => void;
 }
 
 export const DayStages = ({ 
@@ -15,9 +18,19 @@ export const DayStages = ({
   workDay, 
   stages, 
   activeStage, 
-  onStageClick 
+  onStageClick,
+  onBack
 }: DayStagesProps) => (
   <div className="space-y-4 mb-24">
+    <Button
+      variant="ghost"
+      className="mb-4"
+      onClick={onBack}
+    >
+      <ArrowLeft className="mr-2 h-4 w-4" />
+      Volver al módulo
+    </Button>
+    
     <div className="mb-6">
       <h2 className="text-xl font-semibold mb-2">
         Día {selectedDay}: {workDay.title}

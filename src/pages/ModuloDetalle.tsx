@@ -118,6 +118,7 @@ const ModuloDetalle = () => {
               stages={stages}
               activeStage={activeStage}
               onStageClick={handleStageClick}
+              onBack={handleBackFromStages}
             />
           )}
         </>
