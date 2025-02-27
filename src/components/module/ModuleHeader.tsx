@@ -1,7 +1,6 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { ModuleVideoCarousel } from "./ModuleVideoCarousel";
 
 interface ModuleHeaderProps {
   onBack: () => void;
@@ -34,7 +33,6 @@ export const ModuleHeader = ({ onBack, videoSlides }: ModuleHeaderProps) => (
           En progreso
         </span>
       </div>
-      <ModuleVideoCarousel slides={videoSlides} />
     </div>
   </>
 );

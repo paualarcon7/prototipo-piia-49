@@ -10,6 +10,7 @@ import { stages } from "@/constants/moduleStages";
 import { workDays } from "@/constants/workDays";
 import { evaluationQuestions, feedbackQuestions } from "@/constants/moduleQuestions";
 import { ModuleVideoPreview } from "@/components/module/ModuleVideoPreview";
+import { ModuleVideoCarousel } from "@/components/module/ModuleVideoCarousel";
 
 const ModuloDetalle = () => {
   const { id, moduleId } = useParams();
@@ -113,6 +114,7 @@ const ModuloDetalle = () => {
             <>
               <ModuleHeader 
                 onBack={() => navigate(`/programa/${id}`)}
+                videoSlides={videoSlides}
               />
               {!showFullScreenVideo && (
                 <ModuleVideoPreview 
