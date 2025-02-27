@@ -49,19 +49,19 @@ export function ModuleVideoPreview({ videoSlides, onPlayClick }: ModuleVideoPrev
   };
 
   return (
-    <div className="my-4 md:my-6 relative">
-      <h2 className="text-xl font-semibold mb-3 font-oswald">
+    <div className="my-3 relative">
+      <h2 className="text-lg font-semibold mb-2 font-oswald">
         Contenido del Módulo
       </h2>
       
       <div 
-        className="relative w-full max-w-[320px] mx-auto aspect-[9/16] bg-black rounded-xl overflow-hidden cursor-pointer"
+        className="relative w-full max-w-[240px] mx-auto aspect-[9/16] bg-black rounded-lg overflow-hidden cursor-pointer"
         onClick={handlePreviewClick}
       >
         {/* Loading skeleton */}
         {isLoading && (
           <div className="absolute inset-0 bg-gray-900 animate-pulse flex items-center justify-center">
-            <div className="w-10 h-10 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+            <div className="w-8 h-8 border-3 border-primary/30 border-t-primary rounded-full animate-spin"></div>
           </div>
         )}
       
@@ -83,12 +83,12 @@ export function ModuleVideoPreview({ videoSlides, onPlayClick }: ModuleVideoPrev
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
         
         {/* Video title overlay */}
-        <div className="absolute bottom-0 left-0 right-0 p-3">
-          <h3 className="font-oswald text-lg text-white drop-shadow-lg mb-1">
+        <div className="absolute bottom-0 left-0 right-0 p-2">
+          <h3 className="font-oswald text-sm text-white drop-shadow-lg mb-0.5">
             {firstSlide.title}
           </h3>
-          <p className="text-white/80 text-xs mb-4">
-            Desliza para explorar más videos
+          <p className="text-white/80 text-xs mb-2">
+            Desliza para explorar más
           </p>
         </div>
         
@@ -97,14 +97,14 @@ export function ModuleVideoPreview({ videoSlides, onPlayClick }: ModuleVideoPrev
           <Button
             variant="ghost"
             size="icon"
-            className="h-16 w-16 rounded-full bg-white/30 backdrop-blur-[2px] hover:bg-white/50 transition-all duration-300 transform hover:scale-105"
+            className="h-12 w-12 rounded-full bg-white/30 backdrop-blur-[2px] hover:bg-white/50 transition-all duration-300 transform hover:scale-105"
           >
-            <Play className="h-8 w-8 text-white fill-white" />
+            <Play className="h-6 w-6 text-white fill-white" />
           </Button>
         </div>
         
         {/* Interactive badge */}
-        <div className="absolute top-3 right-3 bg-gradient-to-r from-[#FF4081] to-[#9C27B0] text-white text-xs font-medium px-2 py-0.5 rounded-full animate-pulse">
+        <div className="absolute top-2 right-2 bg-gradient-to-r from-[#FF4081] to-[#9C27B0] text-white text-[10px] font-medium px-1.5 py-0.5 rounded-full animate-pulse">
           Interactivo
         </div>
       </div>
