@@ -128,7 +128,7 @@ const RutinaDetalle = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-transparent pb-20">
+    <div className="flex flex-col min-h-screen bg-transparent pb-28">
       <div className="px-4 py-4 border-b border-secondary/20 backdrop-blur-sm sticky top-0 z-10 bg-secondary/10">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -155,7 +155,7 @@ const RutinaDetalle = () => {
         </div>
       </div>
 
-      <div className="px-4 py-6">
+      <div className="flex-1 px-4 py-6 overflow-auto">
         <div className="bg-gradient-to-br from-secondary/50 to-secondary/30 backdrop-blur-sm border border-secondary/20 rounded-lg p-5 mb-6">
           <h2 className="text-xl font-semibold text-white mb-3">{routine.name}</h2>
           
@@ -185,7 +185,7 @@ const RutinaDetalle = () => {
           </div>
         </div>
         
-        <Tabs defaultValue="protocolos" className="mb-4">
+        <Tabs defaultValue="protocolos" className="mb-10">
           <TabsList className="w-full bg-secondary/50">
             <TabsTrigger value="protocolos" className="flex-1">
               Protocolos
