@@ -1,3 +1,4 @@
+
 import * as React from "react";
 
 interface VideoSlide {
@@ -34,17 +35,20 @@ export function useVideoCarouselState(slides: VideoSlide[], onClose: () => void)
   const [progress, setProgress] = React.useState(0);
   const [isLiked, setIsLiked] = React.useState(false);
   const [showControls, setShowControls] = React.useState(true);
-  const videoRefs = React.useRef<(HTMLVideoElement | null)[]>([]);
+  // Inicializa el array de referencias con el tamaño correcto
+  const videoRefs = React.useRef<(HTMLVideoElement | null)[]>(Array(slides.length).fill(null));
 
   const handleVideoTimeUpdate = (e: React.SyntheticEvent<HTMLVideoElement>) => {
     const video = e.target as HTMLVideoElement;
-    const percentage = (video.currentTime / video.duration) * 100;
-    setProgress(percentage);
+    if (video && !isNaN(video.duration)) {
+      const percentage = (video.currentTime / video.duration) * 100;
+      setProgress(percentage);
+    }
   };
 
   const handleVideoEnded = () => {
     if (currentVideoIndex === slides.length - 1) {
-      onClose();
+      // La lógica para mostrar el modal se ha movido al componente contenedor
     } else {
       setCurrentVideoIndex(prev => prev + 1);
     }
@@ -67,20 +71,23 @@ export function useVideoCarouselState(slides: VideoSlide[], onClose: () => void)
     console.error(`Error loading video at index ${index}, URL: ${slides[index].src}`);
   };
 
+  // Efecto para manejar la reproducción de videos al cambiar el índice actual
   React.useEffect(() => {
     videoRefs.current.forEach((video, index) => {
       if (video) {
         if (index === currentVideoIndex) {
+          console.log(`Reproduciendo video ${index}:`, slides[index].src);
           video.play().catch((err) => {
             console.log("Video autoplay prevented", err);
           });
         } else {
           video.pause();
-          video.currentTime = 0;
+          // No reiniciamos a 0 para mantener el progreso por si el usuario vuelve
+          // video.currentTime = 0;
         }
       }
     });
-  }, [currentVideoIndex]);
+  }, [currentVideoIndex, slides]);
 
   return {
     slides,

@@ -63,6 +63,21 @@ export function VideoCarouselContainer() {
     onClose();
   };
 
+  // Facilitar la navegación entre videos con botones adicionales
+  const goToNextVideo = () => {
+    if (currentVideoIndex < slides.length - 1) {
+      setCurrentVideoIndex(prev => prev + 1);
+    } else {
+      setShowPurposeModal(true);
+    }
+  };
+
+  const goToPrevVideo = () => {
+    if (currentVideoIndex > 0) {
+      setCurrentVideoIndex(prev => prev - 1);
+    }
+  };
+
   React.useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -97,7 +112,12 @@ export function VideoCarouselContainer() {
           <VideoPlayer key={index} index={index} />
         ))}
         
-        <VideoControls />
+        <VideoControls 
+          goToNextVideo={goToNextVideo}
+          goToPrevVideo={goToPrevVideo}
+          totalVideos={slides.length}
+          currentIndex={currentVideoIndex}
+        />
         <VideoProgress />
       </div>
 

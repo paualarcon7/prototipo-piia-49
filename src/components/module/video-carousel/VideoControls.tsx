@@ -1,11 +1,18 @@
 
 import * as React from "react";
-import { Volume2, VolumeX, Heart, X } from "lucide-react";
+import { Volume2, VolumeX, Heart, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useVideoCarousel } from "./VideoCarouselContext";
 
-export function VideoControls() {
+interface VideoControlsProps {
+  goToNextVideo: () => void;
+  goToPrevVideo: () => void;
+  totalVideos: number;
+  currentIndex: number;
+}
+
+export function VideoControls({ goToNextVideo, goToPrevVideo, totalVideos, currentIndex }: VideoControlsProps) {
   const {
     slides,
     currentVideoIndex,
@@ -37,6 +44,53 @@ export function VideoControls() {
       >
         <X className="h-6 w-6 text-white" />
       </Button>
+
+      {/* Video counter info */}
+      <div 
+        className={cn(
+          "absolute top-4 right-4 bg-black/50 px-3 py-1.5 rounded-full text-white font-medium transition-opacity duration-300",
+          showControls ? "opacity-100" : "opacity-0"
+        )}
+      >
+        {currentIndex + 1} / {totalVideos}
+      </div>
+
+      {/* Navigation buttons */}
+      <div 
+        className={cn(
+          "absolute inset-y-0 left-0 flex items-center transition-opacity duration-300",
+          showControls ? "opacity-100" : "opacity-0",
+          currentIndex === 0 ? "pointer-events-none opacity-30" : ""
+        )}
+      >
+        <Button
+          variant="ghost"
+          size="icon"
+          className="ml-4 h-12 w-12 rounded-full bg-black/50 hover:bg-black/70"
+          onClick={goToPrevVideo}
+          disabled={currentIndex === 0}
+        >
+          <ChevronLeft className="h-8 w-8 text-white" />
+        </Button>
+      </div>
+
+      <div 
+        className={cn(
+          "absolute inset-y-0 right-0 flex items-center transition-opacity duration-300",
+          showControls ? "opacity-100" : "opacity-0",
+          currentIndex === totalVideos - 1 ? "pointer-events-none opacity-30" : ""
+        )}
+      >
+        <Button
+          variant="ghost"
+          size="icon"
+          className="mr-4 h-12 w-12 rounded-full bg-black/50 hover:bg-black/70"
+          onClick={goToNextVideo}
+          disabled={currentIndex === totalVideos - 1}
+        >
+          <ChevronRight className="h-8 w-8 text-white" />
+        </Button>
+      </div>
 
       {/* Side controls */}
       <div 
@@ -75,8 +129,11 @@ export function VideoControls() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
+      {/* Swipe indicator */}
+      <div className={cn(
+        "absolute bottom-32 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce transition-opacity duration-300",
+        showControls ? "opacity-100" : "opacity-0"
+      )}>
         <p className="text-white text-sm mb-2 opacity-70">Desliza para más videos</p>
         <svg className="w-6 h-6 text-white opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />

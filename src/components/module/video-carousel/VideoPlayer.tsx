@@ -19,10 +19,32 @@ export function VideoPlayer({ index }: VideoPlayerProps) {
   } = useVideoCarousel();
   const slide = slides[index];
   const [videoError, setVideoError] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const handleError = () => {
     setVideoError(true);
     handleVideoError(index);
+  };
+
+  // Cargar el video cuando sea visible
+  React.useEffect(() => {
+    if (videoRefs.current[index] && videoRefs.current[index]?.src === '') {
+      videoRefs.current[index]?.load();
+    }
+    
+    // Verificar si este es el video actual y si debe reproducirse
+    if (index === currentVideoIndex && videoRefs.current[index]) {
+      const videoElement = videoRefs.current[index];
+      if (videoElement) {
+        videoElement.play().catch(err => {
+          console.log("Error al reproducir el video:", err);
+        });
+      }
+    }
+  }, [index, currentVideoIndex, videoRefs]);
+
+  const handleLoadedData = () => {
+    setIsLoading(false);
   };
 
   return (
@@ -33,6 +55,13 @@ export function VideoPlayer({ index }: VideoPlayerProps) {
         currentVideoIndex === index ? "opacity-100" : "opacity-0 pointer-events-none"
       )}
     >
+      {/* Loading indicator */}
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+          <div className="w-12 h-12 rounded-full border-4 border-white/10 border-t-white animate-spin"></div>
+        </div>
+      )}
+      
       <video
         ref={(el) => (videoRefs.current[index] = el)}
         className="w-full h-full object-contain"
@@ -42,6 +71,8 @@ export function VideoPlayer({ index }: VideoPlayerProps) {
         onTimeUpdate={handleVideoTimeUpdate}
         onEnded={handleVideoEnded}
         onError={handleError}
+        onLoadedData={handleLoadedData}
+        preload="auto"
       >
         <source src={slide.src} type="video/mp4" />
         Your browser does not support the video tag.
