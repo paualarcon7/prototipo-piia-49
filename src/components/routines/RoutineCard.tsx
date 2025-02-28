@@ -55,13 +55,13 @@ export const RoutineCard = ({ routine, onClick }: RoutineCardProps) => {
       className={`
         p-4 rounded-lg bg-gradient-to-br from-secondary/50 to-secondary/30 backdrop-blur-sm 
         border border-secondary/20 flex items-center cursor-pointer hover:shadow-lg 
-        transition-shadow duration-200 
+        transition-all duration-200 hover:translate-y-[-2px]
         ${!routine.isActive ? 'opacity-70' : ''}
       `}
       onClick={onClick}
     >
       <div 
-        className="w-12 h-12 rounded-full flex items-center justify-center mr-4"
+        className="w-12 h-12 rounded-full flex items-center justify-center mr-4 transition-all duration-300"
         style={{ backgroundColor: `${routine.color}30` }}
       >
         <Clock className="h-6 w-6" style={{ color: routine.color }} />

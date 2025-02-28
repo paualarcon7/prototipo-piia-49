@@ -221,7 +221,6 @@ const RutinaDetalle = () => {
         { protocol, order: prev.protocols.length }
       ]
     }));
-    setShowProtocolSelector(false);
     toast({
       title: "Protocolo añadido",
       description: `${protocol.title} ha sido añadido a la rutina`,
@@ -430,28 +429,14 @@ const RutinaDetalle = () => {
           </TabsList>
           
           <TabsContent value="protocolos" className="mt-4 space-y-4">
-            {showProtocolSelector ? (
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-medium text-white">Añadir protocolos</h3>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => setShowProtocolSelector(false)}
-                    className="text-gray-400"
-                  >
-                    <X className="h-4 w-4 mr-1" />
-                    Cerrar
-                  </Button>
-                </div>
-                <ProtocolSelector
-                  availableProtocols={protocols}
-                  selectedProtocols={routine.protocols}
-                  onAddProtocol={handleAddProtocol}
-                  onRemoveProtocol={handleRemoveProtocol}
-                  onReorderProtocols={handleReorderProtocols}
-                />
-              </div>
+            {isEditing ? (
+              <ProtocolSelector
+                availableProtocols={protocols}
+                selectedProtocols={routine.protocols}
+                onAddProtocol={handleAddProtocol}
+                onRemoveProtocol={handleRemoveProtocol}
+                onReorderProtocols={handleReorderProtocols}
+              />
             ) : (
               <>
                 <div className="space-y-3">
@@ -481,45 +466,14 @@ const RutinaDetalle = () => {
                           </div>
                         </div>
                         
-                        {isEditing ? (
-                          <div className="flex items-center space-x-1">
-                            <Button 
-                              variant="ghost" 
-                              size="icon" 
-                              className="text-gray-400 h-8 w-8"
-                              onClick={() => moveProtocol(index, 'up')}
-                              disabled={index === 0}
-                            >
-                              <ArrowUp className="h-4 w-4" />
-                            </Button>
-                            <Button 
-                              variant="ghost" 
-                              size="icon" 
-                              className="text-gray-400 h-8 w-8"
-                              onClick={() => moveProtocol(index, 'down')}
-                              disabled={index === routine.protocols.length - 1}
-                            >
-                              <ArrowDown className="h-4 w-4" />
-                            </Button>
-                            <Button 
-                              variant="ghost" 
-                              size="icon" 
-                              className="text-red-400 h-8 w-8"
-                              onClick={() => handleRemoveProtocol(index)}
-                            >
-                              <X className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        ) : (
-                          <Button 
-                            variant="ghost" 
-                            size="icon" 
-                            className="text-white"
-                            onClick={() => navigate(`/protocolos/${item.protocol.id}`)}
-                          >
-                            <PlayCircle className="h-5 w-5" />
-                          </Button>
-                        )}
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          className="text-white"
+                          onClick={() => navigate(`/protocolos/${item.protocol.id}`)}
+                        >
+                          <PlayCircle className="h-5 w-5" />
+                        </Button>
                       </div>
                     ))
                   ) : (
@@ -529,18 +483,17 @@ const RutinaDetalle = () => {
                       <p className="text-gray-400 text-sm mb-4 max-w-xs mx-auto">
                         Esta rutina no tiene protocolos. Añade protocolos para comenzar a organizar tu tiempo.
                       </p>
+                      <Button 
+                        variant="outline" 
+                        className="border-dashed border-gray-500 text-gray-400"
+                        onClick={toggleEditMode}
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Añadir protocolos
+                      </Button>
                     </div>
                   )}
                 </div>
-                
-                <Button 
-                  variant="outline" 
-                  className="w-full mt-4 border-dashed border-gray-500 text-gray-400"
-                  onClick={() => setShowProtocolSelector(true)}
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Añadir protocolo
-                </Button>
               </>
             )}
           </TabsContent>
@@ -557,6 +510,7 @@ const RutinaDetalle = () => {
                 <Switch
                   checked={routine.isActive}
                   onCheckedChange={handleActiveToggle}
+                  disabled={!isEditing}
                 />
               </div>
               
@@ -570,6 +524,7 @@ const RutinaDetalle = () => {
                 <Switch
                   checked={routine.notification.enabled}
                   onCheckedChange={handleNotificationToggle}
+                  disabled={!isEditing}
                 />
               </div>
               
