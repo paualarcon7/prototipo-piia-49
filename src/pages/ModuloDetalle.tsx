@@ -177,6 +177,13 @@ const ModuloDetalle = () => {
 
   const handleCloseTrabajoVideo = () => {
     setShowTrabajoVideo(false);
+    if (currentQuestionIndex === -1) {
+      setCurrentQuestionIndex(0);
+      setMessages([{
+        text: guidedQuestions[0],
+        isBot: true
+      }]);
+    }
   };
 
   const simulateAudioProgress = () => {
@@ -404,56 +411,25 @@ const ModuloDetalle = () => {
                 <div className="space-y-6">
                   <div className="bg-secondary/70 p-6 rounded-lg">
                     <h2 className="text-lg font-semibold mb-4">Videos sobre Estado de Flujo</h2>
-                    <div className="grid grid-cols-2 gap-4">
-                      {trabajoVideoSlides.slice(0, 4).map((slide, index) => (
-                        <div 
-                          key={index} 
-                          className="relative aspect-[9/16] bg-black rounded-md overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
-                          onClick={handleOpenTrabajoVideo}
-                        >
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <Play className="h-8 w-8 text-white opacity-80" />
-                          </div>
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                          <div className="absolute bottom-2 left-2 right-2">
-                            <p className="text-xs text-white font-medium line-clamp-2">
-                              {slide.title}
-                            </p>
-                          </div>
+                    <div>
+                      <div 
+                        className="relative mx-auto aspect-[9/16] max-w-[160px] bg-black rounded-md overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
+                        onClick={handleOpenTrabajoVideo}
+                      >
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <Play className="h-8 w-8 text-white opacity-80" />
                         </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="bg-secondary/70 p-6 rounded-lg">
-                    <h2 className="text-lg font-semibold mb-4">Explicación del Protocolo</h2>
-                    <div className="flex flex-col items-center gap-4">
-                      <div className="w-full bg-gray-700 rounded-full h-2">
-                        <div
-                          className="bg-purple-500 h-2 rounded-full transition-all"
-                          style={{ width: `${(progress / 20) * 100}%` }}
-                        />
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          onClick={handlePlayPause}
-                        >
-                          {isPlaying ? (
-                            <Pause className="h-4 w-4" />
-                          ) : (
-                            <Play className="h-4 w-4" />
-                          )}
-                        </Button>
-                        <span className="text-sm text-gray-400">
-                          {progress}s / 20s
-                        </span>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                        <div className="absolute bottom-2 left-2 right-2">
+                          <p className="text-xs text-white font-medium line-clamp-2">
+                            {trabajoVideoSlides[0].title}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  {audioCompleted && (
+                  {messages.length > 0 && (
                     <div className="bg-secondary/70 p-6 rounded-lg">
                       <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
                         <MessageSquare className="h-5 w-5" />
