@@ -64,6 +64,7 @@ export const useModuleStages = () => {
     showTest,
     showFeedback,
     activeStage,
+    setActiveStage, // Added this line to expose the setActiveStage function
     setStageStatus,
     handleStageChange,
     handleTestComplete,
