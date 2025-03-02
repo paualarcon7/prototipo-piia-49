@@ -8,6 +8,7 @@ interface ModuleStageProps extends Stage {
   stageKey: string;
   status?: 'completed' | 'in-progress' | 'pending';
   children?: React.ReactNode;
+  onSelect?: () => void; // Added this prop to support the onSelect callback
 }
 
 export const ModuleStage = ({ 
@@ -18,7 +19,8 @@ export const ModuleStage = ({
   isActive,
   stageKey,
   status = 'pending',
-  children
+  children,
+  onSelect
 }: ModuleStageProps) => {
   const getStatusColor = () => {
     switch (status) {
@@ -39,9 +41,12 @@ export const ModuleStage = ({
       className="w-full"
     >
       <AccordionItem value={stageKey} className="border-none mb-4">
-        <AccordionTrigger className={`p-4 rounded-lg transition-all ${
-          isActive ? "bg-secondary" : "bg-secondary/50 hover:bg-secondary/70"
-        } flex items-start`}>
+        <AccordionTrigger 
+          className={`p-4 rounded-lg transition-all ${
+            isActive ? "bg-secondary" : "bg-secondary/50 hover:bg-secondary/70"
+          } flex items-start`}
+          onClick={onSelect} // Use the onSelect prop here
+        >
           <div className="flex flex-1 items-center">
             <div className="flex items-center gap-3">
               <div className="relative">

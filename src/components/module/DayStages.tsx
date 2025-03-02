@@ -45,6 +45,7 @@ export const DayStages = ({
         key={index}
         {...stage}
         isActive={activeStage === index}
+        stageKey={`stage-${index}`}
         onSelect={() => onStageClick(index)}
       />
     ))}
