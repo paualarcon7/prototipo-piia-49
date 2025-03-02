@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import TestQuestion from "@/components/TestQuestion";
@@ -27,28 +26,25 @@ const ModuloDetalle = () => {
   const [showTest, setShowTest] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
   const [showFullScreenVideo, setShowFullScreenVideo] = useState(false);
+  const [showTrabajoVideo, setShowTrabajoVideo] = useState(false);
   const { toast } = useToast();
 
-  // Audio player state for trabajo section
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [audioCompleted, setAudioCompleted] = useState(false);
   const progressInterval = useRef<number>();
   
-  // Chat state for trabajo section
   const [messages, setMessages] = useState<Array<{ text: string; isBot: boolean }>>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(-1);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Guided questions for trabajo section
   const guidedQuestions = [
     "¿Recuerdas algún momento en el que hayas perdido la noción del tiempo porque estabas sumergido en algo? ¿Cuéntanos cómo se sintió?",
     "¿Identificas que habilidades utilizaste durante ese momento?",
     "¿Qué te pareció la explicación del protocolo?"
   ];
 
-  // Video slides con el mismo video repetido 3 veces (el tercer video)
   const demoVideo = "https://assets.mixkit.co/videos/preview/mixkit-tree-with-yellow-flowers-1173-large.mp4";
   const videoSlides = [
     {
@@ -69,6 +65,39 @@ const ModuloDetalle = () => {
       title: "Demo Video 3",
       likes: 2000000,
     },
+    {
+      src: demoVideo,
+      thumbnail: "/placeholder-thumbnail-3.jpg",
+      title: "Demo Video 4",
+      likes: 2200000,
+    },
+  ];
+
+  const trabajoVideoSlides = [
+    {
+      src: demoVideo,
+      thumbnail: "/placeholder-thumbnail-3.jpg",
+      title: "Identificando el Estado de Flujo",
+      likes: 1500000,
+    },
+    {
+      src: demoVideo,
+      thumbnail: "/placeholder-thumbnail-3.jpg",
+      title: "Actividades de Alta Energía",
+      likes: 1600000,
+    },
+    {
+      src: demoVideo,
+      thumbnail: "/placeholder-thumbnail-3.jpg",
+      title: "Patrones de Flujo Personales",
+      likes: 1700000,
+    },
+    {
+      src: demoVideo,
+      thumbnail: "/placeholder-thumbnail-3.jpg",
+      title: "Aplicando el Estado de Flujo",
+      likes: 1800000,
+    },
   ];
 
   const handleTestComplete = (results: Record<number, string>) => {
@@ -78,7 +107,6 @@ const ModuloDetalle = () => {
       description: "Tus respuestas han sido guardadas exitosamente.",
     });
     setShowTest(false);
-    // Mark evaluation as completed
     setStageStatus("evaluation", "completed");
   };
 
@@ -89,11 +117,9 @@ const ModuloDetalle = () => {
       description: "¡Gracias por compartir tu experiencia!",
     });
     setShowFeedback(false);
-    // Mark feedback as completed
     setStageStatus("feedback", "completed");
   };
 
-  // Stage status management
   const [stageStatuses, setStageStatuses] = useState({
     trabajo: "pending" as "completed" | "in-progress" | "pending",
     entrenamiento: "pending" as "completed" | "in-progress" | "pending",
@@ -108,16 +134,13 @@ const ModuloDetalle = () => {
     }));
   };
 
-  // Accordion handlers
   const handleStageChange = (value: string) => {
     setActiveStage(value);
     
-    // Update status of selected stage to in-progress if not already completed
     if (value && stageStatuses[value as keyof typeof stageStatuses] === 'pending') {
       setStageStatus(value as keyof typeof stageStatuses, 'in-progress');
     }
 
-    // Show tests for evaluation and feedback
     if (value === 'evaluation') {
       setShowTest(true);
     } else if (value === 'feedback') {
@@ -130,14 +153,13 @@ const ModuloDetalle = () => {
 
   const handleDaySelect = (day: number) => {
     setSelectedDay(day);
-    setActiveStage('trabajo'); // Default open the first accordion
+    setActiveStage('trabajo');
     setStageStatus('trabajo', 'in-progress');
   };
 
   const handleBackFromStages = () => {
     setSelectedDay(null);
     setActiveStage(null);
-    // Reset audio player and chat if needed
     resetAudioPlayer();
   };
 
@@ -149,7 +171,14 @@ const ModuloDetalle = () => {
     setShowFullScreenVideo(false);
   };
 
-  // Audio player functions for trabajo section
+  const handleOpenTrabajoVideo = () => {
+    setShowTrabajoVideo(true);
+  };
+
+  const handleCloseTrabajoVideo = () => {
+    setShowTrabajoVideo(false);
+  };
+
   const simulateAudioProgress = () => {
     setIsPlaying(true);
     let currentProgress = 0;
@@ -160,7 +189,6 @@ const ModuloDetalle = () => {
         clearInterval(progressInterval.current);
         setIsPlaying(false);
         setAudioCompleted(true);
-        // Start the guided questions when audio is completed
         if (currentQuestionIndex === -1) {
           setCurrentQuestionIndex(0);
           setMessages([{
@@ -192,31 +220,25 @@ const ModuloDetalle = () => {
     setCurrentQuestionIndex(-1);
   };
 
-  // Chat functions for trabajo section
   const handleSendMessage = async (text: string) => {
     setMessages(prev => [...prev, { text, isBot: false }]);
     setIsLoading(true);
 
-    // Add delay to simulate processing
     setTimeout(() => {
       if (currentQuestionIndex < guidedQuestions.length - 1) {
-        // If we're still in guided questions, show the next one
         setCurrentQuestionIndex(prev => prev + 1);
         setMessages(prev => [...prev, { 
           text: guidedQuestions[currentQuestionIndex + 1], 
           isBot: true 
         }]);
       } else if (currentQuestionIndex === guidedQuestions.length - 1) {
-        // If we just finished the last guided question
         setCurrentQuestionIndex(prev => prev + 1);
         setMessages(prev => [...prev, { 
           text: "¡Gracias por compartir tus respuestas! Ahora, ¿tienes alguna duda o pregunta adicional sobre el estado de flujo? Estoy aquí para ayudarte.", 
           isBot: true 
         }]);
-        // Mark trabajo as completed when all questions are answered
         setStageStatus('trabajo', 'completed');
       } else {
-        // For any subsequent questions
         setMessages(prev => [...prev, { 
           text: "Gracias por tu pregunta. Permíteme ayudarte a profundizar en tu comprensión del estado de flujo. ¿Hay algo más que te gustaría explorar?", 
           isBot: true 
@@ -238,7 +260,6 @@ const ModuloDetalle = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Training section exercise state
   const [trainingProgress, setTrainingProgress] = useState(0);
   const [exerciseComplete, setExerciseComplete] = useState(false);
   const trainingInterval = useRef<number>();
@@ -256,7 +277,7 @@ const ModuloDetalle = () => {
         setExerciseComplete(true);
         setStageStatus('entrenamiento', 'completed');
       }
-    }, 300); // Faster for demo purposes
+    }, 300);
   };
 
   useEffect(() => {
@@ -316,6 +337,19 @@ const ModuloDetalle = () => {
             </>
           )}
           
+          {showTrabajoVideo && (
+            <div className="fixed inset-0 z-50 bg-black">
+              <div className="h-full w-full flex items-center justify-center">
+                <div className="relative w-full max-w-md h-full">
+                  <ModuleVideoCarousel 
+                    slides={trabajoVideoSlides} 
+                    onClose={handleCloseTrabajoVideo}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+          
           {selectedDay === null ? (
             <WorkDayList 
               workDays={workDays} 
@@ -341,7 +375,6 @@ const ModuloDetalle = () => {
                 </p>
               </div>
 
-              {/* Progress indicator */}
               <div className="mb-6">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-sm text-gray-400">Progreso de hoy</span>
@@ -355,7 +388,6 @@ const ModuloDetalle = () => {
                 />
               </div>
               
-              {/* Trabajo stage */}
               <ModuleStage
                 title="Sesión de trabajo"
                 icon={<ClipboardList className="w-6 h-6" />}
@@ -370,6 +402,29 @@ const ModuloDetalle = () => {
                 status={stageStatuses.trabajo}
               >
                 <div className="space-y-6">
+                  <div className="bg-secondary/70 p-6 rounded-lg">
+                    <h2 className="text-lg font-semibold mb-4">Videos sobre Estado de Flujo</h2>
+                    <div className="grid grid-cols-2 gap-4">
+                      {trabajoVideoSlides.slice(0, 4).map((slide, index) => (
+                        <div 
+                          key={index} 
+                          className="relative aspect-[9/16] bg-black rounded-md overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
+                          onClick={handleOpenTrabajoVideo}
+                        >
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <Play className="h-8 w-8 text-white opacity-80" />
+                          </div>
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                          <div className="absolute bottom-2 left-2 right-2">
+                            <p className="text-xs text-white font-medium line-clamp-2">
+                              {slide.title}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
                   <div className="bg-secondary/70 p-6 rounded-lg">
                     <h2 className="text-lg font-semibold mb-4">Explicación del Protocolo</h2>
                     <div className="flex flex-col items-center gap-4">
@@ -436,7 +491,6 @@ const ModuloDetalle = () => {
                 </div>
               </ModuleStage>
 
-              {/* Entrenamiento stage */}
               <ModuleStage
                 title="Entrenamiento"
                 icon={<Dumbbell className="w-6 h-6" />}
@@ -508,7 +562,6 @@ const ModuloDetalle = () => {
                 </div>
               </ModuleStage>
 
-              {/* Evaluation stage */}
               <ModuleStage
                 title="Evaluación"
                 icon={<PenTool className="w-6 h-6" />}
@@ -530,7 +583,6 @@ const ModuloDetalle = () => {
                 </div>
               </ModuleStage>
 
-              {/* Feedback stage */}
               <ModuleStage
                 title="Feedback"
                 icon={<MessageSquare className="w-6 h-6" />}
