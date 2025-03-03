@@ -30,7 +30,7 @@ export const SearchBar = ({ search, setSearch, selectedProtocols }: SearchBarPro
           {selectedProtocols.length} {selectedProtocols.length === 1 ? 'protocolo' : 'protocolos'} seleccionados
         </div>
         {selectedProtocols.length > 0 && (
-          <Badge className="bg-[#9b87f5]/20 text-[#9b87f5]">
+          <Badge className="bg-[#02b1bb]/20 text-[#02b1bb]">
             Duración total: {calculateTotalDuration(selectedProtocols)}
           </Badge>
         )}

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Check } from "lucide-react";
@@ -164,7 +165,7 @@ const NuevaRutina = () => {
       <div className="fixed bottom-16 inset-x-0 p-4 bg-[#1A1F2C]/50 backdrop-blur-sm border-t border-[#1A1F2C]/20">
         <Button 
           onClick={handleNextStep}
-          className="w-full bg-[#9b87f5] hover:bg-[#8B5CF6]"
+          className="w-full bg-[#02b1bb] hover:bg-[#02b1bb]/80"
         >
           {step < 3 ? (
             <>

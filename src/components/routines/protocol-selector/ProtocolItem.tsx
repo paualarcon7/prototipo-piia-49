@@ -16,7 +16,7 @@ export const ProtocolItem = ({ protocol, isSelected, onToggle }: ProtocolItemPro
       className={`
         p-3 rounded-md flex items-center cursor-pointer transition-colors duration-200
         ${isSelected 
-          ? 'bg-[#1A1F2C]/80 border border-[#9b87f5]/30' 
+          ? 'bg-[#1A1F2C]/80 border border-[#02b1bb]/30' 
           : 'bg-[#1A1F2C]/40 border border-[#1A1F2C]/20 hover:bg-[#1A1F2C]/60'}
       `}
       onClick={onToggle}
@@ -24,7 +24,7 @@ export const ProtocolItem = ({ protocol, isSelected, onToggle }: ProtocolItemPro
       <div className="mr-3 flex items-center justify-center">
         <Checkbox 
           checked={isSelected}
-          className={`${isSelected ? 'border-[#9b87f5] bg-[#9b87f5]' : 'border-[#8A898C]'}`}
+          className={`${isSelected ? 'border-[#02b1bb] bg-[#02b1bb]' : 'border-[#8A898C]'}`}
           onCheckedChange={onToggle}
         />
       </div>
@@ -58,7 +58,7 @@ export const ProtocolItem = ({ protocol, isSelected, onToggle }: ProtocolItemPro
       </div>
       
       {isSelected ? (
-        <Check className="h-4 w-4 text-[#9b87f5]" />
+        <Check className="h-4 w-4 text-[#02b1bb]" />
       ) : null}
     </div>
   );

@@ -288,7 +288,7 @@ const Rutinas = () => {
                 </span>
                 <button 
                   onClick={clearFilters}
-                  className="text-[#9b87f5]"
+                  className="text-[#02b1bb]"
                 >
                   Limpiar filtros
                 </button>
@@ -315,7 +315,7 @@ const Rutinas = () => {
                 <Button 
                   variant="outline" 
                   onClick={clearFilters}
-                  className="border-[#9b87f5] text-[#9b87f5]"
+                  className="border-[#02b1bb] text-[#02b1bb]"
                 >
                   Limpiar filtros
                 </Button>
@@ -326,7 +326,7 @@ const Rutinas = () => {
           {/* Botón flotante para añadir nueva rutina */}
           <Button
             onClick={() => navigate('/rutinas/nueva')}
-            className="fixed right-4 bottom-24 bg-[#9b87f5] hover:bg-[#8B5CF6] rounded-full h-14 w-14 shadow-lg flex items-center justify-center"
+            className="fixed right-4 bottom-24 bg-[#02b1bb] hover:bg-[#02b1bb]/80 rounded-full h-14 w-14 shadow-lg flex items-center justify-center"
           >
             <Plus className="h-7 w-7" />
           </Button>
@@ -349,7 +349,7 @@ const Rutinas = () => {
                         type="radio" 
                         checked={filterStatus === "all"} 
                         onChange={() => setFilterStatus("all")}
-                        className="form-radio text-[#9b87f5]"
+                        className="form-radio text-[#02b1bb]"
                       />
                       <span className="text-[#C8C8C9]">Todas</span>
                     </label>
@@ -358,7 +358,7 @@ const Rutinas = () => {
                         type="radio" 
                         checked={filterStatus === "active"} 
                         onChange={() => setFilterStatus("active")}
-                        className="form-radio text-[#9b87f5]"
+                        className="form-radio text-[#02b1bb]"
                       />
                       <span className="text-[#C8C8C9]">Activas</span>
                     </label>
@@ -367,7 +367,7 @@ const Rutinas = () => {
                         type="radio" 
                         checked={filterStatus === "inactive"} 
                         onChange={() => setFilterStatus("inactive")}
-                        className="form-radio text-[#9b87f5]"
+                        className="form-radio text-[#02b1bb]"
                       />
                       <span className="text-[#C8C8C9]">Inactivas</span>
                     </label>
@@ -382,7 +382,7 @@ const Rutinas = () => {
                         type="radio" 
                         checked={sortBy === "time"} 
                         onChange={() => setSortBy("time")}
-                        className="form-radio text-[#9b87f5]"
+                        className="form-radio text-[#02b1bb]"
                       />
                       <span className="text-[#C8C8C9]">Hora del día</span>
                     </label>
@@ -391,7 +391,7 @@ const Rutinas = () => {
                         type="radio" 
                         checked={sortBy === "name"} 
                         onChange={() => setSortBy("name")}
-                        className="form-radio text-[#9b87f5]"
+                        className="form-radio text-[#02b1bb]"
                       />
                       <span className="text-[#C8C8C9]">Nombre</span>
                     </label>
@@ -400,7 +400,7 @@ const Rutinas = () => {
                         type="radio" 
                         checked={sortBy === "created"} 
                         onChange={() => setSortBy("created")}
-                        className="form-radio text-[#9b87f5]"
+                        className="form-radio text-[#02b1bb]"
                       />
                       <span className="text-[#C8C8C9]">Fecha de creación</span>
                     </label>
@@ -409,7 +409,7 @@ const Rutinas = () => {
                         type="radio" 
                         checked={sortBy === "active"} 
                         onChange={() => setSortBy("active")}
-                        className="form-radio text-[#9b87f5]"
+                        className="form-radio text-[#02b1bb]"
                       />
                       <span className="text-[#C8C8C9]">Estado (activas primero)</span>
                     </label>
@@ -426,7 +426,7 @@ const Rutinas = () => {
                   Limpiar
                 </Button>
                 <SheetClose asChild>
-                  <Button className="w-full bg-[#9b87f5] hover:bg-[#8B5CF6]">
+                  <Button className="w-full bg-[#02b1bb] hover:bg-[#02b1bb]/80">
                     Aplicar
                   </Button>
                 </SheetClose>
@@ -442,7 +442,7 @@ const Rutinas = () => {
             <Button 
               onClick={() => navigate('/rutinas/nueva')}
               size="icon"
-              className="bg-[#9b87f5] hover:bg-[#8B5CF6] rounded-full h-10 w-10 shadow-lg transition-transform hover:scale-105"
+              className="bg-[#02b1bb] hover:bg-[#02b1bb]/80 rounded-full h-10 w-10 shadow-lg transition-transform hover:scale-105"
             >
               <Plus className="h-6 w-6" />
             </Button>
@@ -455,7 +455,7 @@ const Rutinas = () => {
               <h2 className="text-lg font-semibold text-white">Rutinas activas</h2>
               <Button 
                 variant="link" 
-                className="text-[#9b87f5] p-0"
+                className="text-[#02b1bb] p-0"
                 onClick={() => setShowAllView(true)}
               >
                 Ver todas <ArrowRight className="ml-1 h-4 w-4" />
@@ -478,7 +478,7 @@ const Rutinas = () => {
               {activeRoutines.length > 3 && (
                 <Button
                   variant="outline"
-                  className="w-full mt-2 border-[#9b87f5]/20 text-[#9b87f5]"
+                  className="w-full mt-2 border-[#02b1bb]/20 text-[#02b1bb]"
                   onClick={() => setShowAllView(true)}
                 >
                   Ver {activeRoutines.length - 3} rutinas más
@@ -490,7 +490,7 @@ const Rutinas = () => {
           {/* Botón flotante para añadir nueva rutina */}
           <Button
             onClick={() => navigate('/rutinas/nueva')}
-            className="fixed right-4 bottom-24 bg-[#9b87f5] hover:bg-[#8B5CF6] rounded-full h-14 w-14 shadow-lg flex items-center justify-center"
+            className="fixed right-4 bottom-24 bg-[#02b1bb] hover:bg-[#02b1bb]/80 rounded-full h-14 w-14 shadow-lg flex items-center justify-center"
           >
             <Plus className="h-7 w-7" />
           </Button>

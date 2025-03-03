@@ -28,7 +28,7 @@ export const DaySelector = ({ selectedDays, onToggle }: DaySelectorProps) => {
             w-10 h-10 rounded-full flex items-center justify-center
             transition-colors duration-200
             ${selectedDays.includes(day.value) 
-              ? 'bg-[#FF4081] text-white' 
+              ? 'bg-[#02b1bb] text-white' 
               : 'bg-secondary/50 text-gray-400 border border-secondary/30'}
           `}
         >

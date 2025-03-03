@@ -44,7 +44,7 @@ export const ProtocolsList = ({ protocols, routineColor, onEditMode }: Protocols
             className="w-10 h-10 rounded-full flex items-center justify-center mr-3"
             style={{ backgroundColor: `${routineColor}30` }}
           >
-            <span className="text-sm font-medium text-[#9b87f5]">{index + 1}</span>
+            <span className="text-sm font-medium text-[#02b1bb]">{index + 1}</span>
           </div>
           <div className="flex-1">
             <h4 className="text-white text-sm font-medium line-clamp-1">
