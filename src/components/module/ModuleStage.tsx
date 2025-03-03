@@ -88,22 +88,9 @@ export const ModuleStage = ({
           <div className="space-y-6 bg-[#1A1F2C]/60 rounded-xl p-6 shadow-inner border border-gray-800/50 transition-all duration-300 animate-fade-in">
             <div className="space-y-3">
               <h4 className="text-md font-medium text-[#9b87f5] mb-3 font-oswald">Pasos de esta actividad:</h4>
-              {steps.map((step, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-3 text-sm text-gray-300 font-lato"
-                >
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs 
-                    ${status === 'completed' ? "bg-green-500/20 text-green-400 border border-green-400/30" : 
-                      status === 'in-progress' && index === 0 ? "bg-[#9b87f5]/20 text-[#9b87f5] border border-[#9b87f5]/30" : 
-                      "bg-gray-800 text-gray-400 border border-gray-700"}`}>
-                    {index + 1}
-                  </div>
-                  <span className={status === 'completed' ? "text-green-400" : status === 'in-progress' && index === 0 ? "text-[#9b87f5]" : "text-gray-300"}>
-                    {step}
-                  </span>
-                </div>
-              ))}
+              <p className="text-sm text-gray-300 font-lato leading-relaxed">
+                {steps.join('. ')}
+              </p>
             </div>
             {children && (
               <div className="mt-8 pt-6 border-t border-gray-800/50">
