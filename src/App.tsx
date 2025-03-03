@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -86,11 +85,19 @@ const App = () => (
             <Route path="/diario" element={<Diario />} />
             <Route path="/diario/nueva" element={<NuevaEntrada />} />
             <Route path="/ejercicio/:id" element={<Ejercicio />} />
+            
             <Route path="/programa/:id" element={<ProgramaDetalle />} />
+            <Route path="/programa/:programSlug/modulo/:moduleSlug" element={<ModuloDetalle />} />
+            <Route path="/programa/:programSlug/modulo/:moduleSlug/dia/:dayNumber-:dayTitle" element={<ModuloDetalle />} />
+            
             <Route path="/programa/:id/modulo/:moduleId" element={<ModuloDetalle />} />
             <Route path="/programa/:id/modulo/:moduleId/inicio" element={<InicioStage />} />
             <Route path="/programa/:id/modulo/:moduleId/trabajo" element={<TrabajoStage />} />
             <Route path="/programa/:id/modulo/:moduleId/entrenamiento" element={<EntrenamientoStage />} />
+            
+            <Route path="/programa/:programSlug/modulo/:moduleSlug/inicio" element={<InicioStage />} />
+            <Route path="/programa/:programSlug/modulo/:moduleSlug/trabajo" element={<TrabajoStage />} />
+            <Route path="/programa/:programSlug/modulo/:moduleSlug/entrenamiento" element={<EntrenamientoStage />} />
           </Routes>
           <BottomNav />
         </TooltipProvider>

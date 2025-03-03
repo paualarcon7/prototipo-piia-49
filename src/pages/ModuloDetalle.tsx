@@ -1,6 +1,6 @@
 
-import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { evaluationQuestions, feedbackQuestions } from "@/constants/moduleQuestions";
 import { workDays } from "@/constants/workDays";
 import { useModuleStages } from "@/hooks/useModuleStages";
@@ -12,9 +12,39 @@ import { ModuleStagesContent } from "@/components/module-detail/ModuleStagesCont
 import { TestSection } from "@/components/module-detail/TestSection";
 import { DaySelectionSection } from "@/components/module-detail/DaySelectionSection";
 
+// Helper function to convert title to URL friendly slug
+const toSlug = (text: string): string => {
+  return text
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w-]+/g, '')
+    .replace(/--+/g, '-')
+    .replace(/^-+/, '')
+    .replace(/-+$/, '');
+};
+
 const ModuloDetalle = () => {
-  const { id, moduleId } = useParams();
+  const { 
+    id, 
+    moduleId, 
+    programSlug, 
+    moduleSlug, 
+    dayNumber, 
+    dayTitle 
+  } = useParams();
+  
+  const navigate = useNavigate();
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
+
+  // Set selected day from URL params if available
+  useEffect(() => {
+    if (dayNumber) {
+      const dayNum = parseInt(dayNumber, 10);
+      if (!isNaN(dayNum) && dayNum > 0 && dayNum <= workDays.length) {
+        setSelectedDay(dayNum);
+      }
+    }
+  }, [dayNumber]);
 
   // Custom hooks
   const { 
@@ -63,12 +93,27 @@ const ModuloDetalle = () => {
 
   // Event handlers
   const handleDaySelect = (day: number) => {
+    const selectedWorkDay = workDays[day - 1];
+    const dayTitleSlug = toSlug(selectedWorkDay.title);
+    
+    // Use new URL format
+    const programId = programSlug || id;
+    const modId = moduleSlug || moduleId;
+    
+    // Navigate to the new URL format
+    navigate(`/programa/${programId}/modulo/${modId}/dia/${day}-${dayTitleSlug}`);
+    
     setSelectedDay(day);
     setActiveStage('trabajo');
     setStageStatus('trabajo', 'in-progress');
   };
 
   const handleBackFromStages = () => {
+    // Navigate back to module page without day parameter
+    const programId = programSlug || id;
+    const modId = moduleSlug || moduleId;
+    navigate(`/programa/${programId}/modulo/${modId}`);
+    
     setSelectedDay(null);
     setActiveStage(null);
     resetAudioPlayer();
@@ -101,7 +146,7 @@ const ModuloDetalle = () => {
         <>
           {selectedDay === null ? (
             <DaySelectionSection
-              id={id}
+              id={id || programSlug}
               workDays={workDays}
               showFullScreenVideo={showFullScreenVideo}
               videoSlides={videoSlides}
