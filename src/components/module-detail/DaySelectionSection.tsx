@@ -3,19 +3,8 @@ import { WorkDayList } from "@/components/module/WorkDayList";
 import { WorkDay } from "@/types/module";
 import { ModuleVideoSection } from "@/components/module-detail/ModuleVideoSection";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { ChevronRight, Home } from "lucide-react";
-
-// Helper function to convert title to URL friendly slug
-const toSlug = (text: string): string => {
-  return text
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w-]+/g, '')
-    .replace(/--+/g, '-')
-    .replace(/^-+/, '')
-    .replace(/-+$/, '');
-};
 
 interface DaySelectionSectionProps {
   id: string | undefined;
@@ -42,7 +31,6 @@ export const DaySelectionSection = ({
   onDaySelect
 }: DaySelectionSectionProps) => {
   const { programSlug, moduleSlug } = useParams();
-  const navigate = useNavigate();
   
   // Use either the new or old parameter format
   const programId = programSlug || id;
@@ -57,22 +45,6 @@ export const DaySelectionSection = ({
   const programName = programSlug
     ? programSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
     : "Programa";
-
-  // Modified handleDaySelect to use the improved URL structure
-  const handleDaySelect = (day: number) => {
-    const selectedWorkDay = workDays[day - 1];
-    const dayTitleSlug = toSlug(selectedWorkDay.title);
-    
-    if (programSlug && moduleSlug) {
-      // Use the new URL format
-      navigate(`/programa/${programSlug}/modulo/${moduleSlug}/dia/${day}-${dayTitleSlug}`);
-    } else {
-      // Fallback to old format
-      navigate(`/programa/${programId}/modulo/${moduleId}/dia/${day}-${dayTitleSlug}`);
-    }
-    
-    onDaySelect(day);
-  };
   
   return (
     <div className="space-y-10 animate-fade-in">
@@ -115,7 +87,7 @@ export const DaySelectionSection = ({
       
       <WorkDayList 
         workDays={workDays} 
-        onDaySelect={handleDaySelect} 
+        onDaySelect={onDaySelect} 
       />
     </div>
   );

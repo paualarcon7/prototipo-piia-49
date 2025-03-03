@@ -1,3 +1,4 @@
+
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ChevronRight } from "lucide-react";
@@ -7,7 +8,7 @@ import { TrabajoChatSection } from "@/components/trabajo-stage/TrabajoChatSectio
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 const TrabajoStage = () => {
-  const { id, moduleId, programSlug, moduleSlug, dayNumber, dayTitle } = useParams();
+  const { id, moduleId, programSlug, moduleSlug } = useParams();
   const navigate = useNavigate();
   
   const {
@@ -24,17 +25,20 @@ const TrabajoStage = () => {
     console.log(`Stage ${stage} status updated to ${status}`);
   });
 
+  // Use either the new or old parameter format
   const programId = programSlug || id;
   const modId = moduleSlug || moduleId;
   
+  // Handle the back navigation
   const handleBack = () => {
-    if (dayNumber && dayTitle) {
-      navigate(`/programa/${programId}/modulo/${modId}/dia/${dayNumber}-${dayTitle}`);
+    if (programSlug && moduleSlug) {
+      navigate(`/programa/${programSlug}/modulo/${moduleSlug}`);
     } else {
-      navigate(`/programa/${programId}/modulo/${modId}`);
+      navigate(`/programa/${id}/modulo/${moduleId}`);
     }
   };
   
+  // Format module name from slug
   const getModuleName = () => {
     if (moduleSlug) {
       return moduleSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
