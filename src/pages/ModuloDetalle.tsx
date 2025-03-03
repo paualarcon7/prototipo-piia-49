@@ -25,6 +25,7 @@ const ModuloDetalle = () => {
     showTest, 
     showFeedback, 
     activeStage,
+    setActiveStage, // Important: Make sure to extract this function
     setStageStatus,
     handleStageChange,
     handleTestComplete,
