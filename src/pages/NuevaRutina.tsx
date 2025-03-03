@@ -1,19 +1,16 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Clock, Calendar, Check } from "lucide-react";
+import { ChevronLeft, ChevronRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { RoutineTimeSelector } from "@/components/routines/RoutineTimeSelector";
-import { DaySelector } from "@/components/routines/DaySelector";
-import { ProtocolSelector } from "@/components/routines/ProtocolSelector";
-import { CalendarPreview } from "@/components/routines/CalendarPreview";
 import { Routine, WeekDay } from "@/types/rutina";
 import { Protocol } from "@/types/protocols";
 import { protocols } from "@/pages/Protocolos"; // Importing mock protocols
 import { RoutineProtocol } from "@/types/rutina";
-import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+import { StepIndicator } from "@/components/routines/nueva-rutina/StepIndicator";
+import { BasicInfoStep } from "@/components/routines/nueva-rutina/BasicInfoStep";
+import { ProtocolsStep } from "@/components/routines/nueva-rutina/ProtocolsStep";
+import { SyncStep } from "@/components/routines/nueva-rutina/SyncStep";
 
 // Generate a unique ID for the new routine
 const generateId = () => Math.random().toString(36).substr(2, 9);
@@ -94,126 +91,47 @@ const NuevaRutina = () => {
     navigate('/rutinas');
   };
 
-  const renderStepIndicator = () => (
-    <div className="flex justify-center mb-5">
-      <div className="flex items-center space-x-2">
-        {[1, 2, 3].map(s => (
-          <div 
-            key={s}
-            className={`h-2.5 w-2.5 rounded-full ${
-              s === step ? 'bg-[#FF4081]' : 
-              s < step ? 'bg-gray-400' : 'bg-gray-600'
-            }`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-
   const renderStepContent = () => {
     switch (step) {
       case 1:
         return (
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-lg font-medium text-white">Nombre de la rutina</h2>
-              <Input 
-                value={routineName}
-                onChange={e => setRoutineName(e.target.value)}
-                placeholder="Mi rutina"
-                className="bg-secondary/50 border-secondary/30 text-white"
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <h2 className="text-lg font-medium text-white">Horario</h2>
-              <RoutineTimeSelector 
-                startTime={startTime}
-                endTime={endTime}
-                onStartTimeChange={setStartTime}
-                onEndTimeChange={setEndTime}
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <h2 className="text-lg font-medium text-white">Días de la semana</h2>
-              <DaySelector 
-                selectedDays={selectedDays}
-                onToggle={handleDayToggle}
-              />
-            </div>
-          </div>
+          <BasicInfoStep
+            routineName={routineName}
+            startTime={startTime}
+            endTime={endTime}
+            selectedDays={selectedDays}
+            onNameChange={(e) => setRoutineName(e.target.value)}
+            onStartTimeChange={setStartTime}
+            onEndTimeChange={setEndTime}
+            onDayToggle={handleDayToggle}
+          />
         );
       
       case 2:
         return (
-          <div className="space-y-4">
-            <h2 className="text-lg font-medium text-white">Selecciona los protocolos</h2>
-            <ProtocolSelector
-              availableProtocols={protocols}
-              selectedProtocols={selectedProtocols}
-              onAddProtocol={handleAddProtocol}
-              onRemoveProtocol={handleRemoveProtocol}
-              onReorderProtocols={handleReorderProtocols}
-            />
-          </div>
+          <ProtocolsStep
+            availableProtocols={protocols}
+            selectedProtocols={selectedProtocols}
+            onAddProtocol={handleAddProtocol}
+            onRemoveProtocol={handleRemoveProtocol}
+            onReorderProtocols={handleReorderProtocols}
+          />
         );
       
       case 3:
         return (
-          <div className="space-y-6">
-            <h2 className="text-lg font-medium text-white">Google Calendar</h2>
-            
-            <div className="flex items-center justify-between">
-              <Label htmlFor="gcal-toggle" className="text-white">
-                Sincronizar con Google Calendar
-              </Label>
-              <Switch
-                id="gcal-toggle"
-                checked={isGoogleCalendarEnabled}
-                onCheckedChange={setIsGoogleCalendarEnabled}
-              />
-            </div>
-            
-            {isGoogleCalendarEnabled && (
-              <CalendarPreview 
-                routineName={routineName}
-                startTime={startTime}
-                endTime={endTime}
-                days={selectedDays}
-              />
-            )}
-            
-            <h2 className="text-lg font-medium text-white mt-4">Notificaciones</h2>
-            
-            <div className="flex items-center justify-between">
-              <Label htmlFor="notif-toggle" className="text-white">
-                Recibir notificaciones
-              </Label>
-              <Switch
-                id="notif-toggle"
-                checked={notificationsEnabled}
-                onCheckedChange={setNotificationsEnabled}
-              />
-            </div>
-            
-            {notificationsEnabled && (
-              <div className="w-full space-y-2">
-                <Label className="text-gray-400 text-sm">Minutos antes</Label>
-                <select 
-                  value={minutesBefore}
-                  onChange={e => setMinutesBefore(Number(e.target.value))}
-                  className="w-full bg-secondary/50 border border-secondary/30 rounded-md p-2 text-white"
-                >
-                  <option value={5}>5 minutos</option>
-                  <option value={10}>10 minutos</option>
-                  <option value={15}>15 minutos</option>
-                  <option value={30}>30 minutos</option>
-                  <option value={60}>1 hora</option>
-                </select>
-              </div>
-            )}
-          </div>
+          <SyncStep
+            routineName={routineName}
+            startTime={startTime}
+            endTime={endTime}
+            days={selectedDays}
+            isGoogleCalendarEnabled={isGoogleCalendarEnabled}
+            notificationsEnabled={notificationsEnabled}
+            minutesBefore={minutesBefore}
+            onGoogleCalendarToggle={setIsGoogleCalendarEnabled}
+            onNotificationsToggle={setNotificationsEnabled}
+            onMinutesBeforeChange={(e) => setMinutesBefore(Number(e.target.value))}
+          />
         );
       
       default:
@@ -239,7 +157,7 @@ const NuevaRutina = () => {
              "Configurar sincronización"}
           </h1>
         </div>
-        {renderStepIndicator()}
+        <StepIndicator currentStep={step} totalSteps={3} />
       </div>
 
       <div className="flex-1 px-4 py-6 overflow-auto">

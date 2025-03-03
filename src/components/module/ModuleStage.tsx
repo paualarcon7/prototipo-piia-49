@@ -55,8 +55,7 @@ export const ModuleStage = ({
   return (
     <Accordion 
       type="multiple" 
-      collapsible={true}
-      value={isActive ? [stageKey] : []}
+      defaultValue={isActive ? [stageKey] : []}
       className="w-full"
     >
       <AccordionItem value={stageKey} className="border-none mb-6 overflow-hidden">
