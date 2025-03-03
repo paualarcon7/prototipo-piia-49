@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
@@ -11,14 +10,12 @@ import { DiaryOptionsDialog } from "@/components/DiaryOptionsDialog";
 import { EmotionalStateDialog } from "@/components/EmotionalStateDialog";
 import EmotionSelector from "@/components/EmotionSelector";
 import EmotionWords from "@/components/EmotionWords";
-
 type Emotion = {
   id: number;
   name: string;
   color: string;
   icon: string;
 };
-
 export type DiaryEntry = {
   id: string;
   text: string;
@@ -29,7 +26,6 @@ export type DiaryEntry = {
   createdAt: Date;
   date: string;
 };
-
 const Diario = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -44,7 +40,6 @@ const Diario = () => {
   const {
     toast
   } = useToast();
-
   useEffect(() => {
     const newEntry = location.state?.newEntry;
     if (newEntry) {
@@ -61,14 +56,12 @@ const Diario = () => {
         console.log('Estado actualizado de entradas:', updatedEntries);
         return updatedEntries;
       });
-
       if (location.state?.selectedEmotion) {
         setSelectedEmotion(location.state.selectedEmotion);
       }
       if (location.state?.selectedWords) {
         setSelectedWords(location.state.selectedWords);
       }
-
       const {
         newEntry: _,
         ...restState
@@ -80,17 +73,14 @@ const Diario = () => {
       });
     }
   }, [location.state, toast]);
-
   const currentDateKey = date?.toISOString().split('T')[0];
   const currentEntries = currentDateKey ? entries[currentDateKey] || [] : [];
-
   const handleEntryClick = (entry: DiaryEntry) => {
     toast({
       title: "Entrada seleccionada",
       description: entry.text.substring(0, 50) + "..."
     });
   };
-
   const handleNewEntry = () => {
     navigate('/diario/nueva', {
       state: {
@@ -99,7 +89,6 @@ const Diario = () => {
       }
     });
   };
-
   const handleOptionSelect = (option: "entry" | "emotional") => {
     setShowOptionsDialog(false);
     if (option === "entry") {
@@ -108,7 +97,6 @@ const Diario = () => {
       setShowEmotionalDialog(true);
     }
   };
-
   return <div className="flex flex-col min-h-screen pb-28 p-4 pt-16 space-y-4">
       <Tabs defaultValue="today" className="w-full">
         <TabsList className="grid w-full grid-cols-2 bg-secondary/50 backdrop-blur-sm">
@@ -119,10 +107,7 @@ const Diario = () => {
         <TabsContent value="today" className="space-y-4 mt-4">
           {currentEntries.length > 0 && <DiaryEntryList entries={currentEntries} onEntryClick={handleEntryClick} />}
           
-          <Button 
-            onClick={() => setShowOptionsDialog(true)} 
-            className="fixed bottom-24 right-4 h-14 w-14 rounded-full shadow-lg z-10 sm:bottom-8 bg-[#ff4081] hover:bg-[#ff4081]/80 transition-colors"
-          >
+          <Button onClick={() => setShowOptionsDialog(true)} className="fixed bottom-24 right-4 h-14 w-14 rounded-full shadow-lg z-10 sm:bottom-8 transition-colors bg-[#02b1bb]">
             <Plus className="h-8 w-8" />
           </Button>
         </TabsContent>
@@ -137,5 +122,4 @@ const Diario = () => {
       <EmotionalStateDialog open={showEmotionalDialog} onClose={() => setShowEmotionalDialog(false)} />
     </div>;
 };
-
 export default Diario;
