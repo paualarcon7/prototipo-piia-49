@@ -39,10 +39,17 @@ const ModuloDetalle = () => {
   // Set selected day from URL params if available
   useEffect(() => {
     if (dayNumber) {
-      const dayNum = parseInt(dayNumber, 10);
+      // Extract just the number part if it contains a hyphen
+      const extractedDayNumber = dayNumber.split('-')[0];
+      const dayNum = parseInt(extractedDayNumber, 10);
+      
       if (!isNaN(dayNum) && dayNum > 0 && dayNum <= workDays.length) {
         setSelectedDay(dayNum);
+        console.log("Setting selected day to:", dayNum);
       }
+    } else {
+      // Reset selected day when on module page without day parameter
+      setSelectedDay(null);
     }
   }, [dayNumber]);
 
