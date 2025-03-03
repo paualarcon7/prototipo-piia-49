@@ -4,7 +4,6 @@ import { useState } from "react";
 import TestQuestion from "@/components/TestQuestion";
 import { evaluationQuestions, feedbackQuestions } from "@/constants/moduleQuestions";
 import { workDays } from "@/constants/workDays";
-import { ClipboardList, Dumbbell, PenTool, MessageSquare } from "lucide-react";
 import { WorkDayList } from "@/components/module/WorkDayList";
 import { useModuleStages } from "@/hooks/useModuleStages";
 import { useTrabajoStage } from "@/hooks/useTrabajoStage";
@@ -25,7 +24,7 @@ const ModuloDetalle = () => {
     showTest, 
     showFeedback, 
     activeStage,
-    setActiveStage, // Important: Make sure to extract this function
+    setActiveStage,
     setStageStatus,
     handleStageChange,
     handleTestComplete,
@@ -123,6 +122,7 @@ const ModuloDetalle = () => {
               stageStatuses={stageStatuses}
               activeStage={activeStage}
               handleBackFromStages={handleBackFromStages}
+              handleStageChange={handleStageChange}
               trabajoStageProps={{
                 showTrabajoVideo,
                 messages,

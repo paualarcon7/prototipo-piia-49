@@ -8,7 +8,7 @@ interface ModuleStageProps extends Stage {
   stageKey: string;
   status?: 'completed' | 'in-progress' | 'pending';
   children?: React.ReactNode;
-  onSelect?: () => void; // Added this prop to support the onSelect callback
+  onSelect: () => void; // Changed to required prop for accordion functionality
 }
 
 export const ModuleStage = ({ 
@@ -45,7 +45,7 @@ export const ModuleStage = ({
           className={`p-4 rounded-lg transition-all ${
             isActive ? "bg-secondary" : "bg-secondary/50 hover:bg-secondary/70"
           } flex items-start`}
-          onClick={onSelect} // Use the onSelect prop here
+          onClick={onSelect}
         >
           <div className="flex flex-1 items-center">
             <div className="flex items-center gap-3">

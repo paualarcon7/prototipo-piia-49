@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ClipboardList, Dumbbell, PenTool, MessageSquare } from "lucide-react";
 import { WorkDay } from "@/types/module";
@@ -19,6 +20,7 @@ interface ModuleStagesContentProps {
   };
   activeStage: string | null;
   handleBackFromStages: () => void;
+  handleStageChange: (stage: string) => void; // Add this prop to handle stage changes
   
   // Trabajo stage props
   trabajoStageProps: {
@@ -56,6 +58,7 @@ export const ModuleStagesContent = ({
   stageStatuses,
   activeStage,
   handleBackFromStages,
+  handleStageChange, // Now accepting this prop
   trabajoStageProps,
   entrenamientoStageProps,
   setShowTest,
@@ -95,6 +98,7 @@ export const ModuleStagesContent = ({
         isActive={activeStage === 'trabajo'}
         stageKey="trabajo"
         status={stageStatuses.trabajo}
+        onSelect={() => handleStageChange('trabajo')}
       >
         <TrabajoStageContent {...trabajoStageProps} />
       </ModuleStage>
@@ -111,6 +115,7 @@ export const ModuleStagesContent = ({
         isActive={activeStage === 'entrenamiento'}
         stageKey="entrenamiento"
         status={stageStatuses.entrenamiento}
+        onSelect={() => handleStageChange('entrenamiento')}
       >
         <EntrenamientoStageContent {...entrenamientoStageProps} />
       </ModuleStage>
@@ -127,6 +132,7 @@ export const ModuleStagesContent = ({
         isActive={activeStage === 'evaluation'}
         stageKey="evaluation"
         status={stageStatuses.evaluation}
+        onSelect={() => handleStageChange('evaluation')}
       >
         <EvaluationStageContent setShowTest={setShowTest} />
       </ModuleStage>
@@ -143,6 +149,7 @@ export const ModuleStagesContent = ({
         isActive={activeStage === 'feedback'}
         stageKey="feedback"
         status={stageStatuses.feedback}
+        onSelect={() => handleStageChange('feedback')}
       >
         <FeedbackStageContent setShowFeedback={setShowFeedback} />
       </ModuleStage>
