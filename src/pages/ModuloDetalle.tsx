@@ -1,21 +1,19 @@
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState } from "react";
-import TestQuestion from "@/components/TestQuestion";
 import { evaluationQuestions, feedbackQuestions } from "@/constants/moduleQuestions";
 import { workDays } from "@/constants/workDays";
-import { WorkDayList } from "@/components/module/WorkDayList";
 import { useModuleStages } from "@/hooks/useModuleStages";
 import { useTrabajoStage } from "@/hooks/useTrabajoStage";
 import { useEntrenamientoStage } from "@/hooks/useEntrenamientoStage";
 import { useModuleVideo } from "@/hooks/useModuleVideo";
 import { useAudioPlayer } from "@/hooks/useAudioPlayer";
-import { ModuleVideoSection } from "@/components/module-detail/ModuleVideoSection";
 import { ModuleStagesContent } from "@/components/module-detail/ModuleStagesContent";
+import { TestSection } from "@/components/module-detail/TestSection";
+import { DaySelectionSection } from "@/components/module-detail/DaySelectionSection";
 
 const ModuloDetalle = () => {
   const { id, moduleId } = useParams();
-  const navigate = useNavigate();
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
 
   // Custom hooks
@@ -81,7 +79,7 @@ const ModuloDetalle = () => {
   return (
     <div className="container mx-auto px-4 py-6 pb-32">
       {showTest ? (
-        <TestQuestion
+        <TestSection
           questions={evaluationQuestions}
           onComplete={handleTestComplete}
           onBack={() => {
@@ -90,7 +88,7 @@ const ModuloDetalle = () => {
           }}
         />
       ) : showFeedback ? (
-        <TestQuestion
+        <TestSection
           questions={feedbackQuestions}
           onComplete={handleFeedbackComplete}
           onBack={() => {
@@ -100,20 +98,15 @@ const ModuloDetalle = () => {
         />
       ) : (
         <>
-          {selectedDay === null && (
-            <ModuleVideoSection
+          {selectedDay === null ? (
+            <DaySelectionSection
               id={id}
+              workDays={workDays}
               showFullScreenVideo={showFullScreenVideo}
               videoSlides={videoSlides}
               handleOpenFullScreenVideo={handleOpenFullScreenVideo}
               handleCloseFullScreenVideo={handleCloseFullScreenVideo}
-            />
-          )}
-          
-          {selectedDay === null ? (
-            <WorkDayList 
-              workDays={workDays} 
-              onDaySelect={handleDaySelect} 
+              onDaySelect={handleDaySelect}
             />
           ) : currentWorkDay && (
             <ModuleStagesContent
