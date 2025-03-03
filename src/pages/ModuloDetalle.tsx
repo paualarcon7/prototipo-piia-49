@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { evaluationQuestions, feedbackQuestions } from "@/constants/moduleQuestions";
@@ -85,7 +84,6 @@ const ModuloDetalle = () => {
           onComplete={handleTestComplete}
           onBack={() => {
             setShowTest(false);
-            setActiveStage(null);
           }}
         />
       ) : showFeedback ? (
@@ -94,7 +92,6 @@ const ModuloDetalle = () => {
           onComplete={handleFeedbackComplete}
           onBack={() => {
             setShowFeedback(false);
-            setActiveStage(null);
           }}
         />
       ) : (
