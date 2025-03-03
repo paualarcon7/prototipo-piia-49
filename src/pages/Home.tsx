@@ -16,7 +16,7 @@ const Home = () => {
     name: "Elementia",
     description: "Programa para que alcances tu máximo potencial a través de las metodologías del alto rendimiento",
     progress: 100,
-    color: "from-[#4CAF50] to-[#2E7D32]",
+    color: "from-[#02b1bb] to-[#003438]",
     status: "completed"
   }, {
     id: 2,
