@@ -15,11 +15,12 @@ interface AccordionProps extends React.ComponentPropsWithoutRef<typeof Accordion
 const Accordion = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Root>,
   AccordionProps
->(({ type = "single", collapsible = true, ...props }, ref) => (
+>(({ className, type = "single", collapsible = true, ...props }, ref) => (
   <AccordionPrimitive.Root
     ref={ref}
     type={type}
     collapsible={collapsible}
+    className={className}
     {...props}
   />
 ))
