@@ -44,7 +44,7 @@ export const ProtocolItem = ({ protocol, isSelected, onToggle }: ProtocolItemPro
           {protocol.tags.slice(0, 2).map(tag => (
             <span 
               key={tag} 
-              className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#1A1F2C]/50 text-[#C8C8C9]"
+              className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#1A1F2C]/50 text-[#ffcc08]"
             >
               {tag}
             </span>

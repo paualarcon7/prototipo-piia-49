@@ -61,7 +61,7 @@ const ProtocolCard = ({ protocol, isLocked = false }: ProtocolCardProps) => {
               <Badge 
                 key={tag} 
                 variant="secondary" 
-                className="bg-white/10 hover:bg-white/20 transition-colors text-[#FF4081]"
+                className="bg-white/10 hover:bg-white/20 transition-colors text-[#ffcc08]"
               >
                 {tag}
               </Badge>

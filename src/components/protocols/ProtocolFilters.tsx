@@ -83,7 +83,7 @@ const ProtocolFilters = ({
               variant="secondary"
               className={`cursor-pointer whitespace-nowrap px-2 py-1 text-xs ${
                 selectedTag === tag 
-                  ? "bg-[#FF4081]/30 hover:bg-[#FF4081]/40 text-[#FFDEE2]" 
+                  ? "bg-[#ffcc08]/30 hover:bg-[#ffcc08]/40 text-[#ffcc08]" 
                   : "bg-white/10 hover:bg-white/20 text-gray-300"
               }`}
               onClick={() => setSelectedTag(tag as Tag)}
