@@ -107,7 +107,7 @@ const Diario = () => {
         <TabsContent value="today" className="space-y-4 mt-4">
           {currentEntries.length > 0 && <DiaryEntryList entries={currentEntries} onEntryClick={handleEntryClick} />}
           
-          <Button onClick={() => setShowOptionsDialog(true)} className="fixed bottom-24 right-4 h-14 w-14 rounded-full shadow-lg z-10 sm:bottom-8 transition-colors bg-[#02b1bb]">
+          <Button onClick={() => setShowOptionsDialog(true)} className="fixed bottom-24 right-4 h-14 w-14 rounded-full shadow-lg z-10 sm:bottom-8 transition-colors bg-[#ff4081]">
             <Plus className="h-8 w-8" />
           </Button>
         </TabsContent>
