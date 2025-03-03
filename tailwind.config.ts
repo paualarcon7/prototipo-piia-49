@@ -56,7 +56,32 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
-				}
+				},
+				// Brand color extensions
+				brand: {
+					// Pink
+					pink: {
+						DEFAULT: '#ff4081',
+						light: '#f8d6df',
+						dark: '#d4256b',
+					},
+					// Teal
+					teal: {
+						DEFAULT: '#02b1bb',
+						light: '#daf5f3',
+						dark: '#003438',
+					},
+					// Yellow
+					yellow: {
+						DEFAULT: '#ffcc08',
+						light: '#f9e79f',
+					},
+					// Neutrals
+					offwhite: '#f9f7ed',
+					black: '#111111',
+					darkgray: '#333333',
+					lightgray: '#f3f3f3',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

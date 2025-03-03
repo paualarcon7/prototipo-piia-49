@@ -76,14 +76,14 @@ export const EntrenamientoStageContent = ({
           {/* Duración del protocolo */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <Calendar className="h-5 w-5" />
+              <Calendar className="h-5 w-5 text-brand-teal" />
               <h2 className="text-xl font-semibold">Duración del protocolo</h2>
             </div>
             
             <div className="space-y-2">
               <Label className="text-gray-400">Fecha de inicio</Label>
-              <div className="bg-black/40 text-white p-4 rounded-lg w-full md:w-[300px]">
-                <Calendar className="inline-block mr-2 h-5 w-5" />
+              <div className="bg-black/40 text-white p-4 rounded-lg w-full md:w-[300px] border border-brand-teal/20">
+                <Calendar className="inline-block mr-2 h-5 w-5 text-brand-teal" />
                 {format(startDate, "dd/MM/yyyy")}
               </div>
             </div>
@@ -96,7 +96,7 @@ export const EntrenamientoStageContent = ({
           {/* Recordatorio diario */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <Clock className="h-5 w-5" />
+              <Clock className="h-5 w-5 text-brand-yellow" />
               <h2 className="text-xl font-semibold">Recordatorio diario</h2>
             </div>
 
@@ -105,7 +105,7 @@ export const EntrenamientoStageContent = ({
                 value={reminderTime}
                 onValueChange={setReminderTime}
               >
-                <SelectTrigger className="w-full md:w-[200px] bg-black/40">
+                <SelectTrigger className="w-full md:w-[200px] bg-black/40 border-brand-teal/20">
                   <SelectValue placeholder="Seleccionar hora" />
                 </SelectTrigger>
                 <SelectContent>
@@ -119,10 +119,10 @@ export const EntrenamientoStageContent = ({
 
               <Button
                 variant="outline"
-                className="bg-black/40 border-gray-700"
+                className="bg-black/40 border-brand-teal hover:border-brand-teal/80 hover:bg-black/50 text-white"
                 onClick={handleAddToCalendar}
               >
-                <Calendar className="mr-2 h-4 w-4" />
+                <Calendar className="mr-2 h-4 w-4 text-brand-teal" />
                 Agendar en calendario
               </Button>
             </div>
@@ -130,7 +130,7 @@ export const EntrenamientoStageContent = ({
 
           {/* Energy Scale and Activity List */}
           <div className="space-y-6 mt-8">
-            <div className="bg-secondary/70 p-6 rounded-lg">
+            <div className="bg-secondary/70 p-6 rounded-lg border border-brand-pink/20">
               <EnergyScaleLegend />
             </div>
             

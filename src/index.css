@@ -7,26 +7,51 @@
 
 @layer base {
   :root {
+    /* Preserve existing dark theme base colors */
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 217.2 91.2% 59.8%;
+    
+    /* Update primary to use brand pink */
+    --primary: 339 100% 63%;
     --primary-foreground: 222.2 47.4% 11.2%;
+    
+    /* Keep secondary for card backgrounds */
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
     --accent: 240 3.7% 15.9%;
     --accent-foreground: 0 0% 98%;
+    
+    /* Update destructive for more consistency */
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
     --radius: 0.75rem;
+    
+    /* Brand color palette extension */
+    --pink: 339 100% 63%;  /* #ff4081 */
+    --pink-light: 351 67% 90%;  /* #f8d6df */
+    --pink-dark: 339 71% 49%;  /* #d4256b */
+    
+    --teal: 184 98% 37%;  /* #02b1bb */
+    --teal-light: 178 64% 91%;  /* #daf5f3 */
+    --teal-dark: 186 100% 11%;  /* #003438 */
+    
+    --yellow: 49 100% 52%;  /* #ffcc08 */
+    --yellow-light: 48 84% 80%;  /* #f9e79f */
+    --off-white: 48 61% 95%;  /* #f9f7ed */
+    
+    --black: 0 0% 7%;  /* #111111 */
+    --dark-gray: 0 0% 20%;  /* #333333 */
+    --light-gray: 0 0% 95%;  /* #f3f3f3 */
+    --white: 0 0% 100%;  /* #FFFFFF */
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -58,3 +83,42 @@
 p, span, div {
   font-family: 'Lato', sans-serif;
 }
+
+/* New color utility classes */
+@layer utilities {
+  /* Primary (Pink) utilities */
+  .bg-brand-pink { background-color: hsl(var(--pink)); }
+  .text-brand-pink { color: hsl(var(--pink)); }
+  .border-brand-pink { border-color: hsl(var(--pink)); }
+  .bg-brand-pink-light { background-color: hsl(var(--pink-light)); }
+  .text-brand-pink-light { color: hsl(var(--pink-light)); }
+  .border-brand-pink-light { border-color: hsl(var(--pink-light)); }
+  .bg-brand-pink-dark { background-color: hsl(var(--pink-dark)); }
+  .text-brand-pink-dark { color: hsl(var(--pink-dark)); }
+  .border-brand-pink-dark { border-color: hsl(var(--pink-dark)); }
+
+  /* Secondary (Teal) utilities */
+  .bg-brand-teal { background-color: hsl(var(--teal)); }
+  .text-brand-teal { color: hsl(var(--teal)); }
+  .border-brand-teal { border-color: hsl(var(--teal)); }
+  .bg-brand-teal-light { background-color: hsl(var(--teal-light)); }
+  .text-brand-teal-light { color: hsl(var(--teal-light)); }
+  .border-brand-teal-light { border-color: hsl(var(--teal-light)); }
+  .bg-brand-teal-dark { background-color: hsl(var(--teal-dark)); }
+  .text-brand-teal-dark { color: hsl(var(--teal-dark)); }
+  .border-brand-teal-dark { border-color: hsl(var(--teal-dark)); }
+
+  /* Accent (Yellow) utilities */
+  .bg-brand-yellow { background-color: hsl(var(--yellow)); }
+  .text-brand-yellow { color: hsl(var(--yellow)); }
+  .border-brand-yellow { border-color: hsl(var(--yellow)); }
+  .bg-brand-yellow-light { background-color: hsl(var(--yellow-light)); }
+  .text-brand-yellow-light { color: hsl(var(--yellow-light)); }
+  .border-brand-yellow-light { border-color: hsl(var(--yellow-light)); }
+  
+  /* Neutral utilities */
+  .bg-off-white { background-color: hsl(var(--off-white)); }
+  .text-off-white { color: hsl(var(--off-white)); }
+  .border-off-white { border-color: hsl(var(--off-white)); }
+}
+
