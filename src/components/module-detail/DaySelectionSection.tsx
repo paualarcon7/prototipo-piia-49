@@ -29,18 +29,27 @@ export const DaySelectionSection = ({
 }: DaySelectionSectionProps) => {
   return (
     <div className="space-y-10 animate-fade-in">
-      <ModuleVideoSection
-        id={id}
-        showFullScreenVideo={showFullScreenVideo}
-        videoSlides={videoSlides}
-        handleOpenFullScreenVideo={handleOpenFullScreenVideo}
-        handleCloseFullScreenVideo={handleCloseFullScreenVideo}
-      />
+      <div className="bg-[#1A1F2C]/70 backdrop-blur-sm rounded-xl p-6 border border-gray-800/30 shadow-lg">
+        <h2 className="text-2xl font-bold mb-6 font-oswald tracking-wide text-white">Introducción al Módulo</h2>
+        <ModuleVideoSection
+          id={id}
+          showFullScreenVideo={showFullScreenVideo}
+          videoSlides={videoSlides}
+          handleOpenFullScreenVideo={handleOpenFullScreenVideo}
+          handleCloseFullScreenVideo={handleCloseFullScreenVideo}
+        />
+      </div>
       
-      <WorkDayList 
-        workDays={workDays} 
-        onDaySelect={onDaySelect} 
-      />
+      <div className="bg-[#1A1F2C]/70 backdrop-blur-sm rounded-xl p-6 border border-gray-800/30 shadow-lg">
+        <h2 className="text-2xl font-bold mb-6 font-oswald tracking-wide text-white">Plan de Trabajo Diario</h2>
+        <p className="text-gray-300 mb-6 font-lato">
+          Selecciona un día de trabajo para comenzar tu plan de actividades personalizado.
+        </p>
+        <WorkDayList 
+          workDays={workDays} 
+          onDaySelect={onDaySelect} 
+        />
+      </div>
     </div>
   );
 };
