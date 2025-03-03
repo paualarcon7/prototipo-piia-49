@@ -35,28 +35,8 @@ const ProtocolFilters = ({
 
   return (
     <div className="bg-[#1A1F2C]/60 backdrop-blur-sm rounded-lg p-4 border border-[#1A1F2C]/20 space-y-3">
-      {/* Search and Filter Header */}
-      <div className="flex items-center gap-2">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#8A898C]" />
-          <Input
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Buscar protocolos"
-            className="pl-9 bg-[#1A1F2C]/50 border-[#1A1F2C]/30 text-white"
-          />
-          {searchTerm && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute right-1 top-1/2 transform -translate-y-1/2 h-7 w-7"
-              onClick={() => setSearchTerm("")}
-            >
-              <X className="h-4 w-4 text-[#8A898C]" />
-            </Button>
-          )}
-        </div>
-        
+      {/* Filter button first */}
+      <div className="flex justify-end mb-2">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
             <Button 
@@ -135,7 +115,7 @@ const ProtocolFilters = ({
               <div className="space-y-2">
                 <h3 className="text-sm font-medium text-[#C8C8C9]">Etiquetas</h3>
                 <div className="flex flex-wrap gap-2">
-                  {["all", "estrés", "ansiedad", "meditación", "concentración", "productividad", "bienestar", "equilibrio"].map((tag) => (
+                  {["all", "estrés", "ansiedad", "meditación", "concentración", "productividad", "bienestar", "equilibrio", "energía", "flujo", "rendimiento"].map((tag) => (
                     <Badge
                       key={tag}
                       variant="secondary"
@@ -169,6 +149,27 @@ const ProtocolFilters = ({
             </div>
           </SheetContent>
         </Sheet>
+      </div>
+
+      {/* Search bar moved below the filter button */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#8A898C]" />
+        <Input
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Buscar protocolos"
+          className="pl-9 bg-[#1A1F2C]/50 border-[#1A1F2C]/30 text-white"
+        />
+        {searchTerm && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute right-1 top-1/2 transform -translate-y-1/2 h-7 w-7"
+            onClick={() => setSearchTerm("")}
+          >
+            <X className="h-4 w-4 text-[#8A898C]" />
+          </Button>
+        )}
       </div>
       
       {/* Active Filters Display */}
