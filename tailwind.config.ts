@@ -57,7 +57,7 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Brand color extensions
+				// Brand color extensions with exact hex values
 				brand: {
 					// Pink
 					pink: {
