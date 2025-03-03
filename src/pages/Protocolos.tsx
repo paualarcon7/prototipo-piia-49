@@ -1,6 +1,7 @@
 
 import { useState } from "react";
-import { Clipboard } from "lucide-react";
+import { Clipboard, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import ProtocolFilters from "@/components/protocols/ProtocolFilters";
 import ProtocolCard from "@/components/protocols/ProtocolCard";
 import { Protocol, ProtocolDimension, Tag } from "@/types/protocols";
