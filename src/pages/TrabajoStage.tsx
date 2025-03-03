@@ -1,14 +1,13 @@
 
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useTrabajoStage } from "@/hooks/useTrabajoStage";
 import { TrabajoVideoSection } from "@/components/trabajo-stage/TrabajoVideoSection";
 import { TrabajoChatSection } from "@/components/trabajo-stage/TrabajoChatSection";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 const TrabajoStage = () => {
-  const { id, moduleId, programSlug, moduleSlug } = useParams();
+  const { id, moduleId } = useParams();
   const navigate = useNavigate();
   
   const {
@@ -23,66 +22,19 @@ const TrabajoStage = () => {
     handleSendMessage
   } = useTrabajoStage((stage, status) => {
     console.log(`Stage ${stage} status updated to ${status}`);
+    // This is just a placeholder since we don't have direct access to setStageStatus here
   });
 
-  // Use either the new or old parameter format
-  const programId = programSlug || id;
-  const modId = moduleSlug || moduleId;
-  
-  // Handle the back navigation
-  const handleBack = () => {
-    if (programSlug && moduleSlug) {
-      navigate(`/programa/${programSlug}/modulo/${moduleSlug}`);
-    } else {
-      navigate(`/programa/${id}/modulo/${moduleId}`);
-    }
-  };
-  
-  // Format module name from slug
-  const getModuleName = () => {
-    if (moduleSlug) {
-      return moduleSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-    }
-    return "Módulo";
-  };
-  
   return (
     <div className="container mx-auto px-4 py-6 pb-32">
-      <div className="mb-4 flex justify-between items-center">
-        <Button
-          variant="ghost"
-          onClick={handleBack}
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Volver al módulo
-        </Button>
-        
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem className="hidden sm:inline-flex">
-              <BreadcrumbLink onClick={handleBack}>
-                {programSlug ? programSlug.charAt(0).toUpperCase() + programSlug.slice(1) : "Programa"}
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator className="hidden sm:inline-flex">
-              <ChevronRight className="h-4 w-4" />
-            </BreadcrumbSeparator>
-            <BreadcrumbItem className="hidden sm:inline-flex">
-              <BreadcrumbLink onClick={handleBack}>
-                {getModuleName()}
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator className="hidden sm:inline-flex">
-              <ChevronRight className="h-4 w-4" />
-            </BreadcrumbSeparator>
-            <BreadcrumbItem>
-              <BreadcrumbLink className="text-muted-foreground cursor-default">
-                Trabajo
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </div>
+      <Button
+        variant="ghost"
+        className="mb-4"
+        onClick={() => navigate(`/programa/${id}/modulo/${moduleId}`)}
+      >
+        <ArrowLeft className="mr-2 h-4 w-4" />
+        Volver al módulo
+      </Button>
 
       <div className="bg-secondary/50 backdrop-blur-sm rounded-lg p-6 mb-6">
         <h1 className="text-2xl font-bold mb-4">ALMA - PARTE 1: ACTIVA TU ENERGÍA Y DETECTA TU FLUJO</h1>
