@@ -28,15 +28,9 @@ export const useModuleStages = () => {
     if (value && stageStatuses[value as keyof typeof stageStatuses] === 'pending') {
       setStageStatus(value as keyof typeof stageStatuses, 'in-progress');
     }
-
-    if (value === 'evaluation') {
-      setShowTest(true);
-    } else if (value === 'feedback') {
-      setShowFeedback(true);
-    } else {
-      setShowTest(false);
-      setShowFeedback(false);
-    }
+    
+    // Remove automatic test/feedback triggering from here
+    // We'll control this only through the buttons
   };
 
   const handleTestComplete = (results: Record<number, string>) => {
@@ -64,7 +58,7 @@ export const useModuleStages = () => {
     showTest,
     showFeedback,
     activeStage,
-    setActiveStage, // Added this line to expose the setActiveStage function
+    setActiveStage,
     setStageStatus,
     handleStageChange,
     handleTestComplete,

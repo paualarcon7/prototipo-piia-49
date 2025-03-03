@@ -60,7 +60,18 @@ const ModuloDetalle = () => {
     resetAudioPlayer
   } = useAudioPlayer();
 
-  // Event handlers
+  // Modify the handleStageChange function in the useModuleStages hook to prevent automatic test/feedback
+  const handleStageSelection = (value: string) => {
+    setActiveStage(value);
+    
+    if (value && stageStatuses[value as keyof typeof stageStatuses] === 'pending') {
+      setStageStatus(value as keyof typeof stageStatuses, 'in-progress');
+    }
+    
+    // Remove automatic test/feedback triggering
+    // The buttons inside each section will be responsible for opening the forms
+  };
+
   const handleDaySelect = (day: number) => {
     setSelectedDay(day);
     setActiveStage('trabajo');
@@ -113,7 +124,7 @@ const ModuloDetalle = () => {
               stageStatuses={stageStatuses}
               activeStage={activeStage}
               handleBackFromStages={handleBackFromStages}
-              handleStageChange={handleStageChange}
+              handleStageChange={handleStageSelection}
               trabajoStageProps={{
                 showTrabajoVideo,
                 messages,
