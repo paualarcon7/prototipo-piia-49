@@ -1,10 +1,29 @@
+
 import * as React from "react"
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
 import { ChevronDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-const Accordion = AccordionPrimitive.Root
+// Define the types for our custom Accordion component
+interface AccordionProps extends React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Root> {
+  type?: "single" | "multiple";
+  collapsible?: boolean;
+}
+
+// Create a forwardRef for our Accordion to maintain component API
+const Accordion = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Root>,
+  AccordionProps
+>(({ type = "single", collapsible = true, ...props }, ref) => (
+  <AccordionPrimitive.Root
+    ref={ref}
+    type={type}
+    collapsible={collapsible}
+    {...props}
+  />
+))
+Accordion.displayName = "Accordion"
 
 const AccordionItem = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Item>,

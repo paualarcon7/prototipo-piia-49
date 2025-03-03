@@ -42,6 +42,7 @@ export const ProtocolSelector = ({
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const [isSelectionPanelExpanded, setIsSelectionPanelExpanded] = useState(selectedProtocols.length > 0);
   const selectedPanelRef = useRef<HTMLDivElement>(null);
+  const [openCategories, setOpenCategories] = useState<string[]>([]);
   
   // All protocols (selected and unselected)
   const allProtocols = [...availableProtocols];
@@ -136,6 +137,15 @@ export const ProtocolSelector = ({
       }, 100);
     }
   };
+
+  // Toggle category open/closed
+  const toggleCategory = (dimension: string) => {
+    if (openCategories.includes(dimension)) {
+      setOpenCategories(openCategories.filter(cat => cat !== dimension));
+    } else {
+      setOpenCategories([...openCategories, dimension]);
+    }
+  };
   
   return (
     <div className="flex flex-col space-y-4">
@@ -175,7 +185,12 @@ export const ProtocolSelector = ({
       {/* Main protocols list grouped by dimension */}
       <ScrollArea className="flex-1 pr-3" style={{ maxHeight: '60vh' }}>
         {Object.keys(groupedProtocols).length > 0 ? (
-          <Accordion type="multiple" defaultValue={Object.keys(groupedProtocols)} className="space-y-2">
+          <Accordion 
+            type="multiple" 
+            value={openCategories} 
+            onValueChange={setOpenCategories}
+            className="space-y-2"
+          >
             {Object.entries(groupedProtocols).map(([dimension, protocols]) => (
               <AccordionItem 
                 key={dimension} 
