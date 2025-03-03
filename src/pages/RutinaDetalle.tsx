@@ -42,7 +42,8 @@ const mockRoutine: Routine = {
         tags: ["energía", "flujo", "rendimiento"],
         duration: "15 min",
         description: "Descubre y potencia tu estado de flujo personal",
-        icon: () => null
+        // Fixed: Use null directly instead of a function returning null
+        icon: null
       },
       order: 0
     },
@@ -54,7 +55,8 @@ const mockRoutine: Routine = {
         tags: ["concentración", "productividad"],
         duration: "30 min",
         description: "Optimiza tu rendimiento mental y físico",
-        icon: () => null
+        // Fixed: Use null directly instead of a function returning null
+        icon: null
       },
       order: 1
     }
