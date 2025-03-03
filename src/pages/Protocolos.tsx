@@ -40,11 +40,17 @@ export const protocols: Protocol[] = [
 const Protocolos = () => {
   const [selectedDimension, setSelectedDimension] = useState<ProtocolDimension>("all");
   const [selectedTag, setSelectedTag] = useState<Tag>("all");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const filteredProtocols = protocols.filter((protocol) => {
     const dimensionMatch = selectedDimension === "all" || protocol.dimension === selectedDimension;
     const tagMatch = selectedTag === "all" || protocol.tags.includes(selectedTag as Exclude<Tag, "all">);
-    return dimensionMatch && tagMatch;
+    const searchMatch = !searchTerm || 
+      protocol.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      protocol.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      protocol.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+    
+    return dimensionMatch && tagMatch && searchMatch;
   });
 
   return (
@@ -55,6 +61,8 @@ const Protocolos = () => {
           setSelectedDimension={setSelectedDimension}
           selectedTag={selectedTag}
           setSelectedTag={setSelectedTag}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
         />
         
         <div className="grid gap-4 sm:grid-cols-2">
