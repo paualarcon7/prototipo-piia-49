@@ -46,17 +46,17 @@ export const RoutineInfoCard = ({ routine }: RoutineInfoCardProps) => {
       
       <div className="space-y-3">
         <div className="flex items-center text-[#C8C8C9]">
-          <Clock className="h-4 w-4 mr-2 text-[#9b87f5]" />
+          <Clock className="h-4 w-4 mr-2 text-[#02b1bb]" />
           <span>{routine.time.start} - {routine.time.end}</span>
         </div>
         
         <div className="flex items-center text-[#C8C8C9]">
-          <Calendar className="h-4 w-4 mr-2 text-[#9b87f5]" />
+          <Calendar className="h-4 w-4 mr-2 text-[#02b1bb]" />
           <span>{formatDays(routine.days)}</span>
         </div>
         
         <div className="flex items-center text-[#C8C8C9]">
-          <Bell className="h-4 w-4 mr-2 text-[#9b87f5]" />
+          <Bell className="h-4 w-4 mr-2 text-[#02b1bb]" />
           <span>
             {routine.notification.enabled 
               ? `${routine.notification.minutesBefore} minutos antes` 

@@ -88,7 +88,7 @@ export const SettingsTab = ({
         
         <Button 
           variant="outline" 
-          className="w-full mt-6 text-[#9b87f5] border-[#9b87f5]/20"
+          className="w-full mt-6 text-[#02b1bb] border-[#02b1bb]/20"
         >
           <Share2 className="h-4 w-4 mr-2" />
           Compartir rutina
