@@ -28,7 +28,7 @@ export const DaySelectionSection = ({
   onDaySelect
 }: DaySelectionSectionProps) => {
   return (
-    <>
+    <div className="space-y-10 animate-fade-in">
       <ModuleVideoSection
         id={id}
         showFullScreenVideo={showFullScreenVideo}
@@ -41,6 +41,6 @@ export const DaySelectionSection = ({
         workDays={workDays} 
         onDaySelect={onDaySelect} 
       />
-    </>
+    </div>
   );
 };
