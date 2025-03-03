@@ -20,7 +20,7 @@ interface ModuleStagesContentProps {
   };
   activeStage: string | null;
   handleBackFromStages: () => void;
-  handleStageChange: (stage: string) => void; // Add this prop to handle stage changes
+  handleStageChange: (stage: string) => void;
   
   // Trabajo stage props
   trabajoStageProps: {
@@ -45,6 +45,7 @@ interface ModuleStagesContentProps {
     trainingProgress: number;
     exerciseComplete: boolean;
     startTrainingExercise: () => void;
+    goToEnergyMapProtocol: (id?: string, moduleId?: string) => void;
   };
   
   // Evaluation and Feedback props
@@ -58,7 +59,7 @@ export const ModuleStagesContent = ({
   stageStatuses,
   activeStage,
   handleBackFromStages,
-  handleStageChange, // Now accepting this prop
+  handleStageChange,
   trabajoStageProps,
   entrenamientoStageProps,
   setShowTest,

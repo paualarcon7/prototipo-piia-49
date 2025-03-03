@@ -46,7 +46,8 @@ const ModuloDetalle = () => {
   const {
     trainingProgress,
     exerciseComplete,
-    startTrainingExercise
+    startTrainingExercise,
+    goToEnergyMapProtocol
   } = useEntrenamientoStage(setStageStatus);
 
   const {
@@ -130,7 +131,8 @@ const ModuloDetalle = () => {
               entrenamientoStageProps={{
                 trainingProgress,
                 exerciseComplete,
-                startTrainingExercise
+                startTrainingExercise,
+                goToEnergyMapProtocol
               }}
               setShowTest={setShowTest}
               setShowFeedback={setShowFeedback}
