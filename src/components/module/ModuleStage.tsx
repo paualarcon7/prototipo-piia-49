@@ -86,8 +86,7 @@ export const ModuleStage = ({
         </AccordionTrigger>
         <AccordionContent className="pt-4 px-4 animate-accordion-down">
           <div className="space-y-6 bg-[#1A1F2C]/60 rounded-xl p-6 shadow-inner border border-gray-800/50 transition-all duration-300 animate-fade-in">
-            <div className="space-y-3">
-              <h4 className="text-md font-medium text-[#9b87f5] mb-3 font-oswald">Pasos de esta actividad:</h4>
+            <div>
               <p className="text-sm text-gray-300 font-lato leading-relaxed">
                 {steps.join('. ')}
               </p>
