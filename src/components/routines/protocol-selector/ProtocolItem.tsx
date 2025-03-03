@@ -16,15 +16,15 @@ export const ProtocolItem = ({ protocol, isSelected, onToggle }: ProtocolItemPro
       className={`
         p-3 rounded-md flex items-center cursor-pointer transition-colors duration-200
         ${isSelected 
-          ? 'bg-secondary/80 border border-[#FF4081]/30' 
-          : 'bg-secondary/40 border border-secondary/20 hover:bg-secondary/60'}
+          ? 'bg-[#1A1F2C]/80 border border-[#9b87f5]/30' 
+          : 'bg-[#1A1F2C]/40 border border-[#1A1F2C]/20 hover:bg-[#1A1F2C]/60'}
       `}
       onClick={onToggle}
     >
       <div className="mr-3 flex items-center justify-center">
         <Checkbox 
           checked={isSelected}
-          className={`${isSelected ? 'border-[#FF4081] bg-[#FF4081]' : 'border-gray-500'}`}
+          className={`${isSelected ? 'border-[#9b87f5] bg-[#9b87f5]' : 'border-[#8A898C]'}`}
           onCheckedChange={onToggle}
         />
       </div>
@@ -33,10 +33,10 @@ export const ProtocolItem = ({ protocol, isSelected, onToggle }: ProtocolItemPro
           {protocol.title}
         </h4>
         <div className="flex items-center mt-1">
-          <Badge variant="outline" className="text-xs bg-secondary/30 mr-2">
+          <Badge variant="outline" className="text-xs bg-[#1A1F2C]/30 mr-2">
             {protocol.dimension}
           </Badge>
-          <span className="text-xs text-gray-400">
+          <span className="text-xs text-[#C8C8C9]">
             {protocol.duration}
           </span>
         </div>
@@ -44,13 +44,13 @@ export const ProtocolItem = ({ protocol, isSelected, onToggle }: ProtocolItemPro
           {protocol.tags.slice(0, 2).map(tag => (
             <span 
               key={tag} 
-              className="text-[10px] px-1.5 py-0.5 rounded-full bg-secondary/50 text-gray-300"
+              className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#1A1F2C]/50 text-[#C8C8C9]"
             >
               {tag}
             </span>
           ))}
           {protocol.tags.length > 2 && (
-            <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-secondary/50 text-gray-300">
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#1A1F2C]/50 text-[#C8C8C9]">
               +{protocol.tags.length - 2}
             </span>
           )}
@@ -58,7 +58,7 @@ export const ProtocolItem = ({ protocol, isSelected, onToggle }: ProtocolItemPro
       </div>
       
       {isSelected ? (
-        <Check className="h-4 w-4 text-[#FF4081]" />
+        <Check className="h-4 w-4 text-[#9b87f5]" />
       ) : null}
     </div>
   );

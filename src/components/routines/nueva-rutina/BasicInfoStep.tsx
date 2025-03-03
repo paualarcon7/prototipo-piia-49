@@ -33,7 +33,7 @@ export const BasicInfoStep = ({
           value={routineName}
           onChange={onNameChange}
           placeholder="Mi rutina"
-          className="bg-secondary/50 border-secondary/30 text-white"
+          className="bg-[#1A1F2C]/50 border-[#1A1F2C]/30 text-white"
         />
       </div>
       

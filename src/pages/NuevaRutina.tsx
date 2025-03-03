@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Check } from "lucide-react";
@@ -64,7 +63,6 @@ const NuevaRutina = () => {
   };
 
   const handleSaveRoutine = () => {
-    // Here we would normally save to an API or state management
     const newRoutine: Routine = {
       id: generateId(),
       name: routineName,
@@ -79,7 +77,7 @@ const NuevaRutina = () => {
         enabled: notificationsEnabled,
         minutesBefore: minutesBefore
       },
-      color: "#FF4081", // Default color
+      color: "#FF4081",
       isActive: true,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
@@ -87,7 +85,6 @@ const NuevaRutina = () => {
     
     console.log("New routine created:", newRoutine);
     
-    // Navigate back to routines list
     navigate('/rutinas');
   };
 
@@ -141,7 +138,7 @@ const NuevaRutina = () => {
   
   return (
     <div className="flex flex-col h-screen bg-transparent pb-20">
-      <div className="px-4 py-4 border-b border-secondary/20 backdrop-blur-sm sticky top-0 z-10 bg-secondary/10">
+      <div className="px-4 py-4 border-b border-[#1A1F2C]/20 backdrop-blur-sm sticky top-0 z-10 bg-[#1A1F2C]/10">
         <div className="flex items-center">
           <Button 
             variant="ghost" 
@@ -164,10 +161,10 @@ const NuevaRutina = () => {
         {renderStepContent()}
       </div>
 
-      <div className="fixed bottom-16 inset-x-0 p-4 bg-secondary/50 backdrop-blur-sm border-t border-secondary/20">
+      <div className="fixed bottom-16 inset-x-0 p-4 bg-[#1A1F2C]/50 backdrop-blur-sm border-t border-[#1A1F2C]/20">
         <Button 
           onClick={handleNextStep}
-          className="w-full bg-[#FF4081] hover:bg-[#FF4081]/90"
+          className="w-full bg-[#9b87f5] hover:bg-[#8B5CF6]"
         >
           {step < 3 ? (
             <>

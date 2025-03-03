@@ -27,7 +27,7 @@ export const SettingsTab = ({
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-white font-medium">Estado de la rutina</h3>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-[#C8C8C9] mt-1">
               Activa o desactiva temporalmente esta rutina
             </p>
           </div>
@@ -41,7 +41,7 @@ export const SettingsTab = ({
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-white font-medium">Notificaciones</h3>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-[#C8C8C9] mt-1">
               Recibe recordatorios antes de comenzar
             </p>
           </div>
@@ -54,13 +54,13 @@ export const SettingsTab = ({
         
         {routine.notification.enabled && (
           <div className="pl-6 mt-2">
-            <label className="text-sm text-gray-400 block mb-2">
+            <label className="text-sm text-[#C8C8C9] block mb-2">
               Avisar antes
             </label>
             <select 
               value={routine.notification.minutesBefore}
               onChange={onMinutesBeforeChange}
-              className="w-full bg-secondary/50 border border-secondary/30 rounded-md p-2 text-white"
+              className="w-full bg-[#1A1F2C]/50 border border-[#1A1F2C]/30 rounded-md p-2 text-white"
               disabled={!isEditing}
             >
               <option value={5}>5 minutos</option>
@@ -75,7 +75,7 @@ export const SettingsTab = ({
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-white font-medium">Google Calendar</h3>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-[#C8C8C9] mt-1">
               {routine.syncStatus === "synced" 
                 ? "Sincronizado con tu calendario" 
                 : "Sincronizar con tu calendario"}
@@ -88,7 +88,7 @@ export const SettingsTab = ({
         
         <Button 
           variant="outline" 
-          className="w-full mt-6 text-[#FF4081] border-[#FF4081]/20"
+          className="w-full mt-6 text-[#9b87f5] border-[#9b87f5]/20"
         >
           <Share2 className="h-4 w-4 mr-2" />
           Compartir rutina
@@ -96,7 +96,7 @@ export const SettingsTab = ({
         
         <Button 
           variant="outline" 
-          className="w-full mt-2 text-red-500 border-red-500/20"
+          className="w-full mt-2 text-[#D946EF] border-[#D946EF]/20"
           onClick={onOpenDeleteDialog}
         >
           <Trash2 className="h-4 w-4 mr-2" />

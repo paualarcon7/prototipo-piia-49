@@ -15,15 +15,15 @@ export const ProtocolsList = ({ protocols, routineColor, onEditMode }: Protocols
   
   if (protocols.length === 0) {
     return (
-      <div className="text-center py-8 bg-secondary/30 rounded-lg border border-secondary/20 backdrop-blur-sm">
-        <Calendar className="h-12 w-12 mx-auto text-gray-500 mb-3" />
+      <div className="text-center py-8 bg-[#1A1F2C]/30 rounded-lg border border-[#1A1F2C]/20 backdrop-blur-sm">
+        <Calendar className="h-12 w-12 mx-auto text-[#8A898C] mb-3" />
         <h3 className="text-white font-medium mb-2">No hay protocolos</h3>
-        <p className="text-gray-400 text-sm mb-4 max-w-xs mx-auto">
+        <p className="text-[#C8C8C9] text-sm mb-4 max-w-xs mx-auto">
           Esta rutina no tiene protocolos. Añade protocolos para comenzar a organizar tu tiempo.
         </p>
         <Button 
           variant="outline" 
-          className="border-dashed border-gray-500 text-gray-400"
+          className="border-dashed border-[#8A898C] text-[#C8C8C9]"
           onClick={onEditMode}
         >
           <Plus className="h-4 w-4 mr-2" />
@@ -38,23 +38,23 @@ export const ProtocolsList = ({ protocols, routineColor, onEditMode }: Protocols
       {protocols.map((item, index) => (
         <div
           key={`${item.protocol.id}-${index}`}
-          className="p-4 rounded-md bg-secondary/40 border border-secondary/20 flex items-center"
+          className="p-4 rounded-md bg-[#1A1F2C]/40 border border-[#1A1F2C]/20 flex items-center"
         >
           <div 
             className="w-10 h-10 rounded-full flex items-center justify-center mr-3"
             style={{ backgroundColor: `${routineColor}30` }}
           >
-            <span className="text-sm font-medium text-[#FF4081]">{index + 1}</span>
+            <span className="text-sm font-medium text-[#9b87f5]">{index + 1}</span>
           </div>
           <div className="flex-1">
             <h4 className="text-white text-sm font-medium line-clamp-1">
               {item.protocol.title}
             </h4>
             <div className="flex items-center mt-1">
-              <span className="text-xs text-gray-400 bg-secondary/70 px-2 py-0.5 rounded-full mr-2">
+              <span className="text-xs text-[#C8C8C9] bg-[#1A1F2C]/70 px-2 py-0.5 rounded-full mr-2">
                 {item.protocol.dimension}
               </span>
-              <span className="text-xs text-gray-400">
+              <span className="text-xs text-[#C8C8C9]">
                 {item.protocol.duration}
               </span>
             </div>

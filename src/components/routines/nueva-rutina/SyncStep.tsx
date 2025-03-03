@@ -69,11 +69,11 @@ export const SyncStep = ({
       
       {notificationsEnabled && (
         <div className="w-full space-y-2">
-          <Label className="text-gray-400 text-sm">Minutos antes</Label>
+          <Label className="text-[#C8C8C9] text-sm">Minutos antes</Label>
           <select 
             value={minutesBefore}
             onChange={onMinutesBeforeChange}
-            className="w-full bg-secondary/50 border border-secondary/30 rounded-md p-2 text-white"
+            className="w-full bg-[#1A1F2C]/50 border border-[#1A1F2C]/30 rounded-md p-2 text-white"
           >
             <option value={5}>5 minutos</option>
             <option value={10}>10 minutos</option>

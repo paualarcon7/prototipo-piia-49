@@ -33,11 +33,11 @@ export const SelectedProtocolsPanel = ({
   return (
     <div 
       ref={selectedPanelRef}
-      className="mt-4 border-t border-secondary/30 pt-2 transition-all duration-300"
+      className="mt-4 border-t border-[#1A1F2C]/30 pt-2 transition-all duration-300"
     >
       <button
         onClick={onToggleExpanded}
-        className="w-full flex items-center justify-center py-1 text-sm text-gray-300 hover:bg-secondary/30 rounded-md"
+        className="w-full flex items-center justify-center py-1 text-sm text-[#C8C8C9] hover:bg-[#1A1F2C]/30 rounded-md"
       >
         <span>Seleccionados ({selectedProtocols.length})</span>
         {isExpanded ? (
@@ -57,24 +57,24 @@ export const SelectedProtocolsPanel = ({
               onDragOver={(e) => onDragOver(e, index)}
               onDragEnd={onDragEnd}
               className={`
-                p-3 rounded-md bg-secondary/60 border border-[#FF4081]/20 flex items-center
+                p-3 rounded-md bg-[#1A1F2C]/60 border border-[#9b87f5]/20 flex items-center
                 transition-colors duration-200
-                ${dragIndex === index ? 'bg-secondary/80 border-[#FF4081]/50' : ''}
+                ${dragIndex === index ? 'bg-[#1A1F2C]/80 border-[#9b87f5]/50' : ''}
               `}
             >
-              <div className="flex items-center justify-center w-6 h-6 rounded-full bg-secondary/70 mr-3 text-xs font-medium text-white">
+              <div className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1A1F2C]/70 mr-3 text-xs font-medium text-white">
                 {index + 1}
               </div>
-              <GripVertical className="h-5 w-5 text-gray-500 mr-2 cursor-grab flex-shrink-0" />
+              <GripVertical className="h-5 w-5 text-[#8A898C] mr-2 cursor-grab flex-shrink-0" />
               <div className="flex-1">
                 <h4 className="text-white text-sm font-medium line-clamp-1">
                   {item.protocol.title}
                 </h4>
                 <div className="flex items-center mt-1">
-                  <Badge variant="outline" className="text-xs bg-secondary/30 mr-2">
+                  <Badge variant="outline" className="text-xs bg-[#1A1F2C]/30 mr-2">
                     {item.protocol.dimension}
                   </Badge>
-                  <span className="text-xs text-gray-400">
+                  <span className="text-xs text-[#C8C8C9]">
                     {item.protocol.duration}
                   </span>
                 </div>
@@ -84,9 +84,9 @@ export const SelectedProtocolsPanel = ({
                   e.stopPropagation();
                   onRemove(index);
                 }}
-                className="p-1 rounded-full hover:bg-secondary/80"
+                className="p-1 rounded-full hover:bg-[#1A1F2C]/80"
               >
-                <X className="h-4 w-4 text-gray-400" />
+                <X className="h-4 w-4 text-[#C8C8C9]" />
               </button>
             </div>
           ))}

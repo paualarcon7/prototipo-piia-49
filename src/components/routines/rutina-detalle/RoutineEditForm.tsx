@@ -28,16 +28,16 @@ export const RoutineEditForm = ({
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <label className="text-sm text-gray-400">Nombre de la rutina</label>
+        <label className="text-sm text-[#C8C8C9]">Nombre de la rutina</label>
         <Input 
           value={routineName}
           onChange={onNameChange}
-          className="bg-secondary/50 border-secondary/30 text-white text-lg font-semibold"
+          className="bg-[#1A1F2C]/50 border-[#1A1F2C]/30 text-white text-lg font-semibold"
         />
       </div>
       
       <div className="space-y-3">
-        <h3 className="text-sm text-gray-400">Horario</h3>
+        <h3 className="text-sm text-[#C8C8C9]">Horario</h3>
         <RoutineTimeSelector 
           startTime={startTime}
           endTime={endTime}
@@ -47,7 +47,7 @@ export const RoutineEditForm = ({
       </div>
       
       <div className="space-y-3">
-        <h3 className="text-sm text-gray-400">Días de la semana</h3>
+        <h3 className="text-sm text-[#C8C8C9]">Días de la semana</h3>
         <DaySelector 
           selectedDays={selectedDays}
           onToggle={onDayToggle}

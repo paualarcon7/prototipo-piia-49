@@ -41,22 +41,22 @@ export const RoutineInfoCard = ({ routine }: RoutineInfoCardProps) => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-secondary/50 to-secondary/30 backdrop-blur-sm border border-secondary/20 rounded-lg p-5 mb-6">
+    <div className="bg-gradient-to-br from-[#1A1F2C]/50 to-[#1A1F2C]/30 backdrop-blur-sm border border-[#1A1F2C]/20 rounded-lg p-5 mb-6">
       <h2 className="text-xl font-semibold text-white mb-3">{routine.name}</h2>
       
       <div className="space-y-3">
-        <div className="flex items-center text-gray-300">
-          <Clock className="h-4 w-4 mr-2 text-[#FF4081]" />
+        <div className="flex items-center text-[#C8C8C9]">
+          <Clock className="h-4 w-4 mr-2 text-[#9b87f5]" />
           <span>{routine.time.start} - {routine.time.end}</span>
         </div>
         
-        <div className="flex items-center text-gray-300">
-          <Calendar className="h-4 w-4 mr-2 text-[#FF4081]" />
+        <div className="flex items-center text-[#C8C8C9]">
+          <Calendar className="h-4 w-4 mr-2 text-[#9b87f5]" />
           <span>{formatDays(routine.days)}</span>
         </div>
         
-        <div className="flex items-center text-gray-300">
-          <Bell className="h-4 w-4 mr-2 text-[#FF4081]" />
+        <div className="flex items-center text-[#C8C8C9]">
+          <Bell className="h-4 w-4 mr-2 text-[#9b87f5]" />
           <span>
             {routine.notification.enabled 
               ? `${routine.notification.minutesBefore} minutos antes` 
@@ -67,7 +67,7 @@ export const RoutineInfoCard = ({ routine }: RoutineInfoCardProps) => {
         <div className="flex items-center mt-4">
           <SyncStatusBadge status={routine.syncStatus} />
           {routine.protocols.length > 0 && (
-            <Badge className="ml-2 bg-secondary/70 text-white">
+            <Badge className="ml-2 bg-[#1A1F2C]/70 text-white">
               Duración total: {calculateTotalDuration(routine.protocols)}
             </Badge>
           )}

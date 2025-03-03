@@ -53,8 +53,8 @@ export const RoutineCard = ({ routine, onClick }: RoutineCardProps) => {
   return (
     <div 
       className={`
-        p-4 rounded-lg bg-gradient-to-br from-secondary/50 to-secondary/30 backdrop-blur-sm 
-        border border-secondary/20 flex items-center cursor-pointer hover:shadow-lg 
+        p-4 rounded-lg bg-gradient-to-br from-[#1A1F2C]/50 to-[#1A1F2C]/30 backdrop-blur-sm 
+        border border-[#1A1F2C]/20 flex items-center cursor-pointer hover:shadow-lg 
         transition-all duration-200 hover:translate-y-[-2px]
         ${!routine.isActive ? 'opacity-70' : ''}
       `}
@@ -71,13 +71,13 @@ export const RoutineCard = ({ routine, onClick }: RoutineCardProps) => {
         <div className="flex items-center justify-between">
           <h3 className="text-white font-medium">{routine.name}</h3>
           {!routine.isActive && (
-            <Badge variant="outline" className="text-xs bg-gray-700/50 text-gray-400 border-gray-600">
+            <Badge variant="outline" className="text-xs bg-[#403E43]/50 text-[#C8C8C9] border-[#8A898C]">
               Inactiva
             </Badge>
           )}
         </div>
         
-        <div className="flex items-center flex-wrap text-gray-400 text-sm mt-1 gap-x-2">
+        <div className="flex items-center flex-wrap text-[#C8C8C9] text-sm mt-1 gap-x-2">
           <div className="flex items-center">
             <Clock className="h-3.5 w-3.5 mr-1" />
             <span>{routine.time.start} - {routine.time.end}</span>
@@ -97,18 +97,18 @@ export const RoutineCard = ({ routine, onClick }: RoutineCardProps) => {
         <div className="flex items-center gap-2 mt-2 flex-wrap">
           <SyncStatusBadge status={routine.syncStatus} />
           {routine.protocols.length > 0 ? (
-            <Badge className="text-xs bg-secondary/70 text-white">
+            <Badge className="text-xs bg-[#1A1F2C]/70 text-white">
               {routine.protocols.length} {routine.protocols.length === 1 ? 'protocolo' : 'protocolos'} ({calculateTotalDuration()})
             </Badge>
           ) : (
-            <Badge variant="outline" className="text-xs border-gray-600 text-gray-400">
+            <Badge variant="outline" className="text-xs border-[#8A898C] text-[#C8C8C9]">
               Sin protocolos
             </Badge>
           )}
         </div>
       </div>
       
-      <ChevronRight className="h-5 w-5 text-gray-400" />
+      <ChevronRight className="h-5 w-5 text-[#8A898C]" />
     </div>
   );
 };

@@ -239,7 +239,7 @@ const Rutinas = () => {
       {showAllView ? (
         // "Ver todas" view
         <>
-          <div className="px-4 mb-4 sticky top-0 z-10 bg-secondary/10 backdrop-blur-sm pb-2 pt-2">
+          <div className="px-4 mb-4 sticky top-0 z-10 bg-[#1A1F2C]/10 backdrop-blur-sm pb-2 pt-2">
             <div className="flex items-center mb-2">
               <Button 
                 variant="ghost" 
@@ -254,19 +254,19 @@ const Rutinas = () => {
             
             <div className="flex items-center gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#8A898C]" />
                 <Input
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Buscar rutinas"
-                  className="w-full bg-secondary/50 border-secondary/30 text-white pl-9 pr-8"
+                  className="w-full bg-[#1A1F2C]/50 border-[#1A1F2C]/30 text-white pl-9 pr-8"
                 />
                 {searchTerm && (
                   <button
                     onClick={() => setSearchTerm("")}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2"
                   >
-                    <X className="h-4 w-4 text-gray-400" />
+                    <X className="h-4 w-4 text-[#8A898C]" />
                   </button>
                 )}
               </div>
@@ -275,20 +275,20 @@ const Rutinas = () => {
                 variant="outline" 
                 size="icon"
                 onClick={() => setShowFilters(true)}
-                className="bg-secondary/50 border-secondary/30 text-white"
+                className="bg-[#1A1F2C]/50 border-[#1A1F2C]/30 text-white"
               >
                 <SlidersHorizontal className="h-4 w-4" />
               </Button>
             </div>
             
             {(searchTerm || filterStatus !== "all" || sortBy !== "time") && (
-              <div className="flex items-center justify-between mt-2 text-xs text-gray-400">
+              <div className="flex items-center justify-between mt-2 text-xs text-[#C8C8C9]">
                 <span>
                   {filteredRoutines.length} resultado{filteredRoutines.length !== 1 ? 's' : ''}
                 </span>
                 <button 
                   onClick={clearFilters}
-                  className="text-[#FF4081]"
+                  className="text-[#9b87f5]"
                 >
                   Limpiar filtros
                 </button>
@@ -306,16 +306,16 @@ const Rutinas = () => {
                 />
               ))
             ) : (
-              <div className="text-center py-10 bg-secondary/30 rounded-lg border border-secondary/20 backdrop-blur-sm">
-                <Search className="h-12 w-12 mx-auto text-gray-500 mb-3" />
+              <div className="text-center py-10 bg-[#1A1F2C]/30 rounded-lg border border-[#1A1F2C]/20 backdrop-blur-sm">
+                <Search className="h-12 w-12 mx-auto text-[#8A898C] mb-3" />
                 <h3 className="text-white font-medium mb-2">No se encontraron rutinas</h3>
-                <p className="text-gray-400 text-sm mb-4 max-w-xs mx-auto">
+                <p className="text-[#C8C8C9] text-sm mb-4 max-w-xs mx-auto">
                   No hay rutinas que coincidan con tu búsqueda o filtros.
                 </p>
                 <Button 
                   variant="outline" 
                   onClick={clearFilters}
-                  className="border-[#FF4081] text-[#FF4081]"
+                  className="border-[#9b87f5] text-[#9b87f5]"
                 >
                   Limpiar filtros
                 </Button>
@@ -326,16 +326,16 @@ const Rutinas = () => {
           {/* Botón flotante para añadir nueva rutina */}
           <Button
             onClick={() => navigate('/rutinas/nueva')}
-            className="fixed right-4 bottom-24 bg-[#FF4081] hover:bg-[#FF4081]/90 rounded-full h-14 w-14 shadow-lg flex items-center justify-center"
+            className="fixed right-4 bottom-24 bg-[#9b87f5] hover:bg-[#8B5CF6] rounded-full h-14 w-14 shadow-lg flex items-center justify-center"
           >
             <Plus className="h-7 w-7" />
           </Button>
           
           <Sheet open={showFilters} onOpenChange={setShowFilters}>
-            <SheetContent side="right" className="bg-secondary/95 border-secondary/30 w-[280px] sm:w-[350px]">
+            <SheetContent side="right" className="bg-[#1A1F2C]/95 border-[#1A1F2C]/30 w-[280px] sm:w-[350px]">
               <SheetHeader>
                 <SheetTitle className="text-white">Filtros y orden</SheetTitle>
-                <SheetDescription className="text-gray-400">
+                <SheetDescription className="text-[#C8C8C9]">
                   Personaliza cómo quieres ver tus rutinas
                 </SheetDescription>
               </SheetHeader>
@@ -349,27 +349,27 @@ const Rutinas = () => {
                         type="radio" 
                         checked={filterStatus === "all"} 
                         onChange={() => setFilterStatus("all")}
-                        className="form-radio text-[#FF4081]"
+                        className="form-radio text-[#9b87f5]"
                       />
-                      <span className="text-gray-300">Todas</span>
+                      <span className="text-[#C8C8C9]">Todas</span>
                     </label>
                     <label className="flex items-center space-x-2 cursor-pointer">
                       <input 
                         type="radio" 
                         checked={filterStatus === "active"} 
                         onChange={() => setFilterStatus("active")}
-                        className="form-radio text-[#FF4081]"
+                        className="form-radio text-[#9b87f5]"
                       />
-                      <span className="text-gray-300">Activas</span>
+                      <span className="text-[#C8C8C9]">Activas</span>
                     </label>
                     <label className="flex items-center space-x-2 cursor-pointer">
                       <input 
                         type="radio" 
                         checked={filterStatus === "inactive"} 
                         onChange={() => setFilterStatus("inactive")}
-                        className="form-radio text-[#FF4081]"
+                        className="form-radio text-[#9b87f5]"
                       />
-                      <span className="text-gray-300">Inactivas</span>
+                      <span className="text-[#C8C8C9]">Inactivas</span>
                     </label>
                   </div>
                 </div>
@@ -382,36 +382,36 @@ const Rutinas = () => {
                         type="radio" 
                         checked={sortBy === "time"} 
                         onChange={() => setSortBy("time")}
-                        className="form-radio text-[#FF4081]"
+                        className="form-radio text-[#9b87f5]"
                       />
-                      <span className="text-gray-300">Hora del día</span>
+                      <span className="text-[#C8C8C9]">Hora del día</span>
                     </label>
                     <label className="flex items-center space-x-2 cursor-pointer">
                       <input 
                         type="radio" 
                         checked={sortBy === "name"} 
                         onChange={() => setSortBy("name")}
-                        className="form-radio text-[#FF4081]"
+                        className="form-radio text-[#9b87f5]"
                       />
-                      <span className="text-gray-300">Nombre</span>
+                      <span className="text-[#C8C8C9]">Nombre</span>
                     </label>
                     <label className="flex items-center space-x-2 cursor-pointer">
                       <input 
                         type="radio" 
                         checked={sortBy === "created"} 
                         onChange={() => setSortBy("created")}
-                        className="form-radio text-[#FF4081]"
+                        className="form-radio text-[#9b87f5]"
                       />
-                      <span className="text-gray-300">Fecha de creación</span>
+                      <span className="text-[#C8C8C9]">Fecha de creación</span>
                     </label>
                     <label className="flex items-center space-x-2 cursor-pointer">
                       <input 
                         type="radio" 
                         checked={sortBy === "active"} 
                         onChange={() => setSortBy("active")}
-                        className="form-radio text-[#FF4081]"
+                        className="form-radio text-[#9b87f5]"
                       />
-                      <span className="text-gray-300">Estado (activas primero)</span>
+                      <span className="text-[#C8C8C9]">Estado (activas primero)</span>
                     </label>
                   </div>
                 </div>
@@ -421,12 +421,12 @@ const Rutinas = () => {
                 <Button 
                   variant="outline" 
                   onClick={clearFilters}
-                  className="w-full border-gray-600 text-gray-300"
+                  className="w-full border-[#8A898C] text-[#C8C8C9]"
                 >
                   Limpiar
                 </Button>
                 <SheetClose asChild>
-                  <Button className="w-full bg-[#FF4081] hover:bg-[#FF4081]/90">
+                  <Button className="w-full bg-[#9b87f5] hover:bg-[#8B5CF6]">
                     Aplicar
                   </Button>
                 </SheetClose>
@@ -442,7 +442,7 @@ const Rutinas = () => {
             <Button 
               onClick={() => navigate('/rutinas/nueva')}
               size="icon"
-              className="bg-[#FF4081] hover:bg-[#FF4081]/90 rounded-full h-10 w-10 shadow-lg transition-transform hover:scale-105"
+              className="bg-[#9b87f5] hover:bg-[#8B5CF6] rounded-full h-10 w-10 shadow-lg transition-transform hover:scale-105"
             >
               <Plus className="h-6 w-6" />
             </Button>
@@ -455,7 +455,7 @@ const Rutinas = () => {
               <h2 className="text-lg font-semibold text-white">Rutinas activas</h2>
               <Button 
                 variant="link" 
-                className="text-[#FF4081] p-0"
+                className="text-[#9b87f5] p-0"
                 onClick={() => setShowAllView(true)}
               >
                 Ver todas <ArrowRight className="ml-1 h-4 w-4" />
@@ -478,7 +478,7 @@ const Rutinas = () => {
               {activeRoutines.length > 3 && (
                 <Button
                   variant="outline"
-                  className="w-full mt-2 border-[#FF4081]/20 text-[#FF4081]"
+                  className="w-full mt-2 border-[#9b87f5]/20 text-[#9b87f5]"
                   onClick={() => setShowAllView(true)}
                 >
                   Ver {activeRoutines.length - 3} rutinas más
@@ -490,7 +490,7 @@ const Rutinas = () => {
           {/* Botón flotante para añadir nueva rutina */}
           <Button
             onClick={() => navigate('/rutinas/nueva')}
-            className="fixed right-4 bottom-24 bg-[#FF4081] hover:bg-[#FF4081]/90 rounded-full h-14 w-14 shadow-lg flex items-center justify-center"
+            className="fixed right-4 bottom-24 bg-[#9b87f5] hover:bg-[#8B5CF6] rounded-full h-14 w-14 shadow-lg flex items-center justify-center"
           >
             <Plus className="h-7 w-7" />
           </Button>
