@@ -21,7 +21,7 @@ export const FeedbackStageContent = ({
 
         <div className="flex flex-col items-center">
           <Button 
-            className="bg-purple-600 hover:bg-purple-700 text-white w-full max-w-xs"
+            className="bg-[#02b1bb] hover:bg-[#02b1bb]/90 text-white w-full max-w-xs"
             onClick={() => setShowFeedback(true)}
           >
             <MessageSquare className="mr-2 h-5 w-5" />

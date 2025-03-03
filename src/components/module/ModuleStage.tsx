@@ -27,7 +27,7 @@ export const ModuleStage = ({
       case 'completed':
         return "bg-green-500";
       case 'in-progress':
-        return "bg-[#9b87f5]";
+        return "bg-[#02b1bb]";
       default:
         return "bg-gray-500";
     }
@@ -43,7 +43,7 @@ export const ModuleStage = ({
         );
       case 'in-progress':
         return (
-          <Badge className="ml-auto mr-4 bg-[#9b87f5]/20 text-[#9b87f5] border border-[#9b87f5]/30 font-lato animate-pulse">
+          <Badge className="ml-auto mr-4 bg-[#02b1bb]/20 text-[#02b1bb] border border-[#02b1bb]/30 font-lato animate-pulse">
             En progreso
           </Badge>
         );
@@ -62,7 +62,7 @@ export const ModuleStage = ({
         <AccordionTrigger 
           className={`p-6 rounded-xl transition-all duration-300 ${
             isActive 
-              ? "bg-[#1A1F2C] shadow-lg shadow-[#9b87f5]/10 border border-[#9b87f5]/30" 
+              ? "bg-[#1A1F2C] shadow-lg shadow-[#02b1bb]/10 border border-[#02b1bb]/30" 
               : "bg-[#1A1F2C]/80 border border-gray-700/50 hover:border-gray-700 hover:bg-[#1A1F2C]"
           } flex items-start group`}
           onClick={onSelect}
@@ -71,7 +71,7 @@ export const ModuleStage = ({
             <div className="flex items-center gap-4">
               <div className="relative w-12 h-12 flex items-center justify-center bg-[#252A3C] rounded-lg 
                             group-hover:bg-[#2D3344] transition-colors duration-300">
-                <div className={`text-[#9b87f5] ${isActive ? 'scale-110' : ''} transition-transform duration-300`}>
+                <div className={`text-[#02b1bb] ${isActive ? 'scale-110' : ''} transition-transform duration-300`}>
                   {icon}
                 </div>
                 <div className={`absolute -top-1 -right-1 w-3 h-3 rounded-full ${getStatusColor()} ${status === 'in-progress' ? 'animate-pulse' : ''}`} />

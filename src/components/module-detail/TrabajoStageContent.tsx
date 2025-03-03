@@ -71,7 +71,7 @@ export const TrabajoStageContent = ({
       {messages.length > 0 && (
         <div className="bg-secondary/70 p-6 rounded-lg">
           <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <MessageSquare className="h-5 w-5" />
+            <MessageSquare className="h-5 w-5 text-[#02b1bb]" />
             Conversación con PIIA
           </h2>
           

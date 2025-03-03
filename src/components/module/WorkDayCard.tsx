@@ -23,9 +23,9 @@ export const WorkDayCard = ({
     if (status === 'locked') {
       return 'bg-[#1A1F2C]/80 border-gray-700/30 cursor-not-allowed';
     } else if (status === 'completed') {
-      return `bg-[#1A1F2C] border-[#9b87f5]/50 cursor-pointer hover:border-[#9b87f5]/80 hover:shadow-md hover:shadow-[#9b87f5]/10`;
+      return `bg-[#1A1F2C] border-[#02b1bb]/50 cursor-pointer hover:border-[#02b1bb]/80 hover:shadow-md hover:shadow-[#02b1bb]/10`;
     } else if (status === 'current') {
-      return `bg-[#1A1F2C] border-[#7E69AB]/70 cursor-pointer hover:border-[#7E69AB] hover:shadow-md hover:shadow-[#7E69AB]/20`;
+      return `bg-[#1A1F2C] border-[#02b1bb]/70 cursor-pointer hover:border-[#02b1bb] hover:shadow-md hover:shadow-[#02b1bb]/20`;
     } else {
       return `bg-[#1A1F2C]/90 border-gray-700/50 cursor-pointer hover:border-gray-600 hover:shadow-md`;
     }
@@ -41,13 +41,13 @@ export const WorkDayCard = ({
       );
     } else if (status === 'completed') {
       return (
-        <Badge className="bg-[#9b87f5]/20 text-[#9b87f5] border border-[#9b87f5]/30 py-1 font-lato text-xs">
+        <Badge className="bg-[#02b1bb]/20 text-[#02b1bb] border border-[#02b1bb]/30 py-1 font-lato text-xs">
           Completado
         </Badge>
       );
     } else if (status === 'current') {
       return (
-        <Badge className="bg-[#7E69AB]/20 text-[#7E69AB] border border-[#7E69AB]/30 py-1 font-lato text-xs">
+        <Badge className="bg-[#02b1bb]/20 text-[#02b1bb] border border-[#02b1bb]/30 py-1 font-lato text-xs">
           En progreso
         </Badge>
       );
@@ -63,7 +63,7 @@ export const WorkDayCard = ({
     >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <span className="flex items-center justify-center w-8 h-8 bg-[#252A3C] rounded-lg text-[#9b87f5] text-sm font-medium font-lato">
+          <span className="flex items-center justify-center w-8 h-8 bg-[#252A3C] rounded-lg text-[#02b1bb] text-sm font-medium font-lato">
             {day}
           </span>
           <h3 className="text-xl font-semibold text-white font-oswald tracking-wide">{title}</h3>
@@ -75,9 +75,9 @@ export const WorkDayCard = ({
           {status === 'locked' ? (
             <Lock className="w-5 h-5 text-gray-500" />
           ) : status === 'completed' ? (
-            <CheckCircle className="w-5 h-5 text-[#9b87f5]" />
+            <CheckCircle className="w-5 h-5 text-[#02b1bb]" />
           ) : status === 'current' ? (
-            <ChevronRight className="w-5 h-5 text-[#7E69AB] animate-pulse" />
+            <ChevronRight className="w-5 h-5 text-[#02b1bb] animate-pulse" />
           ) : (
             <ChevronRight className="w-5 h-5 text-gray-400" />
           )}
