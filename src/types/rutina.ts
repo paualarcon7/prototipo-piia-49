@@ -5,6 +5,8 @@ export type WeekDay = "L" | "M" | "X" | "J" | "V" | "S" | "D";
 
 export type SyncStatus = "synced" | "pending" | "failed";
 
+export type SortOption = "name" | "time" | "created" | "active";
+
 export interface RoutineProtocol {
   protocol: Protocol;
   order: number;
