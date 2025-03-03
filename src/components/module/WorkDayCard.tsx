@@ -63,7 +63,7 @@ export const WorkDayCard = ({
     >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <span className="flex items-center justify-center w-8 h-8 bg-[#252A3C] rounded-lg text-[#ffcc08] text-sm font-medium font-lato">
+          <span className="flex items-center justify-center w-8 h-8 bg-[#252A3C] rounded-lg text-[#02b1bb] text-sm font-medium font-lato">
             {day}
           </span>
           <h3 className="text-xl font-semibold text-white font-oswald tracking-wide">{title}</h3>
