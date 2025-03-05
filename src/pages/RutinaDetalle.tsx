@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { Routine } from "@/types/rutina";
 import { protocols } from "@/pages/Protocolos"; // Importing mock protocols

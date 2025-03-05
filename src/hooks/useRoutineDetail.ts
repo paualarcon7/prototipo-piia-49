@@ -1,179 +1,95 @@
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
-import { Routine, WeekDay, RoutineProtocol } from "@/types/rutina";
+import { Routine, RoutineProtocol } from "@/types/rutina";
 import { Protocol } from "@/types/protocols";
+import { useRoutineState } from "./routine/useRoutineState";
+import { useRoutineBasicInfo } from "./routine/useRoutineBasicInfo";
+import { useRoutineSettings } from "./routine/useRoutineSettings";
+import { useRoutineProtocols } from "./routine/useRoutineProtocols";
+import { useRoutineActions } from "./routine/useRoutineActions";
 
 export const useRoutineDetail = (initialRoutine: Routine) => {
-  const navigate = useNavigate();
-  const { toast } = useToast();
-  const [routine, setRoutine] = useState<Routine>(initialRoutine);
-  const [originalRoutine, setOriginalRoutine] = useState<Routine>(initialRoutine);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [selectedTab, setSelectedTab] = useState("protocolos");
+  const {
+    routine,
+    setRoutine,
+    isEditing,
+    isDeleteDialogOpen,
+    selectedTab,
+    setSelectedTab,
+    setIsDeleteDialogOpen,
+    toggleEditMode: baseToggleEditMode,
+    saveChanges: baseSaveChanges
+  } = useRoutineState(initialRoutine);
 
-  const handleActiveToggle = () => {
-    setRoutine(prev => ({
-      ...prev,
-      isActive: !prev.isActive
-    }));
-  };
+  const {
+    handleNameChange,
+    handleDayToggle,
+    handleStartTimeChange,
+    handleEndTimeChange
+  } = useRoutineBasicInfo(routine, setRoutine);
 
-  const handleNotificationToggle = () => {
-    setRoutine(prev => ({
-      ...prev,
-      notification: {
-        ...prev.notification,
-        enabled: !prev.notification.enabled
-      }
-    }));
-  };
+  const {
+    handleActiveToggle,
+    handleNotificationToggle,
+    handleMinutesBeforeChange,
+    handleColorChange: baseHandleColorChange
+  } = useRoutineSettings(routine, setRoutine);
 
-  const handleDelete = () => {
-    console.log("Deleting routine:", routine.id);
-    toast({
-      title: "Rutina eliminada",
-      description: "La rutina ha sido eliminada exitosamente",
-    });
-    setIsDeleteDialogOpen(false);
-    navigate("/rutinas");
-  };
+  const {
+    handleAddProtocol: baseHandleAddProtocol,
+    handleRemoveProtocol: baseHandleRemoveProtocol,
+    handleReorderProtocols
+  } = useRoutineProtocols(routine, setRoutine);
 
+  const {
+    handleDelete: baseHandleDelete,
+    notifyChangesDiscarded,
+    notifyChangesSaved,
+    notifyColorUpdated,
+    notifyProtocolAdded,
+    notifyProtocolRemoved
+  } = useRoutineActions();
+
+  // Wrapper functions to add notifications and additional functionality
   const toggleEditMode = () => {
-    if (isEditing) {
-      // Cancel changes - restore original routine
-      console.log("Canceling changes, restoring original color:", originalRoutine.color);
-      setRoutine({...originalRoutine});
-      setIsEditing(false);
-      toast({
-        title: "Cambios cancelados",
-        description: "Los cambios en la rutina han sido descartados",
-      });
-    } else {
-      // Enter edit mode - store current routine as original
-      console.log("Entering edit mode, storing original color:", routine.color);
-      setOriginalRoutine({...routine});
-      setIsEditing(true);
+    const result = baseToggleEditMode();
+    if (result === false) {
+      notifyChangesDiscarded();
     }
   };
 
   const saveChanges = () => {
-    // Save changes - store current routine as original
-    console.log("Saving changes, new color:", routine.color);
-    setOriginalRoutine({...routine});
-    setIsEditing(false);
-    toast({
-      title: "Cambios guardados",
-      description: "Los cambios en la rutina se han guardado exitosamente",
-    });
-    console.log("Saving updated routine:", routine);
+    const savedRoutine = baseSaveChanges();
+    notifyChangesSaved();
+    console.log("Saving updated routine:", savedRoutine);
   };
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRoutine(prev => ({
-      ...prev,
-      name: e.target.value
-    }));
-  };
-
-  const handleDayToggle = (day: WeekDay) => {
-    setRoutine(prev => ({
-      ...prev,
-      days: prev.days.includes(day) 
-        ? prev.days.filter(d => d !== day)
-        : [...prev.days, day]
-    }));
-  };
-
-  const handleStartTimeChange = (time: string) => {
-    setRoutine(prev => ({
-      ...prev,
-      time: {
-        ...prev.time,
-        start: time
-      }
-    }));
-  };
-
-  const handleEndTimeChange = (time: string) => {
-    setRoutine(prev => ({
-      ...prev,
-      time: {
-        ...prev.time,
-        end: time
-      }
-    }));
-  };
-
-  const handleMinutesBeforeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setRoutine(prev => ({
-      ...prev,
-      notification: {
-        ...prev.notification,
-        minutesBefore: Number(e.target.value)
-      }
-    }));
-  };
-
-  const handleAddProtocol = (protocol: Protocol) => {
-    setRoutine(prev => ({
-      ...prev,
-      protocols: [
-        ...prev.protocols,
-        { protocol, order: prev.protocols.length }
-      ]
-    }));
-    toast({
-      title: "Protocolo añadido",
-      description: `${protocol.title} ha sido añadido a la rutina`,
-    });
-  };
-
-  const handleRemoveProtocol = (index: number) => {
-    setRoutine(prev => ({
-      ...prev,
-      protocols: prev.protocols
-        .filter((_, i) => i !== index)
-        .map((p, i) => ({ ...p, order: i }))
-    }));
-    toast({
-      title: "Protocolo eliminado",
-      description: "El protocolo ha sido eliminado de la rutina",
-    });
-  };
-
-  const handleReorderProtocols = (newOrder: RoutineProtocol[]) => {
-    setRoutine(prev => ({
-      ...prev,
-      protocols: newOrder.map((p, i) => ({ ...p, order: i }))
-    }));
+  const handleDelete = () => {
+    baseHandleDelete(routine.id);
+    setIsDeleteDialogOpen(false);
   };
 
   const handleColorChange = (color: string) => {
-    console.log("handleColorChange called with color:", color);
     if (!isEditing) {
       console.log("Not in editing mode, ignoring color change");
       return;
     }
     
-    setRoutine(prev => {
-      const updatedRoutine = {
-        ...prev,
-        color
-      };
-      console.log("Updated routine with new color:", updatedRoutine.color);
-      return updatedRoutine;
-    });
+    baseHandleColorChange(color);
     
     // Only show toast when in edit mode
     if (isEditing) {
-      toast({
-        title: "Color actualizado",
-        description: "El color de la rutina ha sido actualizado",
-      });
+      notifyColorUpdated();
     }
+  };
+
+  const handleAddProtocol = (protocol: Protocol) => {
+    const protocolTitle = baseHandleAddProtocol(protocol);
+    notifyProtocolAdded(protocolTitle);
+  };
+
+  const handleRemoveProtocol = (index: number) => {
+    baseHandleRemoveProtocol(index);
+    notifyProtocolRemoved();
   };
 
   return {
