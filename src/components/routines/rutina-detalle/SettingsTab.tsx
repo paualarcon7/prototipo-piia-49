@@ -1,5 +1,4 @@
-
-import { Trash2, Share2 } from "lucide-react";
+import { Trash2, Share2, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Routine } from "@/types/rutina";

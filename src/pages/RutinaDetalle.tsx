@@ -88,7 +88,7 @@ const RutinaDetalle = () => {
   console.log("RutinaDetalle: isEditing", isEditing);
 
   return (
-    <div className="flex flex-col min-h-screen bg-transparent pb-28">
+    <div className={`flex flex-col min-h-screen bg-transparent pb-28 ${isEditing ? 'edit-mode' : ''}`}>
       {/* Header */}
       <RoutineDetailHeader 
         isEditing={isEditing} 
@@ -97,6 +97,16 @@ const RutinaDetalle = () => {
       />
 
       <div className="flex-1 px-4 py-6 overflow-auto">
+        {/* Edit Mode Indicator */}
+        {isEditing && (
+          <div className="bg-[#02b1bb]/10 border border-[#02b1bb]/30 rounded-lg p-3 mb-4">
+            <p className="text-sm text-white flex items-center">
+              <Edit className="h-4 w-4 mr-2 text-[#02b1bb]" />
+              <span>Modo de edición activo. Realiza cambios y guarda cuando termines.</span>
+            </p>
+          </div>
+        )}
+      
         {/* Main content */}
         {isEditing ? (
           <RoutineEditForm

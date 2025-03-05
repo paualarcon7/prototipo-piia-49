@@ -2,6 +2,7 @@
 import { ChevronLeft, Edit, X, Save } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface RoutineDetailHeaderProps {
   isEditing: boolean;
@@ -35,34 +36,60 @@ export const RoutineDetailHeader = ({
         <div className="flex items-center">
           {isEditing ? (
             <>
-              <Button 
-                variant="ghost" 
-                size="icon"
-                onClick={toggleEditMode}
-                className="text-white mr-1"
-                title="Cancelar"
-              >
-                <X className="h-5 w-5" />
-              </Button>
-              <Button 
-                variant="ghost" 
-                size="icon"
-                onClick={saveChanges}
-                className="text-[#FF4081]"
-                title="Guardar cambios"
-              >
-                <Save className="h-5 w-5" />
-              </Button>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button 
+                      variant="outline" 
+                      onClick={toggleEditMode}
+                      className="text-white mr-2 border-white/20"
+                    >
+                      <X className="h-5 w-5 mr-1" />
+                      Cancelar
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Cancelar cambios</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button 
+                      variant="default" 
+                      onClick={saveChanges}
+                      className="bg-[#FF4081] hover:bg-[#FF4081]/80 text-white"
+                    >
+                      <Save className="h-5 w-5 mr-1" />
+                      Guardar
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Guardar cambios</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </>
           ) : (
-            <Button 
-              variant="ghost" 
-              size="icon"
-              onClick={toggleEditMode}
-              className="text-white"
-            >
-              <Edit className="h-5 w-5" />
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    variant="default" 
+                    onClick={toggleEditMode}
+                    className="bg-[#02b1bb] hover:bg-[#02b1bb]/80 text-white"
+                  >
+                    <Edit className="h-5 w-5 mr-1" />
+                    Editar
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Editar rutina</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           )}
         </div>
       </div>
