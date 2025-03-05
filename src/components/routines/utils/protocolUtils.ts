@@ -38,3 +38,21 @@ export const calculateTotalDuration = (protocols: { protocol: Protocol }[]) => {
   
   return `${totalMinutes}m`;
 };
+
+/**
+ * Formats an array of day abbreviations into a readable string
+ * For example: ["L", "M", "X"] => "Lunes, Martes, Miércoles"
+ */
+export const formatDayList = (days: string[]): string => {
+  const dayNames: Record<string, string> = {
+    'L': 'Lunes',
+    'M': 'Martes',
+    'X': 'Miércoles',
+    'J': 'Jueves',
+    'V': 'Viernes',
+    'S': 'Sábado',
+    'D': 'Domingo'
+  };
+  
+  return days.map(day => dayNames[day] || day).join(', ');
+};
