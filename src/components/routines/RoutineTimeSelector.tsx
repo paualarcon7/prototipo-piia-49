@@ -61,27 +61,12 @@ export const RoutineTimeSelector = ({
     return `${mins}m`;
   };
 
-  // Calculate end time display
-  const calculateEndTime = () => {
-    const [startHours, startMinutes] = startTime.split(":").map(Number);
-    const startTotalMinutes = startHours * 60 + startMinutes;
-    const endTotalMinutes = startTotalMinutes + duration;
-    
-    const endHours = Math.floor(endTotalMinutes / 60) % 24;
-    const endMinutes = endTotalMinutes % 60;
-    
-    const formattedEndHours = endHours.toString().padStart(2, "0");
-    const formattedEndMinutes = endMinutes.toString().padStart(2, "0");
-    
-    return `${formattedEndHours}:${formattedEndMinutes}`;
-  };
-
   return (
     <div className="space-y-4">
       <div className="bg-secondary/50 border border-secondary/30 rounded-lg p-4">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center">
           <div className="flex-1 space-y-1">
-            <label className="text-xs text-gray-400">Hora inicio</label>
+            <label className="text-xs text-gray-400">Hora de inicio</label>
             <div className="relative">
               <input
                 type="time"
@@ -89,16 +74,6 @@ export const RoutineTimeSelector = ({
                 onChange={handleStartTimeChange}
                 className="bg-secondary/70 text-white border-0 rounded-md p-2 pl-8 w-full focus:ring-1 focus:ring-[#FF4081] focus:outline-none"
               />
-              <Clock className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-            </div>
-          </div>
-          
-          <div className="flex-1 space-y-1">
-            <label className="text-xs text-gray-400">Hora fin (automática)</label>
-            <div className="relative">
-              <div className="bg-secondary/70 text-white border-0 rounded-md p-2 pl-8 w-full">
-                {calculateEndTime()}
-              </div>
               <Clock className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
             </div>
           </div>

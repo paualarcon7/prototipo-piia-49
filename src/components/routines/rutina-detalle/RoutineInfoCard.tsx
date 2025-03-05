@@ -44,7 +44,7 @@ export const RoutineInfoCard = ({ routine, onEditClick }: RoutineInfoCardProps) 
       <div className="space-y-3">
         <div className="flex items-center text-sm text-gray-300">
           <Clock className="h-4 w-4 mr-2 text-brand-teal" />
-          <span>{routine.time.start} - {routine.time.end}</span>
+          <span>{routine.time.start}</span>
         </div>
         
         <div className="flex items-center text-sm text-gray-300">

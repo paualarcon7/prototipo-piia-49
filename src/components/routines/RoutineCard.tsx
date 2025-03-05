@@ -1,5 +1,5 @@
 
-import { Clock, Calendar, ChevronRight, Bell, X } from "lucide-react";
+import { Clock, Calendar, ChevronRight, Bell } from "lucide-react";
 import { Routine } from "@/types/rutina";
 import { SyncStatusBadge } from "./SyncStatusBadge";
 import { Badge } from "@/components/ui/badge";
@@ -80,7 +80,7 @@ export const RoutineCard = ({ routine, onClick }: RoutineCardProps) => {
         <div className="flex items-center flex-wrap text-[#C8C8C9] text-sm mt-1 gap-x-2">
           <div className="flex items-center">
             <Clock className="h-3.5 w-3.5 mr-1" />
-            <span>{routine.time.start} - {routine.time.end}</span>
+            <span>{routine.time.start}</span>
           </div>
           <div className="flex items-center">
             <Calendar className="h-3.5 w-3.5 mr-1" />
