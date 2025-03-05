@@ -37,7 +37,7 @@ export const RoutineDetailHeader = ({
         </div>
         
         {isEditing && (
-          <div className={isMobile ? "flex space-x-2 items-center" : "flex space-x-2 items-center mr-16"}>
+          <div className={isMobile ? "flex space-x-2 items-center mr-12" : "flex space-x-2 items-center mr-16"}>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
