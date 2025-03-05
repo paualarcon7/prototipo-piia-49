@@ -35,7 +35,7 @@ export const RoutineDetailHeader = ({
         </div>
         
         {isEditing && (
-          <div className="flex items-center">
+          <div className="flex items-center mr-12"> {/* Added right margin to prevent overlap with hamburger menu */}
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
