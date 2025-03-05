@@ -15,12 +15,12 @@ export const SearchBar = ({ search, setSearch, selectedProtocols }: SearchBarPro
   return (
     <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm pb-2">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#8A898C]" />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-3.5 w-3.5 text-[#8A898C]" />
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Buscar protocolos"
-          className="pl-9 bg-[#1A1F2C]/50 border-[#1A1F2C]/30 text-white"
+          className="pl-8 h-8 bg-[#1A1F2C]/50 border-[#1A1F2C]/30 text-white text-xs"
         />
       </div>
       
