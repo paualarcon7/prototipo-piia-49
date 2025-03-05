@@ -17,18 +17,18 @@ export const ProtocolItem = ({ protocol, isSelected, onToggle }: ProtocolItemPro
   return (
     <div
       className={`
-        p-3 sm:p-4 rounded-md flex items-center cursor-pointer transition-colors duration-200
+        p-4 rounded-lg flex items-center cursor-pointer transition-colors duration-200
         ${isSelected 
-          ? 'bg-[#02b1bb]/10 border border-[#02b1bb]/30' 
-          : 'bg-[#1A1F2C]/40 border border-[#1A1F2C]/20 hover:bg-[#1A1F2C]/60'}
-        active:bg-[#1A1F2C]/80 touch-manipulation
+          ? 'bg-brand-teal/10 border border-brand-teal/30' 
+          : 'bg-secondary/40 border border-secondary/20 hover:bg-secondary/60'}
+        active:bg-secondary/80 touch-manipulation mb-3 last:mb-0
       `}
       onClick={onToggle}
     >
       <div className="mr-3 flex items-center justify-center">
         <Checkbox 
           checked={isSelected}
-          className={`h-5 w-5 ${isSelected ? 'border-[#02b1bb] bg-[#02b1bb]' : 'border-[#8A898C]'}`}
+          className={`h-5 w-5 ${isSelected ? 'border-brand-teal bg-brand-teal' : 'border-gray-400'}`}
           onCheckedChange={onToggle}
         />
       </div>
@@ -38,40 +38,40 @@ export const ProtocolItem = ({ protocol, isSelected, onToggle }: ProtocolItemPro
             {protocol.title}
           </h4>
           {isSelected && !isMobile && (
-            <Badge className="ml-2 bg-[#02b1bb]/20 text-[#02b1bb] text-xs">
+            <Badge className="ml-2 bg-brand-teal/20 text-brand-teal text-xs">
               Seleccionado
             </Badge>
           )}
         </div>
+        
         <div className="flex items-center mt-1 flex-wrap gap-1">
-          <Badge variant="outline" className="text-xs bg-[#1A1F2C]/30">
+          <Badge variant="outline" className="text-xs bg-secondary/50 text-gray-300">
             {protocol.dimension}
           </Badge>
-          <span className="text-xs text-[#C8C8C9] ml-1">
+          <span className="text-xs text-gray-300 ml-1">
             {protocol.duration}
           </span>
         </div>
-        {!isMobile && (
-          <div className="flex flex-wrap gap-1 mt-1">
-            {protocol.tags.slice(0, 2).map(tag => (
-              <span 
-                key={tag} 
-                className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#1A1F2C]/50 text-[#ffcc08]"
-              >
-                {tag}
-              </span>
-            ))}
-            {protocol.tags.length > 2 && (
-              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#1A1F2C]/50 text-[#C8C8C9]">
-                +{protocol.tags.length - 2}
-              </span>
-            )}
-          </div>
-        )}
+        
+        <div className="flex flex-wrap gap-1 mt-1">
+          {protocol.tags.slice(0, isMobile ? 1 : 2).map(tag => (
+            <span 
+              key={tag} 
+              className="text-[10px] px-1.5 py-0.5 rounded-full bg-secondary/50 text-brand-yellow"
+            >
+              {tag}
+            </span>
+          ))}
+          {protocol.tags.length > (isMobile ? 1 : 2) && (
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-secondary/50 text-gray-300">
+              +{protocol.tags.length - (isMobile ? 1 : 2)}
+            </span>
+          )}
+        </div>
       </div>
       
       {isSelected && (
-        <Check className="h-5 w-5 text-[#02b1bb] flex-shrink-0 ml-2" />
+        <Check className="h-5 w-5 text-brand-teal flex-shrink-0 ml-2" />
       )}
     </div>
   );
