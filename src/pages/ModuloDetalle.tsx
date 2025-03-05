@@ -122,7 +122,7 @@ const ModuloDetalle = () => {
               stageStatuses={stageStatuses}
               activeStage={activeStage}
               handleBackFromStages={handleBackFromStages}
-              handleStageChange={handleStageSelection}
+              handleStageChange={handleStageChange}
               trabajoStageProps={{
                 showTrabajoVideo,
                 messages,
