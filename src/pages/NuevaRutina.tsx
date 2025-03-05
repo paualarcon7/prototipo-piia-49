@@ -124,6 +124,7 @@ const NuevaRutina = () => {
           <BasicInfoStep
             routineName={routineName}
             startTime={startTime}
+            endTime={endTime} // Pass the endTime prop
             selectedDays={selectedDays}
             onNameChange={(e) => setRoutineName(e.target.value)}
             onStartTimeChange={setStartTime}

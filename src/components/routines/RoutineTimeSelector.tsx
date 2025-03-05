@@ -17,6 +17,8 @@ export const RoutineTimeSelector = ({
 }: RoutineTimeSelectorProps) => {
   const [duration, setDuration] = useState(() => {
     // Calculate duration between start and end time
+    if (!endTime) return 0;
+    
     const [startHours, startMinutes] = startTime.split(":").map(Number);
     const [endHours, endMinutes] = endTime.split(":").map(Number);
     

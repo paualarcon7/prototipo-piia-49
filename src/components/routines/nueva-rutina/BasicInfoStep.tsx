@@ -8,7 +8,7 @@ import { Protocol } from "@/types/protocols";
 interface BasicInfoStepProps {
   routineName: string;
   startTime: string;
-  endTime: string;
+  endTime?: string; // Make endTime optional
   selectedDays: WeekDay[];
   selectedProtocols?: { protocol: Protocol }[];
   onNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -42,7 +42,7 @@ export const BasicInfoStep = ({
         <h2 className="text-lg font-medium text-white">Horario</h2>
         <RoutineTimeSelector 
           startTime={startTime}
-          endTime={endTime}
+          endTime={endTime || ""}
           onStartTimeChange={onStartTimeChange}
           protocols={selectedProtocols?.map(p => ({ 
             duration: p.protocol.duration
