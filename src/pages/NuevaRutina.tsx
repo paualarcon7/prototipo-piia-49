@@ -35,6 +35,31 @@ const NuevaRutina = () => {
       ...prev,
       { protocol, order: prev.length }
     ]);
+    
+    // Automatically update endTime based on protocol duration
+    try {
+      // Parse the current startTime
+      const [hours, minutes] = startTime.split(':').map(Number);
+      if (isNaN(hours) || isNaN(minutes)) throw new Error('Invalid start time');
+      
+      // Parse the protocol duration (assuming format like "30 min")
+      const durationMatch = protocol.duration.match(/(\d+)/);
+      if (!durationMatch) throw new Error('Invalid protocol duration');
+      
+      const durationMinutes = parseInt(durationMatch[0], 10);
+      
+      // Calculate new end time
+      let totalMinutes = hours * 60 + minutes + durationMinutes;
+      const newHours = Math.floor(totalMinutes / 60) % 24;
+      const newMinutes = totalMinutes % 60;
+      
+      // Format the new end time
+      const newEndTime = `${newHours.toString().padStart(2, '0')}:${newMinutes.toString().padStart(2, '0')}`;
+      setEndTime(newEndTime);
+    } catch (error) {
+      console.error('Error calculating end time:', error);
+    }
+    
     toast({
       title: "Protocolo añadido",
       description: `Se ha añadido "${protocol.title}" a tu rutina`,
@@ -124,8 +149,9 @@ const NuevaRutina = () => {
           <BasicInfoStep
             routineName={routineName}
             startTime={startTime}
-            endTime={endTime} // Pass the endTime prop
+            endTime={endTime}
             selectedDays={selectedDays}
+            selectedProtocols={selectedProtocols}
             onNameChange={(e) => setRoutineName(e.target.value)}
             onStartTimeChange={setStartTime}
             onDayToggle={handleDayToggle}
