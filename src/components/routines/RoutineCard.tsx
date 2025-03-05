@@ -62,9 +62,9 @@ export const RoutineCard = ({ routine, onClick }: RoutineCardProps) => {
     >
       <div 
         className="w-12 h-12 rounded-full flex items-center justify-center mr-4 transition-all duration-300"
-        style={{ backgroundColor: `${routine.color}30` }}
+        style={{ backgroundColor: routine.isActive ? `${routine.color}30` : 'rgba(2, 177, 187, 0.2)' }}
       >
-        <Clock className="h-6 w-6" style={{ color: routine.color }} />
+        <Clock className="h-6 w-6" style={{ color: routine.isActive ? routine.color : '#02b1bb' }} />
       </div>
       
       <div className="flex-1">
