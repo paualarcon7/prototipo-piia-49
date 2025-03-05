@@ -1,6 +1,6 @@
 
 import { Palette } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ROUTINE_COLORS } from "@/types/rutina";
 
@@ -16,9 +16,24 @@ export const ColorSelector = ({
   disabled = false 
 }: ColorSelectorProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const colorSelectorRef = useRef<HTMLDivElement>(null);
+  
+  // Close the color selector when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (colorSelectorRef.current && !colorSelectorRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   
   return (
-    <div className="relative">
+    <div className="relative" ref={colorSelectorRef}>
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-white font-medium">Color de la rutina</h3>
@@ -57,6 +72,7 @@ export const ColorSelector = ({
                   onColorChange(color);
                   setIsOpen(false);
                 }}
+                aria-label={`Select color ${color}`}
               />
             ))}
           </div>

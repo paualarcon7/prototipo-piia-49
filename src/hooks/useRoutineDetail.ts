@@ -145,6 +145,12 @@ export const useRoutineDetail = (initialRoutine: Routine) => {
       ...prev,
       color
     }));
+    
+    // Optional: Show a toast when color is changed
+    toast({
+      title: "Color actualizado",
+      description: "El color de la rutina ha sido actualizado",
+    });
   };
 
   return {
