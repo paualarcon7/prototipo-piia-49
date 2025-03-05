@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { Routine } from "@/types/rutina";
 import { protocols } from "@/pages/Protocolos"; // Importing mock protocols
@@ -8,6 +7,7 @@ import { RoutineDetailHeader } from "@/components/routines/rutina-detalle/Routin
 import { RoutineDetailTabs } from "@/components/routines/rutina-detalle/RoutineDetailTabs";
 import { DeleteRoutineDialog } from "@/components/routines/rutina-detalle/DeleteRoutineDialog";
 import { useRoutineDetail } from "@/hooks/useRoutineDetail";
+import { Edit } from "lucide-react"; // Added import for Edit icon
 
 // Mock routine data (this would normally come from an API)
 const mockRoutine: Routine = {
