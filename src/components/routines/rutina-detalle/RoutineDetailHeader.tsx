@@ -37,7 +37,7 @@ export const RoutineDetailHeader = ({
         </div>
         
         {isEditing && (
-          <div className={`flex ${isMobile ? 'flex-col space-y-2' : 'flex-row space-x-2'} mr-16`}>
+          <div className={isMobile ? "flex space-x-2 items-center" : "flex space-x-2 items-center mr-16"}>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -48,7 +48,7 @@ export const RoutineDetailHeader = ({
                     size={isMobile ? "sm" : "default"}
                   >
                     <X className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'} mr-1`} />
-                    {isMobile ? "Cancelar" : "Cancelar"}
+                    {isMobile ? "" : "Cancelar"}
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -67,7 +67,7 @@ export const RoutineDetailHeader = ({
                     size={isMobile ? "sm" : "default"}
                   >
                     <Save className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'} mr-1`} />
-                    {isMobile ? "Guardar" : "Guardar"}
+                    {isMobile ? "" : "Guardar"}
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
