@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ChevronLeft, Edit, X, Save } from "lucide-react";
@@ -24,7 +23,6 @@ import { RoutineEditForm } from "@/components/routines/rutina-detalle/RoutineEdi
 import { ProtocolsList } from "@/components/routines/rutina-detalle/ProtocolsList";
 import { SettingsTab } from "@/components/routines/rutina-detalle/SettingsTab";
 
-// Mock data for demonstration
 const mockRoutine: Routine = {
   id: "1",
   name: "Rutina de mañana",
@@ -42,7 +40,6 @@ const mockRoutine: Routine = {
         tags: ["energía", "flujo", "rendimiento"],
         duration: "15 min",
         description: "Descubre y potencia tu estado de flujo personal",
-        // Fixed: Use null directly instead of a function returning null
         icon: null
       },
       order: 0
@@ -55,7 +52,6 @@ const mockRoutine: Routine = {
         tags: ["concentración", "productividad"],
         duration: "30 min",
         description: "Optimiza tu rendimiento mental y físico",
-        // Fixed: Use null directly instead of a function returning null
         icon: null
       },
       order: 1
@@ -112,18 +108,15 @@ const RutinaDetalle = () => {
 
   const toggleEditMode = () => {
     if (isEditing) {
-      // If we're cancelling edit mode, restore original routine
       setRoutine(originalRoutine);
       setIsEditing(false);
     } else {
-      // Enter edit mode, save original routine for potential cancellation
       setOriginalRoutine({...routine});
       setIsEditing(true);
     }
   };
 
   const saveChanges = () => {
-    // Here we would normally save to an API
     setOriginalRoutine({...routine});
     setIsEditing(false);
     toast({
@@ -212,9 +205,15 @@ const RutinaDetalle = () => {
     }));
   };
 
+  const handleColorChange = (color: string) => {
+    setRoutine(prev => ({
+      ...prev,
+      color
+    }));
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-transparent pb-28">
-      {/* Header */}
       <div className="px-4 py-4 border-b border-secondary/20 backdrop-blur-sm sticky top-0 z-10 bg-secondary/10">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -266,7 +265,6 @@ const RutinaDetalle = () => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="flex-1 px-4 py-6 overflow-auto">
         {isEditing ? (
           <RoutineEditForm
@@ -323,13 +321,13 @@ const RutinaDetalle = () => {
               onActiveToggle={handleActiveToggle}
               onNotificationToggle={handleNotificationToggle}
               onMinutesBeforeChange={handleMinutesBeforeChange}
+              onColorChange={handleColorChange}
               onOpenDeleteDialog={() => setIsDeleteDialogOpen(true)}
             />
           </TabsContent>
         </Tabs>
       </div>
       
-      {/* Delete Dialog */}
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <AlertDialogContent className="bg-secondary border-secondary/20">
           <AlertDialogHeader>

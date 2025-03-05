@@ -3,6 +3,7 @@ import { Trash2, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Routine } from "@/types/rutina";
+import { ColorSelector } from "./ColorSelector";
 
 interface SettingsTabProps {
   routine: Routine;
@@ -10,6 +11,7 @@ interface SettingsTabProps {
   onActiveToggle: () => void;
   onNotificationToggle: () => void;
   onMinutesBeforeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onColorChange: (color: string) => void;
   onOpenDeleteDialog: () => void;
 }
 
@@ -19,6 +21,7 @@ export const SettingsTab = ({
   onActiveToggle,
   onNotificationToggle,
   onMinutesBeforeChange,
+  onColorChange,
   onOpenDeleteDialog
 }: SettingsTabProps) => {
   return (
@@ -37,6 +40,12 @@ export const SettingsTab = ({
             disabled={!isEditing}
           />
         </div>
+        
+        <ColorSelector
+          currentColor={routine.color}
+          onColorChange={onColorChange}
+          disabled={!isEditing}
+        />
         
         <div className="flex items-center justify-between">
           <div>
