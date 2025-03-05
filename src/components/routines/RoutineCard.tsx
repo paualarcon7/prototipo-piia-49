@@ -1,8 +1,9 @@
-
 import { Clock, Calendar, ChevronRight, Bell } from "lucide-react";
 import { Routine } from "@/types/rutina";
 import { SyncStatusBadge } from "./SyncStatusBadge";
 import { Badge } from "@/components/ui/badge";
+import { useProtocolDuration } from "@/hooks/routine/useProtocolDuration";
+import { formatDayList } from "./utils/protocolUtils";
 
 interface RoutineCardProps {
   routine: Routine;
@@ -10,6 +11,8 @@ interface RoutineCardProps {
 }
 
 export const RoutineCard = ({ routine, onClick }: RoutineCardProps) => {
+  const { formattedDuration } = useProtocolDuration(routine.protocols);
+
   // Convert day codes to label
   const formatDays = (days: string[]) => {
     if (days.length === 7) return "Todos los días";
@@ -27,27 +30,7 @@ export const RoutineCard = ({ routine, onClick }: RoutineCardProps) => {
       return "Fines de semana";
     }
     
-    return days.join(", ");
-  };
-
-  // Calculate total duration
-  const calculateTotalDuration = () => {
-    let totalMinutes = 0;
-    
-    routine.protocols.forEach(({ protocol }) => {
-      const durationMatch = protocol.duration.match(/(\d+)/);
-      if (durationMatch) {
-        totalMinutes += parseInt(durationMatch[0], 10);
-      }
-    });
-    
-    if (totalMinutes >= 60) {
-      const hours = Math.floor(totalMinutes / 60);
-      const minutes = totalMinutes % 60;
-      return `${hours}h ${minutes > 0 ? `${minutes}m` : ""}`;
-    }
-    
-    return `${totalMinutes}m`;
+    return formatDayList(days);
   };
 
   return (
@@ -98,7 +81,7 @@ export const RoutineCard = ({ routine, onClick }: RoutineCardProps) => {
           <SyncStatusBadge status={routine.syncStatus} />
           {routine.protocols.length > 0 ? (
             <Badge className="text-xs bg-[#1A1F2C]/70 text-white">
-              {routine.protocols.length} {routine.protocols.length === 1 ? 'protocolo' : 'protocolos'} ({calculateTotalDuration()})
+              {routine.protocols.length} {routine.protocols.length === 1 ? 'protocolo' : 'protocolos'} ({formattedDuration})
             </Badge>
           ) : (
             <Badge variant="outline" className="text-xs border-[#8A898C] text-[#C8C8C9]">

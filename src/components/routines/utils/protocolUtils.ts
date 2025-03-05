@@ -18,28 +18,6 @@ export const groupByDimension = (protocols: Protocol[]) => {
 };
 
 /**
- * Calculates total duration in minutes from protocol duration strings
- */
-export const calculateTotalDuration = (protocols: { protocol: Protocol }[]) => {
-  let totalMinutes = 0;
-  
-  protocols.forEach(({ protocol }) => {
-    const durationMatch = protocol.duration.match(/(\d+)/);
-    if (durationMatch) {
-      totalMinutes += parseInt(durationMatch[0], 10);
-    }
-  });
-  
-  if (totalMinutes >= 60) {
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-    return `${hours}h ${minutes > 0 ? `${minutes}m` : ""}`;
-  }
-  
-  return `${totalMinutes}m`;
-};
-
-/**
  * Formats an array of day abbreviations into a readable string
  * For example: ["L", "M", "X"] => "Lunes, Martes, Miércoles"
  */

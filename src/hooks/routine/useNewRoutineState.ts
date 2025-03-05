@@ -1,9 +1,9 @@
-
 import { useState } from "react";
 import { Routine, WeekDay, ROUTINE_COLORS, RoutineProtocol } from "@/types/rutina";
 import { Protocol } from "@/types/protocols";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
+import { useProtocolDuration } from "./useProtocolDuration";
 
 // Generate a unique ID for the new routine
 const generateId = () => Math.random().toString(36).substr(2, 9);
@@ -21,6 +21,9 @@ export function useNewRoutineState() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [minutesBefore, setMinutesBefore] = useState(15);
   const [selectedColor, setSelectedColor] = useState(ROUTINE_COLORS[0]);
+  
+  // Use our new custom hook for duration calculations
+  const { calculateEndTime } = useProtocolDuration(selectedProtocols);
 
   const handleAddProtocol = (protocol: Protocol) => {
     setSelectedProtocols(prev => [
@@ -28,29 +31,8 @@ export function useNewRoutineState() {
       { protocol, order: prev.length }
     ]);
     
-    // Automatically update endTime based on protocol duration
-    try {
-      // Parse the current startTime
-      const [hours, minutes] = startTime.split(':').map(Number);
-      if (isNaN(hours) || isNaN(minutes)) throw new Error('Invalid start time');
-      
-      // Parse the protocol duration (assuming format like "30 min")
-      const durationMatch = protocol.duration.match(/(\d+)/);
-      if (!durationMatch) throw new Error('Invalid protocol duration');
-      
-      const durationMinutes = parseInt(durationMatch[0], 10);
-      
-      // Calculate new end time
-      let totalMinutes = hours * 60 + minutes + durationMinutes;
-      const newHours = Math.floor(totalMinutes / 60) % 24;
-      const newMinutes = totalMinutes % 60;
-      
-      // Format the new end time
-      const newEndTime = `${newHours.toString().padStart(2, '0')}:${newMinutes.toString().padStart(2, '0')}`;
-      setEndTime(newEndTime);
-    } catch (error) {
-      console.error('Error calculating end time:', error);
-    }
+    // Automatically update endTime based on all protocols including the new one
+    setEndTime(calculateEndTime(startTime));
     
     toast({
       title: "Protocolo añadido",
