@@ -29,7 +29,7 @@ const BottomNav = () => {
         <Link
           to="/rutinas"
           className={`flex flex-col items-center py-3 px-5 ${
-            location.pathname === "/rutinas" ? "text-[#FF4081]" : "text-gray-400"
+            location.pathname === "/rutinas" ? "text-[#02b1bb]" : "text-gray-400"
           } transition-colors`}
         >
           <Calendar className="w-6 h-6" />

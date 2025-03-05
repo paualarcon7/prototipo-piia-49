@@ -21,7 +21,7 @@ export const EmptyRoutinesState = ({ onCreateClick }: EmptyRoutinesStateProps) =
       
       <Button 
         onClick={onCreateClick}
-        className="bg-[#FF4081] hover:bg-[#FF4081]/90"
+        className="bg-[#02b1bb] hover:bg-[#02b1bb]/90"
       >
         <Plus className="h-4 w-4 mr-2" />
         Crear primera rutina

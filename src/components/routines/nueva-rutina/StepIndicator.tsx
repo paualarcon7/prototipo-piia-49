@@ -12,7 +12,7 @@ export const StepIndicator = ({ currentStep, totalSteps }: StepIndicatorProps) =
           <div 
             key={step}
             className={`h-2.5 w-2.5 rounded-full ${
-              step === currentStep ? 'bg-[#FF4081]' : 
+              step === currentStep ? 'bg-[#02b1bb]' : 
               step < currentStep ? 'bg-gray-400' : 'bg-gray-600'
             }`}
           />
