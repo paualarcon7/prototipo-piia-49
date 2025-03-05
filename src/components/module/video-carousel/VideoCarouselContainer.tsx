@@ -5,6 +5,7 @@ import { VideoPlayer } from "./VideoPlayer";
 import { VideoControls } from "./VideoControls";
 import { VideoProgress } from "./VideoProgress";
 import { PurposeModal } from "./PurposeModal";
+import { X } from "lucide-react";
 
 export function VideoCarouselContainer() {
   const { 
@@ -24,7 +25,7 @@ export function VideoCarouselContainer() {
   // Always start with the first video
   React.useEffect(() => {
     if (!hasInitialized) {
-      console.log("Inicializando el carrusel con el primer video (índice 0)");
+      console.log("Initializing carousel with first video (index 0)");
       setCurrentVideoIndex(0);
       setHasInitialized(true);
     }
@@ -94,14 +95,27 @@ export function VideoCarouselContainer() {
     }
   };
 
+  // Close button handler
+  const handleCloseClick = () => {
+    onClose();
+  };
+
   return (
     <div 
       ref={containerRef}
-      className="relative w-full h-full bg-black overflow-hidden"
+      className="fixed inset-0 z-50 w-screen h-screen bg-black overflow-hidden"
       onMouseMove={handleVideoContainerHover}
       onMouseLeave={() => setShowControls(false)}
       onWheel={handleWheel}
     >
+      {/* Close button */}
+      <button
+        onClick={handleCloseClick}
+        className="absolute top-4 right-4 z-50 p-2 bg-black/40 hover:bg-black/60 rounded-full transition-colors"
+      >
+        <X className="h-6 w-6 text-white" />
+      </button>
+
       {slides.map((_, index) => (
         <VideoPlayer key={index} index={index} />
       ))}

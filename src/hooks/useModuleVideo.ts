@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const useModuleVideo = () => {
   const [showFullScreenVideo, setShowFullScreenVideo] = useState(false);
@@ -33,12 +33,27 @@ export const useModuleVideo = () => {
   ];
 
   const handleOpenFullScreenVideo = () => {
+    console.log("Opening fullscreen video");
     setShowFullScreenVideo(true);
+    
+    // Prevent body scrolling when fullscreen is active
+    document.body.style.overflow = 'hidden';
   };
 
   const handleCloseFullScreenVideo = () => {
+    console.log("Closing fullscreen video");
     setShowFullScreenVideo(false);
+    
+    // Restore body scrolling
+    document.body.style.overflow = 'auto';
   };
+
+  // Clean up when component unmounts
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
 
   return {
     showFullScreenVideo,

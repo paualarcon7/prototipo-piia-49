@@ -1,7 +1,6 @@
 
 import * as React from "react";
 import { Play } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -41,6 +40,10 @@ export function ModuleVideoPreview({
   }, [firstSlide.src]);
 
   const handlePreviewClick = () => {
+    // Pause the preview video before opening fullscreen
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
     // Call the onPlayClick to open the full screen video
     onPlayClick();
   };
@@ -81,7 +84,6 @@ export function ModuleVideoPreview({
           onError={handleVideoError} 
           onLoadedData={handleVideoLoaded}
           preload="metadata"
-          src={firstSlide.src}
         />
         
         {/* Overlay mask */}
