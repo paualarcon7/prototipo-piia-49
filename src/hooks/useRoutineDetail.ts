@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
@@ -43,8 +42,12 @@ export const useRoutineDetail = (initialRoutine: Routine) => {
 
   const toggleEditMode = () => {
     if (isEditing) {
-      setRoutine(originalRoutine);
+      setRoutine({...originalRoutine});
       setIsEditing(false);
+      toast({
+        title: "Cambios cancelados",
+        description: "Los cambios en la rutina han sido descartados",
+      });
     } else {
       setOriginalRoutine({...routine});
       setIsEditing(true);
@@ -58,6 +61,7 @@ export const useRoutineDetail = (initialRoutine: Routine) => {
       title: "Cambios guardados",
       description: "Los cambios en la rutina se han guardado exitosamente",
     });
+    console.log("Saving updated routine:", routine);
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -141,12 +145,11 @@ export const useRoutineDetail = (initialRoutine: Routine) => {
   };
 
   const handleColorChange = (color: string) => {
+    console.log("Color changed to:", color);
     setRoutine(prev => ({
       ...prev,
       color
     }));
-    
-    // Optional: Show a toast when color is changed
     toast({
       title: "Color actualizado",
       description: "El color de la rutina ha sido actualizado",

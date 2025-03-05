@@ -24,6 +24,9 @@ export const SettingsTab = ({
   onColorChange,
   onOpenDeleteDialog
 }: SettingsTabProps) => {
+  console.log("SettingsTab: routine color", routine.color);
+  console.log("SettingsTab: isEditing", isEditing);
+  
   return (
     <div className="space-y-6">
       <div className="space-y-4">

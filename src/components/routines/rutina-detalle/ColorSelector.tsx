@@ -32,6 +32,17 @@ export const ColorSelector = ({
     };
   }, []);
   
+  // When currentColor changes externally, make sure our component stays in sync
+  useEffect(() => {
+    console.log("ColorSelector: currentColor updated to", currentColor);
+  }, [currentColor]);
+  
+  const handleColorSelection = (color: string) => {
+    console.log("ColorSelector: color selected", color);
+    onColorChange(color);
+    setIsOpen(false);
+  };
+  
   return (
     <div className="relative" ref={colorSelectorRef}>
       <div className="flex items-center justify-between">
@@ -68,10 +79,7 @@ export const ColorSelector = ({
                     : 'border-transparent hover:scale-105'
                 }`}
                 style={{ backgroundColor: color }}
-                onClick={() => {
-                  onColorChange(color);
-                  setIsOpen(false);
-                }}
+                onClick={() => handleColorSelection(color)}
                 aria-label={`Select color ${color}`}
               />
             ))}

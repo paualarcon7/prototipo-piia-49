@@ -58,6 +58,7 @@ const mockRoutine: Routine = {
 
 const RutinaDetalle = () => {
   const { id } = useParams<{ id: string }>();
+  console.log("Viewing routine with ID:", id);
   
   // In a real app, this would fetch the routine data from an API
   const {
@@ -82,6 +83,9 @@ const RutinaDetalle = () => {
     handleMinutesBeforeChange,
     handleColorChange
   } = useRoutineDetail(mockRoutine);
+
+  console.log("RutinaDetalle: Current routine color", routine.color);
+  console.log("RutinaDetalle: isEditing", isEditing);
 
   return (
     <div className="flex flex-col min-h-screen bg-transparent pb-28">
