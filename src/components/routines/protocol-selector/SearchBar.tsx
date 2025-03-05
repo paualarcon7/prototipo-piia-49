@@ -3,7 +3,7 @@ import { Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { RoutineProtocol } from "@/types/rutina";
-import { calculateTotalDuration } from "../utils/protocolUtils";
+import { useProtocolDuration } from "@/hooks/routine/useProtocolDuration";
 import { Button } from "@/components/ui/button";
 
 interface SearchBarProps {
@@ -13,6 +13,8 @@ interface SearchBarProps {
 }
 
 export const SearchBar = ({ search, setSearch, selectedProtocols }: SearchBarProps) => {
+  const { formattedDuration } = useProtocolDuration(selectedProtocols);
+
   return (
     <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm pb-3 pt-1">
       <div className="relative">
@@ -42,7 +44,7 @@ export const SearchBar = ({ search, setSearch, selectedProtocols }: SearchBarPro
         </div>
         {selectedProtocols.length > 0 && (
           <Badge className="bg-[#02b1bb]/20 text-[#02b1bb] font-medium">
-            ⏱️ Duración total: {calculateTotalDuration(selectedProtocols)}
+            ⏱️ Duración total: {formattedDuration}
           </Badge>
         )}
       </div>
