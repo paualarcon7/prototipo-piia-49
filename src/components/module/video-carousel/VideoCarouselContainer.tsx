@@ -21,7 +21,7 @@ export function VideoCarouselContainer() {
   const [showPurposeModal, setShowPurposeModal] = React.useState(false);
   const [hasInitialized, setHasInitialized] = React.useState(false);
 
-  // Asegurar que siempre comience con el primer video
+  // Always start with the first video
   React.useEffect(() => {
     if (!hasInitialized) {
       console.log("Inicializando el carrusel con el primer video (índice 0)");
@@ -79,7 +79,7 @@ export function VideoCarouselContainer() {
     onClose();
   };
 
-  // Facilitar la navegación entre videos con botones adicionales
+  // Navigation between videos
   const goToNextVideo = () => {
     if (currentVideoIndex < slides.length - 1) {
       setCurrentVideoIndex(prev => prev + 1);
@@ -94,36 +94,31 @@ export function VideoCarouselContainer() {
     }
   };
 
-  // No usamos IntersectionObserver ya que puede interferir con el orden de los videos
-  // En su lugar, nos aseguramos de que currentVideoIndex sea siempre el estado controlador
-
   return (
-    <>
-      <div 
-        ref={containerRef}
-        className="relative w-full h-full bg-black overflow-hidden"
-        onMouseMove={handleVideoContainerHover}
-        onMouseLeave={() => setShowControls(false)}
-        onWheel={handleWheel}
-      >
-        {slides.map((_, index) => (
-          <VideoPlayer key={index} index={index} />
-        ))}
-        
-        <VideoControls 
-          goToNextVideo={goToNextVideo}
-          goToPrevVideo={goToPrevVideo}
-          totalVideos={slides.length}
-          currentIndex={currentVideoIndex}
-        />
-        <VideoProgress />
-      </div>
+    <div 
+      ref={containerRef}
+      className="relative w-full h-full bg-black overflow-hidden"
+      onMouseMove={handleVideoContainerHover}
+      onMouseLeave={() => setShowControls(false)}
+      onWheel={handleWheel}
+    >
+      {slides.map((_, index) => (
+        <VideoPlayer key={index} index={index} />
+      ))}
+      
+      <VideoControls 
+        goToNextVideo={goToNextVideo}
+        goToPrevVideo={goToPrevVideo}
+        totalVideos={slides.length}
+        currentIndex={currentVideoIndex}
+      />
+      <VideoProgress />
 
       <PurposeModal 
         open={showPurposeModal} 
         onOpenChange={setShowPurposeModal}
         onSubmit={handlePurposeSubmit}
       />
-    </>
+    </div>
   );
 }

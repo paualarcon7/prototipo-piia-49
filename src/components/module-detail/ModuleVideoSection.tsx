@@ -41,16 +41,10 @@ export const ModuleVideoSection = ({
       )}
       
       {showFullScreenVideo && (
-        <div className="fixed inset-0 z-50 bg-black">
-          <div className="h-full w-full flex items-center justify-center">
-            <div className="relative w-full max-w-md h-full">
-              <ModuleVideoCarousel 
-                slides={videoSlides} 
-                onClose={handleCloseFullScreenVideo}
-              />
-            </div>
-          </div>
-        </div>
+        <ModuleVideoCarousel 
+          slides={videoSlides} 
+          onClose={handleCloseFullScreenVideo}
+        />
       )}
     </>
   );

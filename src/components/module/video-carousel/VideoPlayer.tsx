@@ -35,6 +35,7 @@ export function VideoPlayer({ index }: VideoPlayerProps) {
       // Check if this is the current video and should be played
       if (index === currentVideoIndex) {
         console.log(`Reproduciendo video ${index}: ${slide.src}`);
+        
         if (videoElement) {
           // Set video source if needed
           if (!videoElement.src) {
@@ -43,12 +44,14 @@ export function VideoPlayer({ index }: VideoPlayerProps) {
           }
           
           // Play the video with error handling
-          const playPromise = videoElement.play();
-          if (playPromise !== undefined) {
-            playPromise.catch(err => {
-              console.error("Error al reproducir el video:", err);
-            });
-          }
+          setTimeout(() => {
+            const playPromise = videoElement.play();
+            if (playPromise !== undefined) {
+              playPromise.catch(err => {
+                console.error("Error al reproducir el video:", err);
+              });
+            }
+          }, 100);
         }
       } else {
         // Pause other videos to conserve resources

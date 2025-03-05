@@ -41,6 +41,7 @@ export function ModuleVideoPreview({
   }, [firstSlide.src]);
 
   const handlePreviewClick = () => {
+    // Call the onPlayClick to open the full screen video
     onPlayClick();
   };
 
@@ -59,7 +60,10 @@ export function ModuleVideoPreview({
     <div className="my-2 relative">
       <h2 className="text-base font-semibold mb-1 font-oswald">Introducción del Módulo</h2>
       
-      <div className="relative w-full max-w-[120px] mx-auto aspect-[9/16] bg-black rounded-md overflow-hidden cursor-pointer" onClick={handlePreviewClick}>
+      <div 
+        className="relative w-full max-w-[120px] mx-auto aspect-[9/16] bg-black rounded-md overflow-hidden cursor-pointer" 
+        onClick={handlePreviewClick}
+      >
         {/* Loading skeleton */}
         {isLoading && (
           <div className="absolute inset-0 bg-gray-900 animate-pulse flex items-center justify-center">

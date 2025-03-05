@@ -17,8 +17,10 @@ interface ModuleVideoCarouselProps {
 
 export function ModuleVideoCarousel({ slides, onClose }: ModuleVideoCarouselProps) {
   return (
-    <VideoCarouselProvider slides={slides} onClose={onClose}>
-      <VideoCarouselContainer />
-    </VideoCarouselProvider>
+    <div className="fixed inset-0 z-50 bg-black w-full h-full flex items-center justify-center">
+      <VideoCarouselProvider slides={slides} onClose={onClose}>
+        <VideoCarouselContainer />
+      </VideoCarouselProvider>
+    </div>
   );
 }
