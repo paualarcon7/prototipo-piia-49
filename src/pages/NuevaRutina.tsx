@@ -1,146 +1,37 @@
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Routine, WeekDay, ROUTINE_COLORS } from "@/types/rutina";
-import { Protocol } from "@/types/protocols";
+import { useNewRoutineState } from "@/hooks/routine/useNewRoutineState";
 import { protocols } from "@/pages/Protocolos"; // Importing mock protocols
-import { RoutineProtocol } from "@/types/rutina";
-import { StepIndicator } from "@/components/routines/nueva-rutina/StepIndicator";
 import { BasicInfoStep } from "@/components/routines/nueva-rutina/BasicInfoStep";
 import { ProtocolsStep } from "@/components/routines/nueva-rutina/ProtocolsStep";
 import { SyncStep } from "@/components/routines/nueva-rutina/SyncStep";
-import { useToast } from "@/hooks/use-toast";
-
-// Generate a unique ID for the new routine
-const generateId = () => Math.random().toString(36).substr(2, 9);
+import { PageHeader } from "@/components/routines/nueva-rutina/PageHeader";
+import { BottomNav } from "@/components/routines/nueva-rutina/BottomNav";
 
 const NuevaRutina = () => {
-  const navigate = useNavigate();
-  const { toast } = useToast();
-  const [step, setStep] = useState(1);
-  const [routineName, setRoutineName] = useState("Mi nueva rutina");
-  const [startTime, setStartTime] = useState("08:00");
-  const [endTime, setEndTime] = useState("08:30");
-  const [selectedDays, setSelectedDays] = useState<WeekDay[]>(["L", "M", "X", "J", "V"]);
-  const [selectedProtocols, setSelectedProtocols] = useState<RoutineProtocol[]>([]);
-  const [isGoogleCalendarEnabled, setIsGoogleCalendarEnabled] = useState(true);
-  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  const [minutesBefore, setMinutesBefore] = useState(15);
-  const [selectedColor, setSelectedColor] = useState(ROUTINE_COLORS[0]);
-
-  const handleAddProtocol = (protocol: Protocol) => {
-    setSelectedProtocols(prev => [
-      ...prev,
-      { protocol, order: prev.length }
-    ]);
-    
-    // Automatically update endTime based on protocol duration
-    try {
-      // Parse the current startTime
-      const [hours, minutes] = startTime.split(':').map(Number);
-      if (isNaN(hours) || isNaN(minutes)) throw new Error('Invalid start time');
-      
-      // Parse the protocol duration (assuming format like "30 min")
-      const durationMatch = protocol.duration.match(/(\d+)/);
-      if (!durationMatch) throw new Error('Invalid protocol duration');
-      
-      const durationMinutes = parseInt(durationMatch[0], 10);
-      
-      // Calculate new end time
-      let totalMinutes = hours * 60 + minutes + durationMinutes;
-      const newHours = Math.floor(totalMinutes / 60) % 24;
-      const newMinutes = totalMinutes % 60;
-      
-      // Format the new end time
-      const newEndTime = `${newHours.toString().padStart(2, '0')}:${newMinutes.toString().padStart(2, '0')}`;
-      setEndTime(newEndTime);
-    } catch (error) {
-      console.error('Error calculating end time:', error);
-    }
-    
-    toast({
-      title: "Protocolo añadido",
-      description: `Se ha añadido "${protocol.title}" a tu rutina`,
-      variant: "default",
-    });
-  };
-
-  const handleRemoveProtocol = (index: number) => {
-    const protocolName = selectedProtocols[index]?.protocol.title;
-    setSelectedProtocols(prev => 
-      prev.filter((_, i) => i !== index)
-         .map((p, i) => ({ ...p, order: i }))
-    );
-    toast({
-      title: "Protocolo eliminado",
-      description: `Se ha eliminado "${protocolName || 'el protocolo'}" de tu rutina`,
-      variant: "destructive",
-    });
-  };
-
-  const handleReorderProtocols = (newOrder: RoutineProtocol[]) => {
-    setSelectedProtocols(newOrder.map((p, i) => ({ ...p, order: i })));
-  };
-
-  const handleDayToggle = (day: WeekDay) => {
-    setSelectedDays(prev => 
-      prev.includes(day) 
-        ? prev.filter(d => d !== day)
-        : [...prev, day]
-    );
-  };
-
-  const handleNextStep = () => {
-    if (step < 3) {
-      setStep(step + 1);
-      window.scrollTo(0, 0);
-    } else {
-      handleSaveRoutine();
-    }
-  };
-
-  const handlePrevStep = () => {
-    if (step > 1) {
-      setStep(step - 1);
-      window.scrollTo(0, 0);
-    } else {
-      navigate('/rutinas');
-    }
-  };
-
-  const handleSaveRoutine = () => {
-    const newRoutine: Routine = {
-      id: generateId(),
-      name: routineName,
-      time: {
-        start: startTime,
-        end: endTime
-      },
-      days: selectedDays,
-      protocols: selectedProtocols,
-      syncStatus: isGoogleCalendarEnabled ? "pending" : "synced",
-      notification: {
-        enabled: notificationsEnabled,
-        minutesBefore: minutesBefore
-      },
-      color: selectedColor,
-      isActive: true,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
-    
-    console.log("New routine created:", newRoutine);
-    
-    toast({
-      title: "Rutina creada",
-      description: `Se ha creado la rutina "${routineName}" correctamente`,
-      variant: "default",
-    });
-    
-    navigate('/rutinas');
-  };
+  const {
+    step,
+    routineName,
+    startTime,
+    endTime,
+    selectedDays,
+    selectedProtocols,
+    isGoogleCalendarEnabled,
+    notificationsEnabled,
+    minutesBefore,
+    selectedColor,
+    setRoutineName,
+    setStartTime,
+    setIsGoogleCalendarEnabled,
+    setNotificationsEnabled,
+    setMinutesBefore,
+    setSelectedColor,
+    handleAddProtocol,
+    handleRemoveProtocol,
+    handleReorderProtocols,
+    handleDayToggle,
+    handleNextStep,
+    handlePrevStep
+  } = useNewRoutineState();
 
   const renderStepContent = () => {
     switch (step) {
@@ -194,45 +85,20 @@ const NuevaRutina = () => {
   
   return (
     <div className="flex flex-col h-screen bg-transparent pb-20">
-      <div className="px-4 py-4 border-b border-[#1A1F2C]/20 backdrop-blur-sm sticky top-0 z-10 bg-[#1A1F2C]/10">
-        <div className="flex items-center">
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={handlePrevStep}
-            className="text-white mr-2"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </Button>
-          <h1 className="text-xl font-semibold font-oswald text-white">
-            {step === 1 ? "Crear nueva rutina" : 
-             step === 2 ? "Seleccionar protocolos" : 
-             "Personalizar rutina"}
-          </h1>
-        </div>
-        <StepIndicator currentStep={step} totalSteps={3} />
-      </div>
+      <PageHeader 
+        currentStep={step} 
+        onPrevStep={handlePrevStep} 
+      />
 
       <div className="flex-1 px-4 py-6 overflow-auto">
         {renderStepContent()}
       </div>
 
-      <div className="fixed bottom-16 inset-x-0 p-4 bg-[#1A1F2C]/50 backdrop-blur-sm border-t border-[#1A1F2C]/20">
-        <Button 
-          onClick={handleNextStep}
-          className="w-full bg-[#02b1bb] hover:bg-[#02b1bb]/80"
-        >
-          {step < 3 ? (
-            <>
-              Siguiente <ChevronRight className="ml-2 h-4 w-4" />
-            </>
-          ) : (
-            <>
-              Guardar rutina <Check className="ml-2 h-4 w-4" />
-            </>
-          )}
-        </Button>
-      </div>
+      <BottomNav 
+        currentStep={step}
+        totalSteps={3}
+        onNextStep={handleNextStep}
+      />
     </div>
   );
 };
