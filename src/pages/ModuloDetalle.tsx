@@ -11,6 +11,7 @@ import { useAudioPlayer } from "@/hooks/useAudioPlayer";
 import { ModuleStagesContent } from "@/components/module-detail/ModuleStagesContent";
 import { TestSection } from "@/components/module-detail/TestSection";
 import { DaySelectionSection } from "@/components/module-detail/DaySelectionSection";
+import { ModuleVideoCarousel } from "@/components/module/ModuleVideoCarousel";
 
 const ModuloDetalle = () => {
   const { id, moduleId } = useParams();
@@ -61,18 +62,6 @@ const ModuloDetalle = () => {
     resetAudioPlayer
   } = useAudioPlayer();
 
-  // Modify the handleStageChange function in the useModuleStages hook to prevent automatic test/feedback
-  const handleStageSelection = (value: string) => {
-    setActiveStage(value);
-    
-    if (value && stageStatuses[value as keyof typeof stageStatuses] === 'pending') {
-      setStageStatus(value as keyof typeof stageStatuses, 'in-progress');
-    }
-    
-    // Remove automatic test/feedback triggering
-    // The buttons inside each section will be responsible for opening the forms
-  };
-
   const handleDaySelect = (day: number) => {
     setSelectedDay(day);
     setActiveStage('trabajo');
@@ -90,6 +79,14 @@ const ModuloDetalle = () => {
 
   return (
     <div className="container mx-auto px-4 py-6 pb-32">
+      {/* Fullscreen video carousel */}
+      {showFullScreenVideo && (
+        <ModuleVideoCarousel 
+          slides={videoSlides} 
+          onClose={handleCloseFullScreenVideo} 
+        />
+      )}
+
       {showTest ? (
         <TestSection
           questions={evaluationQuestions}

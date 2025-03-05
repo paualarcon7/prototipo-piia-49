@@ -27,6 +27,11 @@ export const DaySelectionSection = ({
   handleCloseFullScreenVideo,
   onDaySelect
 }: DaySelectionSectionProps) => {
+  // If fullscreen video is shown, don't render the regular content
+  if (showFullScreenVideo) {
+    return null;
+  }
+  
   return (
     <div className="space-y-10 animate-fade-in">
       <div className="bg-[#1A1F2C]/70 backdrop-blur-sm rounded-xl p-6 border border-gray-800/30 shadow-lg">
