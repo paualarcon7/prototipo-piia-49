@@ -1,76 +1,61 @@
 
-import { Clock, Calendar, Bell } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { SyncStatusBadge } from "@/components/routines/SyncStatusBadge";
-import { Routine, WeekDay } from "@/types/rutina";
-import { calculateTotalDuration } from "@/components/routines/utils/protocolUtils";
+import { Clock, Calendar } from "lucide-react";
+import { Routine } from "@/types/rutina";
+import { formatDayList } from "@/components/routines/utils/protocolUtils";
+import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Edit } from "lucide-react";
 
 interface RoutineInfoCardProps {
   routine: Routine;
+  onEditClick: () => void;
 }
 
-export const RoutineInfoCard = ({ routine }: RoutineInfoCardProps) => {
-  // Format days for display
-  const formatDays = (days: WeekDay[]) => {
-    const dayMap: Record<WeekDay, string> = {
-      "L": "Lunes",
-      "M": "Martes",
-      "X": "Miércoles",
-      "J": "Jueves",
-      "V": "Viernes",
-      "S": "Sábado",
-      "D": "Domingo"
-    };
-    
-    if (days.length === 7) return "Todos los días";
-    if (days.length === 5 && 
-        days.includes("L") && 
-        days.includes("M") && 
-        days.includes("X") && 
-        days.includes("J") && 
-        days.includes("V")) {
-      return "Lunes a viernes";
-    }
-    if (days.length === 2 && 
-        days.includes("S") && 
-        days.includes("D")) {
-      return "Fines de semana";
-    }
-    
-    return days.map(d => dayMap[d]).join(", ");
-  };
-
+export const RoutineInfoCard = ({ routine, onEditClick }: RoutineInfoCardProps) => {
   return (
-    <div className="bg-gradient-to-br from-[#1A1F2C]/50 to-[#1A1F2C]/30 backdrop-blur-sm border border-[#1A1F2C]/20 rounded-lg p-5 mb-6">
-      <h2 className="text-xl font-semibold text-white mb-3">{routine.name}</h2>
+    <div className="bg-secondary/10 border border-secondary/20 rounded-lg p-4 mb-6">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <h2 className="text-2xl font-bold text-white font-oswald">{routine.name}</h2>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={onEditClick}
+                  className="h-8 w-8 p-0 text-brand-teal hover:bg-brand-teal/20 rounded-full"
+                >
+                  <Edit className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Editar rutina</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+        <div 
+          className="w-4 h-4 rounded-full" 
+          style={{ backgroundColor: routine.color }}
+        />
+      </div>
       
       <div className="space-y-3">
-        <div className="flex items-center text-[#C8C8C9]">
-          <Clock className="h-4 w-4 mr-2 text-[#02b1bb]" />
+        <div className="flex items-center text-sm text-gray-300">
+          <Clock className="h-4 w-4 mr-2 text-brand-teal" />
           <span>{routine.time.start} - {routine.time.end}</span>
         </div>
         
-        <div className="flex items-center text-[#C8C8C9]">
-          <Calendar className="h-4 w-4 mr-2 text-[#02b1bb]" />
-          <span>{formatDays(routine.days)}</span>
+        <div className="flex items-center text-sm text-gray-300">
+          <Calendar className="h-4 w-4 mr-2 text-brand-teal" />
+          <span>{formatDayList(routine.days)}</span>
         </div>
         
-        <div className="flex items-center text-[#C8C8C9]">
-          <Bell className="h-4 w-4 mr-2 text-[#02b1bb]" />
-          <span>
-            {routine.notification.enabled 
-              ? `${routine.notification.minutesBefore} minutos antes` 
-              : "Notificaciones desactivadas"}
-          </span>
-        </div>
-        
-        <div className="flex items-center mt-4">
-          <SyncStatusBadge status={routine.syncStatus} />
-          {routine.protocols.length > 0 && (
-            <Badge className="ml-2 bg-[#1A1F2C]/70 text-white">
-              Duración total: {calculateTotalDuration(routine.protocols)}
-            </Badge>
-          )}
+        <div className="mt-4">
+          <p className="text-xs text-gray-400">
+            {routine.protocols.length} {routine.protocols.length === 1 ? 'protocolo' : 'protocolos'}
+          </p>
         </div>
       </div>
     </div>

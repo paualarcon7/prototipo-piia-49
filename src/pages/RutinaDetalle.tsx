@@ -1,3 +1,4 @@
+
 import { useParams } from "react-router-dom";
 import { Routine } from "@/types/rutina";
 import { protocols } from "@/pages/Protocolos"; // Importing mock protocols
@@ -120,7 +121,10 @@ const RutinaDetalle = () => {
             onDayToggle={handleDayToggle}
           />
         ) : (
-          <RoutineInfoCard routine={routine} />
+          <RoutineInfoCard 
+            routine={routine} 
+            onEditClick={toggleEditMode}
+          />
         )}
         
         {/* Tabs */}
