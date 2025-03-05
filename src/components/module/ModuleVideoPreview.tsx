@@ -1,18 +1,22 @@
+
 import * as React from "react";
 import { Play } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
+
 interface VideoSlide {
   src: string;
   thumbnail: string;
   title: string;
   likes?: number;
 }
+
 interface ModuleVideoPreviewProps {
   videoSlides: VideoSlide[];
   onPlayClick: () => void;
 }
+
 export function ModuleVideoPreview({
   videoSlides,
   onPlayClick
@@ -27,9 +31,21 @@ export function ModuleVideoPreview({
 
   // Reference for the video element
   const videoRef = React.useRef<HTMLVideoElement>(null);
+  
   React.useEffect(() => {
-    setPreviewVideo(videoRef.current);
-  }, []);
+    if (videoRef.current) {
+      setPreviewVideo(videoRef.current);
+      
+      // Ensure the video source is loaded properly
+      const videoElement = videoRef.current;
+      const sourceElement = videoElement.querySelector('source');
+      if (sourceElement && sourceElement.src !== firstSlide.src) {
+        sourceElement.src = firstSlide.src;
+        videoElement.load();
+      }
+    }
+  }, [firstSlide.src]);
+
   const handlePreviewClick = () => {
     onPlayClick();
   };
@@ -44,17 +60,30 @@ export function ModuleVideoPreview({
   const handleVideoLoaded = () => {
     setIsLoading(false);
   };
-  return <div className="my-2 relative">
+
+  return (
+    <div className="my-2 relative">
       <h2 className="text-base font-semibold mb-1 font-oswald">Introducción del Módulo</h2>
       
       <div className="relative w-full max-w-[120px] mx-auto aspect-[9/16] bg-black rounded-md overflow-hidden cursor-pointer" onClick={handlePreviewClick}>
         {/* Loading skeleton */}
-        {isLoading && <div className="absolute inset-0 bg-gray-900 animate-pulse flex items-center justify-center">
+        {isLoading && (
+          <div className="absolute inset-0 bg-gray-900 animate-pulse flex items-center justify-center">
             <div className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full animate-spin"></div>
-          </div>}
+          </div>
+        )}
       
         {/* Preview video */}
-        <video ref={videoRef} className="w-full h-full object-cover pointer-events-none" muted loop playsInline onError={handleVideoError} onLoadedData={handleVideoLoaded}>
+        <video 
+          ref={videoRef} 
+          className="w-full h-full object-cover pointer-events-none" 
+          muted 
+          loop 
+          playsInline 
+          onError={handleVideoError} 
+          onLoadedData={handleVideoLoaded}
+          preload="metadata"
+        >
           <source src={firstSlide.src} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -81,5 +110,6 @@ export function ModuleVideoPreview({
           ✦
         </div>
       </div>
-    </div>;
+    </div>
+  );
 }

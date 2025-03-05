@@ -26,22 +26,41 @@ export function VideoPlayer({ index }: VideoPlayerProps) {
     handleVideoError(index);
   };
 
-  // Cargar el video cuando sea visible
+  // Load and play the video when it becomes visible
   React.useEffect(() => {
-    if (videoRefs.current[index] && videoRefs.current[index]?.src === '') {
-      videoRefs.current[index]?.load();
-    }
-    
-    // Verificar si este es el video actual y si debe reproducirse
-    if (index === currentVideoIndex && videoRefs.current[index]) {
+    if (videoRefs.current[index]) {
+      // Make sure video has a source
       const videoElement = videoRefs.current[index];
-      if (videoElement) {
-        videoElement.play().catch(err => {
-          console.log("Error al reproducir el video:", err);
-        });
+      if (videoElement && !videoElement.src) {
+        videoElement.load();
+      }
+      
+      // Check if this is the current video and should be played
+      if (index === currentVideoIndex) {
+        console.log(`Reproduciendo video ${index}: ${slide.src}`);
+        if (videoElement) {
+          // Set the src attribute directly if needed
+          if (videoElement.querySelector('source')?.src !== slide.src) {
+            const sourceElement = videoElement.querySelector('source');
+            if (sourceElement) {
+              sourceElement.src = slide.src;
+              videoElement.load();
+            }
+          }
+          
+          // Play the video with error handling
+          videoElement.play().catch(err => {
+            console.log("Error al reproducir el video:", err);
+          });
+        }
+      } else {
+        // Pause other videos to conserve resources
+        if (videoRefs.current[index]) {
+          videoRefs.current[index].pause();
+        }
       }
     }
-  }, [index, currentVideoIndex, videoRefs]);
+  }, [index, currentVideoIndex, videoRefs, slide.src]);
 
   const handleLoadedData = () => {
     setIsLoading(false);
@@ -72,7 +91,7 @@ export function VideoPlayer({ index }: VideoPlayerProps) {
         onEnded={handleVideoEnded}
         onError={handleError}
         onLoadedData={handleLoadedData}
-        preload="auto"
+        preload="metadata"
       >
         <source src={slide.src} type="video/mp4" />
         Your browser does not support the video tag.
