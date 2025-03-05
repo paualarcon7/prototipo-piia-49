@@ -1,3 +1,4 @@
+
 import { useParams } from "react-router-dom";
 import { Routine } from "@/types/rutina";
 import { protocols } from "@/pages/Protocolos"; // Importing mock protocols
@@ -74,7 +75,6 @@ const RutinaDetalle = () => {
     handleNameChange,
     handleDayToggle,
     handleStartTimeChange,
-    handleEndTimeChange,
     handleAddProtocol,
     handleRemoveProtocol,
     handleReorderProtocols,
@@ -113,7 +113,6 @@ const RutinaDetalle = () => {
             routine={routine}
             onNameChange={handleNameChange}
             onStartTimeChange={handleStartTimeChange}
-            onEndTimeChange={handleEndTimeChange}
             onDayToggle={handleDayToggle}
             onActiveToggle={handleActiveToggle}
             onNotificationToggle={handleNotificationToggle}
