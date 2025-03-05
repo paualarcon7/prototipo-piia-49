@@ -3,19 +3,22 @@ import { useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { CalendarPreview } from "@/components/routines/CalendarPreview";
-import { WeekDay } from "@/types/rutina";
+import { WeekDay, ROUTINE_COLORS } from "@/types/rutina";
+import { ColorSelector } from "@/components/routines/rutina-detalle/ColorSelector";
 
 interface SyncStepProps {
   routineName: string;
   startTime: string;
   endTime: string;
   days: WeekDay[];
+  selectedColor: string;
   isGoogleCalendarEnabled: boolean;
   notificationsEnabled: boolean;
   minutesBefore: number;
   onGoogleCalendarToggle: (checked: boolean) => void;
   onNotificationsToggle: (checked: boolean) => void;
   onMinutesBeforeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onColorChange: (color: string) => void;
 }
 
 export const SyncStep = ({
@@ -23,15 +26,25 @@ export const SyncStep = ({
   startTime,
   endTime,
   days,
+  selectedColor,
   isGoogleCalendarEnabled,
   notificationsEnabled,
   minutesBefore,
   onGoogleCalendarToggle,
   onNotificationsToggle,
-  onMinutesBeforeChange
+  onMinutesBeforeChange,
+  onColorChange
 }: SyncStepProps) => {
   return (
     <div className="space-y-6">
+      {/* Color Selector */}
+      <div className="p-4 bg-secondary/20 rounded-lg border border-secondary/30 mb-4">
+        <ColorSelector
+          currentColor={selectedColor}
+          onColorChange={onColorChange}
+        />
+      </div>
+
       <h2 className="text-lg font-medium text-white">Google Calendar</h2>
       
       <div className="flex items-center justify-between">

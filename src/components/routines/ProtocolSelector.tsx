@@ -1,5 +1,5 @@
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Info } from "lucide-react";
 import { Protocol } from "@/types/protocols";
 import { RoutineProtocol } from "@/types/rutina";
@@ -7,6 +7,7 @@ import { groupByDimension } from "./utils/protocolUtils";
 import { SearchBar } from "./protocol-selector/SearchBar";
 import { ProtocolCategories } from "./protocol-selector/ProtocolCategories";
 import { SelectedProtocolsPanel } from "./protocol-selector/SelectedProtocolsPanel";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface ProtocolSelectorProps {
   availableProtocols: Protocol[];
@@ -28,6 +29,20 @@ export const ProtocolSelector = ({
   const [isSelectionPanelExpanded, setIsSelectionPanelExpanded] = useState(selectedProtocols.length > 0);
   const selectedPanelRef = useRef<HTMLDivElement>(null);
   const [openCategories, setOpenCategories] = useState<string[]>([]);
+  
+  // Open first category by default if none are open
+  useEffect(() => {
+    if (openCategories.length === 0 && Object.keys(groupByDimension(availableProtocols)).length > 0) {
+      setOpenCategories([Object.keys(groupByDimension(availableProtocols))[0]]);
+    }
+  }, [availableProtocols, openCategories.length]);
+  
+  // Expand selection panel when protocols are selected
+  useEffect(() => {
+    if (selectedProtocols.length > 0 && !isSelectionPanelExpanded) {
+      setIsSelectionPanelExpanded(true);
+    }
+  }, [selectedProtocols.length, isSelectionPanelExpanded]);
   
   // All protocols (selected and unselected)
   const allProtocols = [...availableProtocols];
@@ -57,15 +72,10 @@ export const ProtocolSelector = ({
     } else {
       onAddProtocol(protocol);
       
-      // Expand selection panel if it's not already expanded
-      if (!isSelectionPanelExpanded) {
-        setIsSelectionPanelExpanded(true);
-        
-        // Scroll to selection panel after a short delay to let it render
-        setTimeout(() => {
-          selectedPanelRef.current?.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
+      // Scroll to selection panel after a short delay to let it render
+      setTimeout(() => {
+        selectedPanelRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
     }
   };
 
@@ -94,17 +104,13 @@ export const ProtocolSelector = ({
   // Toggle selection panel
   const toggleSelectionPanel = () => {
     setIsSelectionPanelExpanded(!isSelectionPanelExpanded);
-    
-    // Scroll to selection panel if expanding
-    if (!isSelectionPanelExpanded) {
-      setTimeout(() => {
-        selectedPanelRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    }
   };
   
+  // Check if search has no results
+  const hasNoResults = search.length > 0 && Object.keys(groupedProtocols).length === 0;
+  
   return (
-    <div className="flex flex-col space-y-4">
+    <div className="flex flex-col space-y-4 relative">
       {/* Search bar - fixed at top */}
       <SearchBar 
         search={search}
@@ -113,21 +119,36 @@ export const ProtocolSelector = ({
       />
       
       {/* Info message */}
-      <div className="mb-2 bg-secondary/50 p-2 rounded-md flex items-center text-xs">
-        <Info className="h-4 w-4 text-gray-400 mr-2 flex-shrink-0" />
-        <span className="text-gray-300">
-          Selecciona los protocolos para tu rutina. Puedes arrastrar para reordenar.
-        </span>
-      </div>
+      <Alert className="bg-[#02b1bb]/10 border-[#02b1bb]/30 mb-4">
+        <AlertDescription className="text-gray-300 flex items-center">
+          <Info className="h-4 w-4 text-[#02b1bb] mr-2 flex-shrink-0" />
+          Selecciona los protocolos para tu rutina. Puedes reordenarlos arrastrándolos.
+        </AlertDescription>
+      </Alert>
+      
+      {/* No results message */}
+      {hasNoResults && (
+        <div className="py-8 text-center">
+          <p className="text-gray-400">No se encontraron protocolos que coincidan con tu búsqueda.</p>
+          <button 
+            className="mt-2 text-[#02b1bb] text-sm"
+            onClick={() => setSearch("")}
+          >
+            Borrar búsqueda
+          </button>
+        </div>
+      )}
       
       {/* Main protocols list grouped by dimension */}
-      <ProtocolCategories
-        groupedProtocols={groupedProtocols}
-        openCategories={openCategories}
-        setOpenCategories={setOpenCategories}
-        isSelected={isSelected}
-        handleToggleProtocol={handleToggleProtocol}
-      />
+      <div className="pb-24">
+        <ProtocolCategories
+          groupedProtocols={groupedProtocols}
+          openCategories={openCategories}
+          setOpenCategories={setOpenCategories}
+          isSelected={isSelected}
+          handleToggleProtocol={handleToggleProtocol}
+        />
+      </div>
       
       {/* Bottom panel with selected protocols */}
       <SelectedProtocolsPanel

@@ -33,13 +33,13 @@ export const SelectedProtocolsPanel = ({
   return (
     <div 
       ref={selectedPanelRef}
-      className="mt-4 border-t border-[#1A1F2C]/30 pt-2 transition-all duration-300"
+      className="sticky bottom-0 bg-[#1A1F2C] border-t border-[#1A1F2C]/30 pt-2 transition-all duration-300 rounded-t-lg shadow-lg"
     >
       <button
         onClick={onToggleExpanded}
-        className="w-full flex items-center justify-center py-1 text-sm text-[#C8C8C9] hover:bg-[#1A1F2C]/30 rounded-md"
+        className="w-full flex items-center justify-center py-2 text-sm text-white hover:bg-[#1A1F2C]/30 rounded-t-md"
       >
-        <span>Seleccionados ({selectedProtocols.length})</span>
+        <span className="font-medium">Seleccionados ({selectedProtocols.length})</span>
         {isExpanded ? (
           <ChevronDown className="ml-1 h-4 w-4" />
         ) : (
@@ -48,7 +48,8 @@ export const SelectedProtocolsPanel = ({
       </button>
       
       {isExpanded && (
-        <div className="mt-2 space-y-2 max-h-[40vh] overflow-auto pr-1">
+        <div className="p-3 space-y-2 max-h-[40vh] overflow-auto">
+          <p className="text-xs text-gray-400 mb-2 italic">Arrastra para reordenar los protocolos</p>
           {selectedProtocols.map((item, index) => (
             <div
               key={`${item.protocol.id}-${index}`}
@@ -57,12 +58,12 @@ export const SelectedProtocolsPanel = ({
               onDragOver={(e) => onDragOver(e, index)}
               onDragEnd={onDragEnd}
               className={`
-                p-3 rounded-md bg-[#1A1F2C]/60 border border-[#0EA5E9]/20 flex items-center
-                transition-colors duration-200
-                ${dragIndex === index ? 'bg-[#1A1F2C]/80 border-[#0EA5E9]/50' : ''}
+                p-3 rounded-md bg-[#1A1F2C]/60 border border-[#02b1bb]/20 flex items-center
+                transition-all duration-200
+                ${dragIndex === index ? 'bg-[#1A1F2C]/80 border-[#02b1bb]/50 transform scale-[1.02] shadow-md' : ''}
               `}
             >
-              <div className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1A1F2C]/70 mr-3 text-xs font-medium text-white">
+              <div className="flex items-center justify-center w-6 h-6 rounded-full bg-[#02b1bb] mr-3 text-xs font-medium text-white">
                 {index + 1}
               </div>
               <GripVertical className="h-5 w-5 text-[#8A898C] mr-2 cursor-grab flex-shrink-0" />
@@ -84,9 +85,9 @@ export const SelectedProtocolsPanel = ({
                   e.stopPropagation();
                   onRemove(index);
                 }}
-                className="p-1 rounded-full hover:bg-[#1A1F2C]/80"
+                className="p-1.5 rounded-full hover:bg-[#1A1F2C]/80 text-red-400 hover:text-red-300"
               >
-                <X className="h-4 w-4 text-[#C8C8C9]" />
+                <X className="h-4 w-4" />
               </button>
             </div>
           ))}

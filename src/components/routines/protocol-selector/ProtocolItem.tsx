@@ -16,7 +16,7 @@ export const ProtocolItem = ({ protocol, isSelected, onToggle }: ProtocolItemPro
       className={`
         p-3 rounded-md flex items-center cursor-pointer transition-colors duration-200
         ${isSelected 
-          ? 'bg-[#1A1F2C]/80 border border-[#02b1bb]/30' 
+          ? 'bg-[#02b1bb]/10 border border-[#02b1bb]/30' 
           : 'bg-[#1A1F2C]/40 border border-[#1A1F2C]/20 hover:bg-[#1A1F2C]/60'}
       `}
       onClick={onToggle}
@@ -29,9 +29,16 @@ export const ProtocolItem = ({ protocol, isSelected, onToggle }: ProtocolItemPro
         />
       </div>
       <div className="flex-1">
-        <h4 className="text-white text-sm font-medium line-clamp-1">
-          {protocol.title}
-        </h4>
+        <div className="flex items-center">
+          <h4 className="text-white text-sm font-medium line-clamp-1">
+            {protocol.title}
+          </h4>
+          {isSelected && (
+            <Badge className="ml-2 bg-[#02b1bb]/20 text-[#02b1bb] text-xs">
+              Seleccionado
+            </Badge>
+          )}
+        </div>
         <div className="flex items-center mt-1">
           <Badge variant="outline" className="text-xs bg-[#1A1F2C]/30 mr-2">
             {protocol.dimension}
@@ -58,7 +65,7 @@ export const ProtocolItem = ({ protocol, isSelected, onToggle }: ProtocolItemPro
       </div>
       
       {isSelected ? (
-        <Check className="h-4 w-4 text-[#02b1bb]" />
+        <Check className="h-4 w-4 text-[#02b1bb] flex-shrink-0" />
       ) : null}
     </div>
   );

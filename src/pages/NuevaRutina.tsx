@@ -1,8 +1,9 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Routine, WeekDay } from "@/types/rutina";
+import { Routine, WeekDay, ROUTINE_COLORS } from "@/types/rutina";
 import { Protocol } from "@/types/protocols";
 import { protocols } from "@/pages/Protocolos"; // Importing mock protocols
 import { RoutineProtocol } from "@/types/rutina";
@@ -10,12 +11,14 @@ import { StepIndicator } from "@/components/routines/nueva-rutina/StepIndicator"
 import { BasicInfoStep } from "@/components/routines/nueva-rutina/BasicInfoStep";
 import { ProtocolsStep } from "@/components/routines/nueva-rutina/ProtocolsStep";
 import { SyncStep } from "@/components/routines/nueva-rutina/SyncStep";
+import { useToast } from "@/hooks/use-toast";
 
 // Generate a unique ID for the new routine
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
 const NuevaRutina = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [step, setStep] = useState(1);
   const [routineName, setRoutineName] = useState("Mi nueva rutina");
   const [startTime, setStartTime] = useState("08:00");
@@ -25,19 +28,31 @@ const NuevaRutina = () => {
   const [isGoogleCalendarEnabled, setIsGoogleCalendarEnabled] = useState(true);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [minutesBefore, setMinutesBefore] = useState(15);
+  const [selectedColor, setSelectedColor] = useState(ROUTINE_COLORS[0]);
 
   const handleAddProtocol = (protocol: Protocol) => {
     setSelectedProtocols(prev => [
       ...prev,
       { protocol, order: prev.length }
     ]);
+    toast({
+      title: "Protocolo añadido",
+      description: `Se ha añadido "${protocol.title}" a tu rutina`,
+      variant: "default",
+    });
   };
 
   const handleRemoveProtocol = (index: number) => {
+    const protocolName = selectedProtocols[index]?.protocol.title;
     setSelectedProtocols(prev => 
       prev.filter((_, i) => i !== index)
          .map((p, i) => ({ ...p, order: i }))
     );
+    toast({
+      title: "Protocolo eliminado",
+      description: `Se ha eliminado "${protocolName || 'el protocolo'}" de tu rutina`,
+      variant: "destructive",
+    });
   };
 
   const handleReorderProtocols = (newOrder: RoutineProtocol[]) => {
@@ -53,13 +68,21 @@ const NuevaRutina = () => {
   };
 
   const handleNextStep = () => {
-    if (step < 3) setStep(step + 1);
-    else handleSaveRoutine();
+    if (step < 3) {
+      setStep(step + 1);
+      window.scrollTo(0, 0);
+    } else {
+      handleSaveRoutine();
+    }
   };
 
   const handlePrevStep = () => {
-    if (step > 1) setStep(step - 1);
-    else navigate('/rutinas');
+    if (step > 1) {
+      setStep(step - 1);
+      window.scrollTo(0, 0);
+    } else {
+      navigate('/rutinas');
+    }
   };
 
   const handleSaveRoutine = () => {
@@ -77,13 +100,19 @@ const NuevaRutina = () => {
         enabled: notificationsEnabled,
         minutesBefore: minutesBefore
       },
-      color: "#FF4081",
+      color: selectedColor,
       isActive: true,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
     
     console.log("New routine created:", newRoutine);
+    
+    toast({
+      title: "Rutina creada",
+      description: `Se ha creado la rutina "${routineName}" correctamente`,
+      variant: "default",
+    });
     
     navigate('/rutinas');
   };
@@ -95,7 +124,6 @@ const NuevaRutina = () => {
           <BasicInfoStep
             routineName={routineName}
             startTime={startTime}
-            endTime={endTime}
             selectedDays={selectedDays}
             onNameChange={(e) => setRoutineName(e.target.value)}
             onStartTimeChange={setStartTime}
@@ -121,12 +149,14 @@ const NuevaRutina = () => {
             startTime={startTime}
             endTime={endTime}
             days={selectedDays}
+            selectedColor={selectedColor}
             isGoogleCalendarEnabled={isGoogleCalendarEnabled}
             notificationsEnabled={notificationsEnabled}
             minutesBefore={minutesBefore}
             onGoogleCalendarToggle={setIsGoogleCalendarEnabled}
             onNotificationsToggle={setNotificationsEnabled}
             onMinutesBeforeChange={(e) => setMinutesBefore(Number(e.target.value))}
+            onColorChange={setSelectedColor}
           />
         );
       
@@ -150,7 +180,7 @@ const NuevaRutina = () => {
           <h1 className="text-xl font-semibold font-oswald text-white">
             {step === 1 ? "Crear nueva rutina" : 
              step === 2 ? "Seleccionar protocolos" : 
-             "Configurar sincronización"}
+             "Personalizar rutina"}
           </h1>
         </div>
         <StepIndicator currentStep={step} totalSteps={3} />
