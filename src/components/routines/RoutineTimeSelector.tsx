@@ -6,7 +6,6 @@ interface RoutineTimeSelectorProps {
   startTime: string;
   endTime: string;
   onStartTimeChange: (time: string) => void;
-  onEndTimeChange: (time: string) => void;
   protocols?: { duration: string }[];
 }
 
@@ -14,7 +13,6 @@ export const RoutineTimeSelector = ({
   startTime,
   endTime,
   onStartTimeChange,
-  onEndTimeChange,
   protocols = []
 }: RoutineTimeSelectorProps) => {
   const [duration, setDuration] = useState(() => {
@@ -41,38 +39,12 @@ export const RoutineTimeSelector = ({
     
     if (totalMinutes > 0) {
       setDuration(totalMinutes);
-      
-      // Update end time based on protocols duration
-      const [hours, minutes] = startTime.split(":").map(Number);
-      const startTotalMinutes = hours * 60 + minutes;
-      const endTotalMinutes = startTotalMinutes + totalMinutes;
-      
-      const endHours = Math.floor(endTotalMinutes / 60) % 24;
-      const endMinutes = endTotalMinutes % 60;
-      
-      const formattedEndHours = endHours.toString().padStart(2, "0");
-      const formattedEndMinutes = endMinutes.toString().padStart(2, "0");
-      
-      onEndTimeChange(`${formattedEndHours}:${formattedEndMinutes}`);
     }
-  }, [protocols, startTime, onEndTimeChange]);
+  }, [protocols]);
 
   const handleStartTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newStartTime = e.target.value;
     onStartTimeChange(newStartTime);
-    
-    // Update end time based on duration
-    const [hours, minutes] = newStartTime.split(":").map(Number);
-    const startTotalMinutes = hours * 60 + minutes;
-    const endTotalMinutes = startTotalMinutes + duration;
-    
-    const endHours = Math.floor(endTotalMinutes / 60) % 24;
-    const endMinutes = endTotalMinutes % 60;
-    
-    const formattedEndHours = endHours.toString().padStart(2, "0");
-    const formattedEndMinutes = endMinutes.toString().padStart(2, "0");
-    
-    onEndTimeChange(`${formattedEndHours}:${formattedEndMinutes}`);
   };
 
   // Format duration for display

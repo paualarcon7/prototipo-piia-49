@@ -99,7 +99,6 @@ const NuevaRutina = () => {
             selectedDays={selectedDays}
             onNameChange={(e) => setRoutineName(e.target.value)}
             onStartTimeChange={setStartTime}
-            onEndTimeChange={setEndTime}
             onDayToggle={handleDayToggle}
           />
         );

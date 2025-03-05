@@ -13,7 +13,6 @@ interface BasicInfoStepProps {
   selectedProtocols?: { protocol: Protocol }[];
   onNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onStartTimeChange: (time: string) => void;
-  onEndTimeChange: (time: string) => void;
   onDayToggle: (day: WeekDay) => void;
 }
 
@@ -25,7 +24,6 @@ export const BasicInfoStep = ({
   selectedProtocols = [],
   onNameChange,
   onStartTimeChange,
-  onEndTimeChange,
   onDayToggle
 }: BasicInfoStepProps) => {
   return (
@@ -46,7 +44,6 @@ export const BasicInfoStep = ({
           startTime={startTime}
           endTime={endTime}
           onStartTimeChange={onStartTimeChange}
-          onEndTimeChange={onEndTimeChange}
           protocols={selectedProtocols?.map(p => ({ 
             duration: p.protocol.duration
           }))}

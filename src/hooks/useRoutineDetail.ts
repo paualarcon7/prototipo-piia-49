@@ -1,4 +1,3 @@
-
 import { Routine, RoutineProtocol } from "@/types/rutina";
 import { Protocol } from "@/types/protocols";
 import { useRoutineState } from "./routine/useRoutineState";
@@ -23,8 +22,7 @@ export const useRoutineDetail = (initialRoutine: Routine) => {
   const {
     handleNameChange,
     handleDayToggle,
-    handleStartTimeChange,
-    handleEndTimeChange
+    handleStartTimeChange
   } = useRoutineBasicInfo(routine, setRoutine);
 
   const {
@@ -49,7 +47,6 @@ export const useRoutineDetail = (initialRoutine: Routine) => {
     notifyProtocolRemoved
   } = useRoutineActions();
 
-  // Wrapper functions to add notifications and additional functionality
   const toggleEditMode = () => {
     const result = baseToggleEditMode();
     if (result === false) {
@@ -76,7 +73,6 @@ export const useRoutineDetail = (initialRoutine: Routine) => {
     
     baseHandleColorChange(color);
     
-    // Only show toast when in edit mode
     if (isEditing) {
       notifyColorUpdated();
     }
@@ -105,7 +101,6 @@ export const useRoutineDetail = (initialRoutine: Routine) => {
     handleNameChange,
     handleDayToggle,
     handleStartTimeChange,
-    handleEndTimeChange,
     handleAddProtocol,
     handleRemoveProtocol,
     handleReorderProtocols,

@@ -1,3 +1,4 @@
+
 import { Routine, WeekDay } from "@/types/rutina";
 
 export function useRoutineBasicInfo(routine: Routine, setRoutine: React.Dispatch<React.SetStateAction<Routine>>) {
@@ -44,20 +45,9 @@ export function useRoutineBasicInfo(routine: Routine, setRoutine: React.Dispatch
     }));
   };
 
-  const handleEndTimeChange = (time: string) => {
-    setRoutine(prev => ({
-      ...prev,
-      time: {
-        ...prev.time,
-        end: time
-      }
-    }));
-  };
-
   return {
     handleNameChange,
     handleDayToggle,
-    handleStartTimeChange,
-    handleEndTimeChange
+    handleStartTimeChange
   };
 }

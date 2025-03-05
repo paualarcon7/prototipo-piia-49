@@ -1,4 +1,3 @@
-
 import { Input } from "@/components/ui/input";
 import { RoutineTimeSelector } from "@/components/routines/RoutineTimeSelector";
 import { DaySelector } from "@/components/routines/DaySelector";
@@ -11,7 +10,6 @@ interface RoutineEditFormProps {
   routine: Routine;
   onNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onStartTimeChange: (time: string) => void;
-  onEndTimeChange: (time: string) => void;
   onDayToggle: (day: WeekDay) => void;
   onActiveToggle: () => void;
   onNotificationToggle: () => void;
@@ -23,7 +21,6 @@ export const RoutineEditForm = ({
   routine,
   onNameChange,
   onStartTimeChange,
-  onEndTimeChange,
   onDayToggle,
   onActiveToggle,
   onNotificationToggle,
@@ -48,7 +45,6 @@ export const RoutineEditForm = ({
           startTime={routine.time.start}
           endTime={routine.time.end}
           onStartTimeChange={onStartTimeChange}
-          onEndTimeChange={onEndTimeChange}
           protocols={routine.protocols?.map(p => ({ 
             duration: p.protocol.duration
           }))}
