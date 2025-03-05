@@ -34,7 +34,7 @@ const ProtocolCard = ({ protocol, isLocked = false }: ProtocolCardProps) => {
     <>
       <Card 
         key={protocol.id} 
-        className={`bg-gradient-to-br from-[#0EA5E9]/20 to-[#9b87f5]/20 backdrop-blur-sm border-secondary/20 p-6 space-y-4 hover:shadow-lg hover:shadow-[#ffcc08]/10 transition-all duration-300 cursor-pointer relative ${
+        className={`bg-gradient-to-br from-[#0EA5E9]/20 to-[#02b1bb]/20 backdrop-blur-sm border-secondary/20 p-6 space-y-4 hover:shadow-lg hover:shadow-[#02b1bb]/10 transition-all duration-300 cursor-pointer relative ${
           isLocked ? 'opacity-75 hover:opacity-85' : ''
         }`}
         onClick={handleClick}

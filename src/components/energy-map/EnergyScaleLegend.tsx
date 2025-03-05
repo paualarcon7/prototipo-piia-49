@@ -4,7 +4,7 @@ import { BadgeAlert } from "lucide-react";
 export const EnergyScaleLegend = () => {
   return (
     <div className="flex items-start gap-4">
-      <BadgeAlert className="w-6 h-6 text-purple-500 flex-shrink-0 mt-1" />
+      <BadgeAlert className="w-6 h-6 text-[#02b1bb] flex-shrink-0 mt-1" />
       <div>
         <h3 className="font-medium mb-2">Escala de Energía</h3>
         <ul className="space-y-2 text-sm text-gray-300">
@@ -25,7 +25,7 @@ export const EnergyScaleLegend = () => {
             <span>Estimulante - Te da un impulso de energía</span>
           </li>
           <li className="flex items-center gap-2">
-            <span className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-300 flex items-center justify-center text-xs">5</span>
+            <span className="w-6 h-6 rounded-full bg-[#02b1bb]/20 text-[#02b1bb] flex items-center justify-center text-xs">5</span>
             <span>Energizante - Te llena de vitalidad y motivación</span>
           </li>
         </ul>

@@ -32,12 +32,12 @@ export const ActivityList = ({ activities, onAddActivity }: ActivityListProps) =
             variant="outline"
             size="icon"
             onClick={onAddActivity}
-            className="rounded-full bg-purple-500 hover:bg-purple-600 border-0 absolute -top-4 -right-4"
+            className="rounded-full bg-[#02b1bb] hover:bg-[#003438] border-0 absolute -top-4 -right-4"
           >
             <Plus className="h-4 w-4 text-white" />
           </Button>
         ) : (
-          <Button onClick={onAddActivity}>
+          <Button onClick={onAddActivity} className="bg-[#02b1bb] hover:bg-[#003438] text-white">
             <Plus className="mr-2 h-4 w-4" />
             Nueva Actividad
           </Button>
@@ -68,8 +68,8 @@ export const ActivityList = ({ activities, onAddActivity }: ActivityListProps) =
                           {format(new Date(`2024-01-01T${activity.endTime}`), 'HH:mm')}
                         </span>
                         <div className="flex items-center gap-1">
-                          <Star className="w-4 h-4 text-purple-500" fill="currentColor" />
-                          <span className="text-purple-300">{activity.energyRating}</span>
+                          <Star className="w-4 h-4 text-[#02b1bb]" fill="currentColor" />
+                          <span className="text-[#02b1bb]">{activity.energyRating}</span>
                         </div>
                       </div>
                       {activity.description && (

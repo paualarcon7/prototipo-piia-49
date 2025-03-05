@@ -18,14 +18,14 @@ export const ModuleProgress = ({ stageStatuses }: ModuleProgressProps) => {
     <div className="mb-2">
       <div className="flex justify-between items-center mb-2">
         <span className="text-sm text-gray-400 font-lato">Progreso de hoy</span>
-        <span className="text-sm font-medium text-[#9b87f5]">
+        <span className="text-sm font-medium text-[#02b1bb]">
           {completedStages}/4 completadas
         </span>
       </div>
       <Progress 
         value={completedStages * 25} 
         className="h-2.5 bg-[#252A3C] rounded-full overflow-hidden"
-        indicatorClassName="bg-gradient-to-r from-[#7E69AB] to-[#9b87f5]"
+        indicatorClassName="bg-gradient-to-r from-[#0EA5E9] to-[#02b1bb]"
       />
       <div className="flex justify-between mt-2">
         <span className="text-xs text-gray-500 font-lato">Inicio</span>

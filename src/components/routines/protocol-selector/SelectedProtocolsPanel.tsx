@@ -57,9 +57,9 @@ export const SelectedProtocolsPanel = ({
               onDragOver={(e) => onDragOver(e, index)}
               onDragEnd={onDragEnd}
               className={`
-                p-3 rounded-md bg-[#1A1F2C]/60 border border-[#9b87f5]/20 flex items-center
+                p-3 rounded-md bg-[#1A1F2C]/60 border border-[#0EA5E9]/20 flex items-center
                 transition-colors duration-200
-                ${dragIndex === index ? 'bg-[#1A1F2C]/80 border-[#9b87f5]/50' : ''}
+                ${dragIndex === index ? 'bg-[#1A1F2C]/80 border-[#0EA5E9]/50' : ''}
               `}
             >
               <div className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1A1F2C]/70 mr-3 text-xs font-medium text-white">

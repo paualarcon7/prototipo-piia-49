@@ -16,7 +16,7 @@ export const EnergyRatingSelector = ({ value, onChange }: EnergyRatingSelectorPr
           className={cn(
             "w-10 h-10 rounded-full flex items-center justify-center transition-all",
             value === rating
-              ? "bg-purple-500 text-white"
+              ? "bg-[#02b1bb] text-white"
               : "bg-secondary hover:bg-secondary/80 text-gray-400"
           )}
         >

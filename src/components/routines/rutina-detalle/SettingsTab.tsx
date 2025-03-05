@@ -96,7 +96,7 @@ export const SettingsTab = ({
         
         <Button 
           variant="outline" 
-          className="w-full mt-2 text-[#D946EF] border-[#D946EF]/20"
+          className="w-full mt-2 text-[#FF4081] border-[#FF4081]/20"
           onClick={onOpenDeleteDialog}
         >
           <Trash2 className="h-4 w-4 mr-2" />
