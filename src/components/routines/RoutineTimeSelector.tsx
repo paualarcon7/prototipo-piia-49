@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Clock } from "lucide-react";
 
 interface RoutineTimeSelectorProps {
@@ -7,13 +7,15 @@ interface RoutineTimeSelectorProps {
   endTime: string;
   onStartTimeChange: (time: string) => void;
   onEndTimeChange: (time: string) => void;
+  protocols?: { duration: string }[];
 }
 
 export const RoutineTimeSelector = ({
   startTime,
   endTime,
   onStartTimeChange,
-  onEndTimeChange
+  onEndTimeChange,
+  protocols = []
 }: RoutineTimeSelectorProps) => {
   const [duration, setDuration] = useState(() => {
     // Calculate duration between start and end time
@@ -25,6 +27,35 @@ export const RoutineTimeSelector = ({
     
     return endTotalMinutes - startTotalMinutes;
   });
+
+  // Calculate total duration from protocols
+  useEffect(() => {
+    let totalMinutes = 0;
+    
+    protocols.forEach(protocol => {
+      const durationMatch = protocol.duration?.match(/(\d+)/);
+      if (durationMatch) {
+        totalMinutes += parseInt(durationMatch[0], 10);
+      }
+    });
+    
+    if (totalMinutes > 0) {
+      setDuration(totalMinutes);
+      
+      // Update end time based on protocols duration
+      const [hours, minutes] = startTime.split(":").map(Number);
+      const startTotalMinutes = hours * 60 + minutes;
+      const endTotalMinutes = startTotalMinutes + totalMinutes;
+      
+      const endHours = Math.floor(endTotalMinutes / 60) % 24;
+      const endMinutes = endTotalMinutes % 60;
+      
+      const formattedEndHours = endHours.toString().padStart(2, "0");
+      const formattedEndMinutes = endMinutes.toString().padStart(2, "0");
+      
+      onEndTimeChange(`${formattedEndHours}:${formattedEndMinutes}`);
+    }
+  }, [protocols, startTime, onEndTimeChange]);
 
   const handleStartTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newStartTime = e.target.value;
@@ -44,20 +75,6 @@ export const RoutineTimeSelector = ({
     onEndTimeChange(`${formattedEndHours}:${formattedEndMinutes}`);
   };
 
-  const handleEndTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newEndTime = e.target.value;
-    onEndTimeChange(newEndTime);
-    
-    // Update duration
-    const [startHours, startMinutes] = startTime.split(":").map(Number);
-    const [endHours, endMinutes] = newEndTime.split(":").map(Number);
-    
-    const startTotalMinutes = startHours * 60 + startMinutes;
-    const endTotalMinutes = endHours * 60 + endMinutes;
-    
-    setDuration(endTotalMinutes - startTotalMinutes);
-  };
-
   // Format duration for display
   const formatDuration = (minutes: number) => {
     if (minutes < 0) return "Horario inválido";
@@ -70,6 +87,21 @@ export const RoutineTimeSelector = ({
     }
     
     return `${mins}m`;
+  };
+
+  // Calculate end time display
+  const calculateEndTime = () => {
+    const [startHours, startMinutes] = startTime.split(":").map(Number);
+    const startTotalMinutes = startHours * 60 + startMinutes;
+    const endTotalMinutes = startTotalMinutes + duration;
+    
+    const endHours = Math.floor(endTotalMinutes / 60) % 24;
+    const endMinutes = endTotalMinutes % 60;
+    
+    const formattedEndHours = endHours.toString().padStart(2, "0");
+    const formattedEndMinutes = endMinutes.toString().padStart(2, "0");
+    
+    return `${formattedEndHours}:${formattedEndMinutes}`;
   };
 
   return (
@@ -90,14 +122,11 @@ export const RoutineTimeSelector = ({
           </div>
           
           <div className="flex-1 space-y-1">
-            <label className="text-xs text-gray-400">Hora fin</label>
+            <label className="text-xs text-gray-400">Hora fin (automática)</label>
             <div className="relative">
-              <input
-                type="time"
-                value={endTime}
-                onChange={handleEndTimeChange}
-                className="bg-secondary/70 text-white border-0 rounded-md p-2 pl-8 w-full focus:ring-1 focus:ring-[#FF4081] focus:outline-none"
-              />
+              <div className="bg-secondary/70 text-white border-0 rounded-md p-2 pl-8 w-full">
+                {calculateEndTime()}
+              </div>
               <Clock className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
             </div>
           </div>

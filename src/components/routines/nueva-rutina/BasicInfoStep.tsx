@@ -3,12 +3,14 @@ import { Input } from "@/components/ui/input";
 import { RoutineTimeSelector } from "@/components/routines/RoutineTimeSelector";
 import { DaySelector } from "@/components/routines/DaySelector";
 import { WeekDay } from "@/types/rutina";
+import { Protocol } from "@/types/protocols";
 
 interface BasicInfoStepProps {
   routineName: string;
   startTime: string;
   endTime: string;
   selectedDays: WeekDay[];
+  selectedProtocols?: { protocol: Protocol }[];
   onNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onStartTimeChange: (time: string) => void;
   onEndTimeChange: (time: string) => void;
@@ -20,6 +22,7 @@ export const BasicInfoStep = ({
   startTime,
   endTime,
   selectedDays,
+  selectedProtocols = [],
   onNameChange,
   onStartTimeChange,
   onEndTimeChange,
@@ -44,6 +47,9 @@ export const BasicInfoStep = ({
           endTime={endTime}
           onStartTimeChange={onStartTimeChange}
           onEndTimeChange={onEndTimeChange}
+          protocols={selectedProtocols?.map(p => ({ 
+            duration: p.protocol.duration
+          }))}
         />
       </div>
       

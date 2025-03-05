@@ -49,6 +49,9 @@ export const RoutineEditForm = ({
           endTime={routine.time.end}
           onStartTimeChange={onStartTimeChange}
           onEndTimeChange={onEndTimeChange}
+          protocols={routine.protocols?.map(p => ({ 
+            duration: p.protocol.duration
+          }))}
         />
       </div>
       
