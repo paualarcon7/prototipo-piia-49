@@ -111,14 +111,15 @@ const RutinaDetalle = () => {
         {/* Main content */}
         {isEditing ? (
           <RoutineEditForm
-            routineName={routine.name}
-            startTime={routine.time.start}
-            endTime={routine.time.end}
-            selectedDays={routine.days}
+            routine={routine}
             onNameChange={handleNameChange}
             onStartTimeChange={handleStartTimeChange}
             onEndTimeChange={handleEndTimeChange}
             onDayToggle={handleDayToggle}
+            onActiveToggle={handleActiveToggle}
+            onNotificationToggle={handleNotificationToggle}
+            onMinutesBeforeChange={handleMinutesBeforeChange}
+            onColorChange={handleColorChange}
           />
         ) : (
           <RoutineInfoCard 
