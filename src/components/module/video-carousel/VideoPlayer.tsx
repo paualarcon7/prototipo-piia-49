@@ -31,27 +31,24 @@ export function VideoPlayer({ index }: VideoPlayerProps) {
     if (videoRefs.current[index]) {
       // Make sure video has a source
       const videoElement = videoRefs.current[index];
-      if (videoElement && !videoElement.src) {
-        videoElement.load();
-      }
       
       // Check if this is the current video and should be played
       if (index === currentVideoIndex) {
         console.log(`Reproduciendo video ${index}: ${slide.src}`);
         if (videoElement) {
-          // Set the src attribute directly if needed
-          if (videoElement.querySelector('source')?.src !== slide.src) {
-            const sourceElement = videoElement.querySelector('source');
-            if (sourceElement) {
-              sourceElement.src = slide.src;
-              videoElement.load();
-            }
+          // Set video source if needed
+          if (!videoElement.src) {
+            videoElement.src = slide.src;
+            videoElement.load();
           }
           
           // Play the video with error handling
-          videoElement.play().catch(err => {
-            console.log("Error al reproducir el video:", err);
-          });
+          const playPromise = videoElement.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(err => {
+              console.error("Error al reproducir el video:", err);
+            });
+          }
         }
       } else {
         // Pause other videos to conserve resources
@@ -91,11 +88,9 @@ export function VideoPlayer({ index }: VideoPlayerProps) {
         onEnded={handleVideoEnded}
         onError={handleError}
         onLoadedData={handleLoadedData}
+        src={slide.src}
         preload="metadata"
-      >
-        <source src={slide.src} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+      />
 
       {videoError && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/75 text-white text-center p-4">

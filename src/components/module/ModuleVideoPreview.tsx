@@ -21,8 +21,6 @@ export function ModuleVideoPreview({
   videoSlides,
   onPlayClick
 }: ModuleVideoPreviewProps) {
-  const [previewVideo, setPreviewVideo] = React.useState<HTMLVideoElement | null>(null);
-  const [isPlaying, setIsPlaying] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const isMobile = useIsMobile();
 
@@ -34,14 +32,10 @@ export function ModuleVideoPreview({
   
   React.useEffect(() => {
     if (videoRef.current) {
-      setPreviewVideo(videoRef.current);
-      
-      // Ensure the video source is loaded properly
-      const videoElement = videoRef.current;
-      const sourceElement = videoElement.querySelector('source');
-      if (sourceElement && sourceElement.src !== firstSlide.src) {
-        sourceElement.src = firstSlide.src;
-        videoElement.load();
+      // Set the source directly
+      if (!videoRef.current.src) {
+        videoRef.current.src = firstSlide.src;
+        videoRef.current.load();
       }
     }
   }, [firstSlide.src]);
@@ -83,10 +77,8 @@ export function ModuleVideoPreview({
           onError={handleVideoError} 
           onLoadedData={handleVideoLoaded}
           preload="metadata"
-        >
-          <source src={firstSlide.src} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+          src={firstSlide.src}
+        />
         
         {/* Overlay mask */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
