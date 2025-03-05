@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
@@ -42,6 +43,8 @@ export const useRoutineDetail = (initialRoutine: Routine) => {
 
   const toggleEditMode = () => {
     if (isEditing) {
+      // Cancel changes - restore original routine
+      console.log("Canceling changes, restoring original color:", originalRoutine.color);
       setRoutine({...originalRoutine});
       setIsEditing(false);
       toast({
@@ -49,12 +52,16 @@ export const useRoutineDetail = (initialRoutine: Routine) => {
         description: "Los cambios en la rutina han sido descartados",
       });
     } else {
+      // Enter edit mode - store current routine as original
+      console.log("Entering edit mode, storing original color:", routine.color);
       setOriginalRoutine({...routine});
       setIsEditing(true);
     }
   };
 
   const saveChanges = () => {
+    // Save changes - store current routine as original
+    console.log("Saving changes, new color:", routine.color);
     setOriginalRoutine({...routine});
     setIsEditing(false);
     toast({
@@ -145,15 +152,28 @@ export const useRoutineDetail = (initialRoutine: Routine) => {
   };
 
   const handleColorChange = (color: string) => {
-    console.log("Color changed to:", color);
-    setRoutine(prev => ({
-      ...prev,
-      color
-    }));
-    toast({
-      title: "Color actualizado",
-      description: "El color de la rutina ha sido actualizado",
+    console.log("handleColorChange called with color:", color);
+    if (!isEditing) {
+      console.log("Not in editing mode, ignoring color change");
+      return;
+    }
+    
+    setRoutine(prev => {
+      const updatedRoutine = {
+        ...prev,
+        color
+      };
+      console.log("Updated routine with new color:", updatedRoutine.color);
+      return updatedRoutine;
     });
+    
+    // Only show toast when in edit mode
+    if (isEditing) {
+      toast({
+        title: "Color actualizado",
+        description: "El color de la rutina ha sido actualizado",
+      });
+    }
   };
 
   return {

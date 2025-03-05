@@ -55,19 +55,19 @@ export const ColorSelector = ({
         <Button
           variant="outline"
           size="icon"
-          className="relative"
+          className={`relative ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
           onClick={() => !disabled && setIsOpen(!isOpen)}
           disabled={disabled}
         >
           <div 
             className="absolute inset-2 rounded-sm"
-            style={{ backgroundColor: currentColor }}
+            style={{ backgroundColor: currentColor || '#FF4081' }}
           />
           <Palette className="h-4 w-4 text-white opacity-0" />
         </Button>
       </div>
       
-      {isOpen && (
+      {isOpen && !disabled && (
         <div className="absolute right-0 mt-2 p-3 bg-[#1A1F2C] border border-[#1A1F2C]/50 rounded-lg shadow-lg z-20">
           <div className="grid grid-cols-5 gap-2">
             {ROUTINE_COLORS.map((color) => (
