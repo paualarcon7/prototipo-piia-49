@@ -1,6 +1,6 @@
 
 import { useState, useRef, useEffect } from "react";
-import { Info } from "lucide-react";
+import { Filter, Info } from "lucide-react";
 import { Protocol } from "@/types/protocols";
 import { RoutineProtocol } from "@/types/rutina";
 import { groupByDimension } from "./utils/protocolUtils";
@@ -8,6 +8,8 @@ import { SearchBar } from "./protocol-selector/SearchBar";
 import { ProtocolCategories } from "./protocol-selector/ProtocolCategories";
 import { SelectedProtocolsPanel } from "./protocol-selector/SelectedProtocolsPanel";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ProtocolSelectorProps {
   availableProtocols: Protocol[];
@@ -29,6 +31,8 @@ export const ProtocolSelector = ({
   const [isSelectionPanelExpanded, setIsSelectionPanelExpanded] = useState(selectedProtocols.length > 0);
   const selectedPanelRef = useRef<HTMLDivElement>(null);
   const [openCategories, setOpenCategories] = useState<string[]>([]);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const isMobile = useIsMobile();
   
   // Open first category by default if none are open
   useEffect(() => {
@@ -116,13 +120,50 @@ export const ProtocolSelector = ({
         search={search}
         setSearch={setSearch}
         selectedProtocols={selectedProtocols}
+        onOpenFilters={() => setIsFilterOpen(true)}
       />
+      
+      {/* Mobile Filter Sheet */}
+      {isMobile && (
+        <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+          <SheetContent side="bottom" className="h-[80vh] pb-16">
+            <SheetHeader>
+              <SheetTitle>Filtrar por dimensión</SheetTitle>
+            </SheetHeader>
+            <div className="mt-4 space-y-2">
+              {Object.keys(groupByDimension(availableProtocols)).map(dimension => (
+                <button
+                  key={dimension}
+                  className={`w-full p-3 text-left rounded-md ${
+                    openCategories.includes(dimension) 
+                      ? 'bg-[#02b1bb]/10 border border-[#02b1bb]/30' 
+                      : 'bg-[#1A1F2C]/40 border border-[#1A1F2C]/20'
+                  }`}
+                  onClick={() => {
+                    setOpenCategories(prev => 
+                      prev.includes(dimension) 
+                        ? prev.filter(d => d !== dimension) 
+                        : [...prev, dimension]
+                    );
+                    setIsFilterOpen(false);
+                  }}
+                >
+                  <span className="font-medium">{dimension}</span>
+                  <div className="text-xs text-gray-400 mt-1">
+                    {availableProtocols.filter(p => p.dimension === dimension).length} protocolos
+                  </div>
+                </button>
+              ))}
+            </div>
+          </SheetContent>
+        </Sheet>
+      )}
       
       {/* Info message */}
       <Alert className="bg-[#02b1bb]/10 border-[#02b1bb]/30 mb-4">
-        <AlertDescription className="text-gray-300 flex items-center">
+        <AlertDescription className="text-gray-300 flex items-center text-sm">
           <Info className="h-4 w-4 text-[#02b1bb] mr-2 flex-shrink-0" />
-          Selecciona los protocolos para tu rutina. Puedes reordenarlos arrastrándolos.
+          {isMobile ? "Selecciona protocolos para tu rutina." : "Selecciona los protocolos para tu rutina. Puedes reordenarlos arrastrándolos."}
         </AlertDescription>
       </Alert>
       
