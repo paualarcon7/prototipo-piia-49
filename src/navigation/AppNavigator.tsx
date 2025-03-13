@@ -6,11 +6,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
 // Import screens
+import HomeScreen from '../screens/HomeScreen';
+import ChatbotScreen from '../screens/ChatbotScreen';
 import ProgramaDetalleScreen from '../screens/ProgramaDetalleScreen';
 
 // Define our navigation types
 type RootStackParamList = {
   Home: undefined;
+  Chatbot: undefined;
   ProgramaDetalle: { id: string };
   ModuloDetalle: { id: string; moduleId: string };
 };
@@ -18,6 +21,34 @@ type RootStackParamList = {
 // Create our navigators
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
+
+// Tab navigator
+const TabNavigator = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName: any;
+
+          if (route.name === 'Home') {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'Chatbot') {
+            iconName = focused ? 'chatbubble' : 'chatbubble-outline';
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarStyle: { backgroundColor: '#121212', borderTopColor: '#333' },
+        tabBarActiveTintColor: '#FF4081',
+        tabBarInactiveTintColor: 'gray',
+        headerShown: false,
+      })}
+    >
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Chatbot" component={ChatbotScreen} />
+    </Tab.Navigator>
+  );
+};
 
 // Main stack navigator
 const AppStack = () => {
@@ -28,15 +59,14 @@ const AppStack = () => {
         cardStyle: { backgroundColor: '#121212' },
       }}
     >
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="TabNavigator" component={TabNavigator} />
       <Stack.Screen name="ProgramaDetalle" component={ProgramaDetalleScreen} />
       <Stack.Screen name="ModuloDetalle" component={ModuloDetalleScreen} />
     </Stack.Navigator>
   );
 };
 
-// Placeholder components for now
-const HomeScreen = () => <></>;
+// Placeholder component for now
 const ModuloDetalleScreen = () => <></>;
 
 // Export the navigation container
