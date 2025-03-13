@@ -9,6 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
 import ChatbotScreen from '../screens/ChatbotScreen';
 import ProgramaDetalleScreen from '../screens/ProgramaDetalleScreen';
+import ModuloDetalleScreen from '../screens/ModuloDetalleScreen';
 
 // Define our navigation types
 type RootStackParamList = {
@@ -16,6 +17,7 @@ type RootStackParamList = {
   Chatbot: undefined;
   ProgramaDetalle: { id: string };
   ModuloDetalle: { id: string; moduleId: string };
+  TabNavigator: undefined;
 };
 
 // Create our navigators
@@ -66,8 +68,12 @@ const AppStack = () => {
   );
 };
 
-// Placeholder component for now
-const ModuloDetalleScreen = () => <></>;
+// Create ModuloDetalleScreen component
+const ModuloDetalleScreen: React.FC<{ route: { params: { id: string, moduleId: string } } }> = ({ route }) => {
+  return (
+    <></>
+  );
+};
 
 // Export the navigation container
 export default function AppNavigator() {

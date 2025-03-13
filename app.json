@@ -1,0 +1,31 @@
+
+{
+  "expo": {
+    "name": "PIIA App",
+    "slug": "piia-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./public/lovable-uploads/70da5878-9104-43f4-a80c-d917eeb7f844.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./public/lovable-uploads/70da5878-9104-43f4-a80c-d917eeb7f844.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#121212"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./public/lovable-uploads/70da5878-9104-43f4-a80c-d917eeb7f844.png",
+        "backgroundColor": "#121212"
+      }
+    },
+    "web": {
+      "favicon": "./public/favicon.ico"
+    }
+  }
+}

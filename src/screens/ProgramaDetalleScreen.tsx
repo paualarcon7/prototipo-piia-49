@@ -1,12 +1,11 @@
 
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, FlatList, Modal } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 // Define program type
@@ -245,7 +244,7 @@ const ProgramaDetalleScreen = () => {
 
   const handleModuleClick = (moduleIndex: number, module: Module) => {
     if (!module.completed && !module.current) {
-      // In React Native, we'd use an alert instead of toast
+      // Use react native alert
       alert("Este módulo aún no está disponible");
       return;
     }

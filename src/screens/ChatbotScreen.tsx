@@ -9,7 +9,8 @@ import {
   StyleSheet, 
   KeyboardAvoidingView, 
   Platform, 
-  Image 
+  Image,
+  Animated 
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -42,11 +43,60 @@ const ChatbotScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const flatListRef = useRef<FlatList>(null);
 
+  // Animated values for dots
+  const dot1Opacity = useRef(new Animated.Value(0.6)).current;
+  const dot2Opacity = useRef(new Animated.Value(0.6)).current;
+  const dot3Opacity = useRef(new Animated.Value(0.6)).current;
+
   useEffect(() => {
     if (flatListRef.current) {
       flatListRef.current.scrollToEnd({ animated: true });
     }
-  }, [messages]);
+
+    // Animation sequence for loading dots
+    const animateDots = () => {
+      Animated.sequence([
+        Animated.timing(dot1Opacity, {
+          toValue: 1,
+          duration: 200,
+          useNativeDriver: true
+        }),
+        Animated.timing(dot2Opacity, {
+          toValue: 1,
+          duration: 200,
+          useNativeDriver: true
+        }),
+        Animated.timing(dot3Opacity, {
+          toValue: 1,
+          duration: 200,
+          useNativeDriver: true
+        }),
+        Animated.timing(dot1Opacity, {
+          toValue: 0.6,
+          duration: 200,
+          useNativeDriver: true
+        }),
+        Animated.timing(dot2Opacity, {
+          toValue: 0.6,
+          duration: 200,
+          useNativeDriver: true
+        }),
+        Animated.timing(dot3Opacity, {
+          toValue: 0.6,
+          duration: 200,
+          useNativeDriver: true
+        })
+      ]).start(() => {
+        if (isLoading) {
+          animateDots();
+        }
+      });
+    };
+
+    if (isLoading) {
+      animateDots();
+    }
+  }, [messages, isLoading, dot1Opacity, dot2Opacity, dot3Opacity]);
 
   const handleSendMessage = () => {
     if (!inputText.trim()) return;
@@ -80,9 +130,9 @@ const ChatbotScreen = () => {
     ]}>
       {isLoading && item === messages[messages.length - 1] && item.isBot ? (
         <View style={styles.loadingDots}>
-          <View style={[styles.dot, { animationDelay: '0s' }]} />
-          <View style={[styles.dot, { animationDelay: '0.2s' }]} />
-          <View style={[styles.dot, { animationDelay: '0.4s' }]} />
+          <Animated.View style={[styles.dot, { opacity: dot1Opacity }]} />
+          <Animated.View style={[styles.dot, { opacity: dot2Opacity }]} />
+          <Animated.View style={[styles.dot, { opacity: dot3Opacity }]} />
         </View>
       ) : (
         <Text style={styles.messageText}>{item.text}</Text>
@@ -93,9 +143,9 @@ const ChatbotScreen = () => {
   const LoadingIndicator = () => (
     <View style={[styles.messageBubble, styles.botMessage]}>
       <View style={styles.loadingDots}>
-        <View style={styles.dot} />
-        <View style={styles.dot} />
-        <View style={styles.dot} />
+        <Animated.View style={[styles.dot, { opacity: dot1Opacity }]} />
+        <Animated.View style={[styles.dot, { opacity: dot2Opacity }]} />
+        <Animated.View style={[styles.dot, { opacity: dot3Opacity }]} />
       </View>
     </View>
   );
@@ -252,7 +302,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: '#9e9e9e',
     marginHorizontal: 2,
-    opacity: 0.6,
   },
 });
 
