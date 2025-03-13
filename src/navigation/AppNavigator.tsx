@@ -28,6 +28,7 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
   return (
     <Tab.Navigator
+      id="tab-navigator"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName: any;
@@ -56,6 +57,7 @@ const TabNavigator = () => {
 const AppStack = () => {
   return (
     <Stack.Navigator
+      id="app-stack"
       screenOptions={{
         headerShown: false,
         cardStyle: { backgroundColor: '#121212' },
@@ -65,13 +67,6 @@ const AppStack = () => {
       <Stack.Screen name="ProgramaDetalle" component={ProgramaDetalleScreen} />
       <Stack.Screen name="ModuloDetalle" component={ModuloDetalleScreen} />
     </Stack.Navigator>
-  );
-};
-
-// Create ModuloDetalleScreen component
-const ModuloDetalleScreen: React.FC<{ route: { params: { id: string, moduleId: string } } }> = ({ route }) => {
-  return (
-    <></>
   );
 };
 
