@@ -12,17 +12,20 @@ import ProgramaDetalleScreen from '../screens/ProgramaDetalleScreen';
 import ModuloDetalleScreen from '../screens/ModuloDetalleScreen';
 
 // Define our navigation types
-type RootStackParamList = {
-  Home: undefined;
-  Chatbot: undefined;
+export type RootStackParamList = {
+  TabNavigator: undefined;
   ProgramaDetalle: { id: string };
   ModuloDetalle: { id: string; moduleId: string };
-  TabNavigator: undefined;
+};
+
+export type TabParamList = {
+  Home: undefined;
+  Chatbot: undefined;
 };
 
 // Create our navigators
 const Stack = createStackNavigator<RootStackParamList>();
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<TabParamList>();
 
 // Tab navigator
 const TabNavigator = () => {
