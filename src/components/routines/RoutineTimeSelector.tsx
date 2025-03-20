@@ -5,15 +5,15 @@ import { View, Text } from 'react-native';
 interface RoutineTimeSelectorProps {
   startTime: string;
   endTime: string;
-  setStartTime: (time: string) => void;
-  setEndTime: (time: string) => void;
+  onStartTimeChange: (time: string) => void;
+  protocols?: { duration: number }[];
 }
 
 const RoutineTimeSelector: React.FC<RoutineTimeSelectorProps> = ({
   startTime,
   endTime,
-  setStartTime,
-  setEndTime
+  onStartTimeChange,
+  protocols
 }) => {
   return (
     <View>

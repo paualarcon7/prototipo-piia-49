@@ -3,12 +3,14 @@ import { ArrowRight, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Routine } from "@/types/rutina";
 import { WeekView } from "@/components/routines/WeekView";
-import { RoutineCard } from "@/components/routines/RoutineCard";
-import { EmptyRoutinesState } from "@/components/routines/EmptyRoutinesState";
+import RoutineCard from "@/components/routines/RoutineCard";
+import EmptyRoutinesState from "@/components/routines/EmptyRoutinesState";
+
 interface ActiveRoutinesViewProps {
   activeRoutines: Routine[];
   setShowAllView: (show: boolean) => void;
 }
+
 export const ActiveRoutinesView = ({
   activeRoutines,
   setShowAllView

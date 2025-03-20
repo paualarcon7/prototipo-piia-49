@@ -1,19 +1,20 @@
 
 import React from 'react';
 import { View, Text } from 'react-native';
+import { WeekDay } from '@/types/rutina';
 
 interface CalendarPreviewProps {
   routineName: string;
   startTime: string;
   endTime: string;
-  selectedDays: string[];
+  days: WeekDay[];
 }
 
 const CalendarPreview: React.FC<CalendarPreviewProps> = ({
   routineName,
   startTime,
   endTime,
-  selectedDays
+  days
 }) => {
   return (
     <View>

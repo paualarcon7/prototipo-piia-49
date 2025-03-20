@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Routine } from "@/types/rutina";
-import { RoutineCard } from "@/components/routines/RoutineCard";
+import RoutineCard from "@/components/routines/RoutineCard";
 import { SearchFilters } from "./SearchFilters";
 import { NoResultsView } from "./NoResultsView";
 

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { CalendarPreview } from "@/components/routines/CalendarPreview";
+import CalendarPreview from "@/components/routines/CalendarPreview";
 import { WeekDay, ROUTINE_COLORS } from "@/types/rutina";
 import { ColorSelector } from "@/components/routines/rutina-detalle/ColorSelector";
 

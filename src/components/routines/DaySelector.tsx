@@ -5,12 +5,12 @@ import { WeekDay } from '@/types/rutina';
 
 interface DaySelectorProps {
   selectedDays: WeekDay[];
-  onDayToggle: (day: WeekDay) => void;
+  onToggle: (day: WeekDay) => void;
 }
 
 const DaySelector: React.FC<DaySelectorProps> = ({
   selectedDays,
-  onDayToggle
+  onToggle
 }) => {
   return (
     <View>

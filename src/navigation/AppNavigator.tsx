@@ -31,6 +31,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
 const TabNavigator = () => {
   return (
     <Tab.Navigator
+      id="TabNavigator"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName: any;
@@ -59,6 +60,7 @@ const TabNavigator = () => {
 const AppStack = () => {
   return (
     <Stack.Navigator
+      id="AppStack"
       screenOptions={{
         headerShown: false,
         cardStyle: { backgroundColor: '#121212' },

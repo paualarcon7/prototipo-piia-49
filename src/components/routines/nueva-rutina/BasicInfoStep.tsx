@@ -1,7 +1,7 @@
 
 import { Input } from "@/components/ui/input";
-import { RoutineTimeSelector } from "@/components/routines/RoutineTimeSelector";
-import { DaySelector } from "@/components/routines/DaySelector";
+import RoutineTimeSelector from "@/components/routines/RoutineTimeSelector";
+import DaySelector from "@/components/routines/DaySelector";
 import { WeekDay } from "@/types/rutina";
 import { Protocol } from "@/types/protocols";
 
